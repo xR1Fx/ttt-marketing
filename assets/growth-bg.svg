@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="gbg" cx="32%" cy="60%" r="85%">
+      <stop offset="0%" stop-color="#16161a"/>
+      <stop offset="60%" stop-color="#0f0f12"/>
+      <stop offset="100%" stop-color="#0a0a0b"/>
+    </radialGradient>
+    <linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FBBC05" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#FBBC05" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="gglow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      @keyframes ring{0%{opacity:.5;transform:scale(.2)}100%{opacity:0;transform:scale(1)}}
+      @keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
+      .ring{transform-box:fill-box;transform-origin:center;animation:ring 3s ease-out infinite}
+      .ring2{transform-box:fill-box;transform-origin:center;animation:ring 3s ease-out infinite 1.5s}
+      .area{animation:breathe 5s ease-in-out infinite}
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#gbg)"/>
+
+  <!-- horizontal gridlines -->
+  <g stroke="#ffffff" stroke-opacity="0.045" stroke-width="1">
+    <path d="M0 300H1920M0 460H1920M0 620H1920M0 780H1920M0 900H1920"/>
+  </g>
+
+  <!-- ascending bars -->
+  <g fill="#FBBC05" fill-opacity="0.08">
+    <rect x="300"  y="780" width="70" height="120"/>
+    <rect x="560"  y="700" width="70" height="200"/>
+    <rect x="820"  y="640" width="70" height="260"/>
+    <rect x="1080" y="540" width="70" height="360"/>
+    <rect x="1340" y="430" width="70" height="470"/>
+    <rect x="1600" y="300" width="70" height="600"/>
+  </g>
+
+  <!-- area under the trend -->
+  <path class="area" d="M160 860 L420 800 L680 700 L900 740 L1140 560 L1380 470 L1620 300 L1780 240 L1780 900 L160 900 Z" fill="url(#gfill)"/>
+
+  <!-- trend line -->
+  <path id="gline" d="M160 860 L420 800 L680 700 L900 740 L1140 560 L1380 470 L1620 300 L1780 240"
+        fill="none" stroke="#FBBC05" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.9"/>
+
+  <!-- traveling pulse along the line -->
+  <circle r="7" fill="#FFFFFF" filter="url(#gglow)">
+    <animateMotion dur="5s" repeatCount="indefinite" rotate="0" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+      <mpath href="#gline"/>
+    </animateMotion>
+  </circle>
+
+  <!-- endpoint: pulse rings + node + arrow -->
+  <circle class="ring"  cx="1780" cy="240" r="34" fill="none" stroke="#FBBC05" stroke-width="2.5"/>
+  <circle class="ring2" cx="1780" cy="240" r="34" fill="none" stroke="#FBBC05" stroke-width="2.5"/>
+  <circle cx="1780" cy="240" r="8" fill="#FBBC05" filter="url(#gglow)"/>
+  <path d="M1740 300 L1780 250 L1820 300 M1780 250 V330" fill="none" stroke="#FBBC05" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.85"/>
+</svg>

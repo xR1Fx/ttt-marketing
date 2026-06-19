@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Inter','Helvetica Neue',Arial,sans-serif">
+  <defs>
+    <radialGradient id="glow" cx="78%" cy="18%" r="60%">
+      <stop offset="0%" stop-color="#4285F4" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#4285F4" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#4285F4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2B2B29"/>
+      <stop offset="100%" stop-color="#1A1A19"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="#111110"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- subtle vertical grid -->
+  <g stroke="#ffffff" stroke-opacity="0.035" stroke-width="1">
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- brand mark + wordmark -->
+  <g transform="translate(80,70) scale(1.05)">
+    <path d="M11 35 L23.5 11" fill="none" stroke="#4285F4" stroke-width="5.4" stroke-linecap="round"/>
+    <path d="M25 11 L39 35" fill="none" stroke="#FBBC05" stroke-width="5.4" stroke-linecap="round"/>
+    <path d="M11 38 L38 38" fill="none" stroke="#EA4335" stroke-width="5.4" stroke-linecap="round"/>
+  </g>
+  <text x="142" y="108" font-size="34" font-weight="800" letter-spacing="-1" fill="#FFFFFF">TTT<tspan fill="#9C9B97">Marketing</tspan></text>
+
+  <!-- eyebrow -->
+  <text x="82" y="222" font-size="22" font-weight="600" letter-spacing="3" fill="#9C9B97">ВНЕШНИЙ ОТДЕЛ МАРКЕТИНГА · С 2016</text>
+
+  <!-- headline -->
+  <text x="78" y="318" font-size="82" font-weight="900" letter-spacing="-3.5" fill="#FFFFFF">Весь маркетинг</text>
+  <text x="78" y="410" font-size="82" font-weight="900" letter-spacing="-3.5" fill="#FFFFFF">под ключ — до <tspan fill="#4285F4">денег</tspan></text>
+
+  <!-- stats -->
+  <g font-weight="800" letter-spacing="-1">
+    <text x="82" y="540" font-size="44" fill="#FFFFFF">200<tspan fill="#4285F4">+</tspan></text>
+    <text x="82" y="572" font-size="18" font-weight="500" fill="#9C9B97">проектов</text>
+
+    <text x="312" y="540" font-size="44" fill="#FFFFFF">3,5<tspan font-size="26"> млрд ₸</tspan></text>
+    <text x="312" y="572" font-size="18" font-weight="500" fill="#9C9B97">оборот клиентов / мес</text>
+
+    <text x="700" y="540" font-size="44" fill="#FFFFFF">$500<tspan fill="#FBBC05">K+</tspan></text>
+    <text x="700" y="572" font-size="18" font-weight="500" fill="#9C9B97">бюджета / год</text>
+
+    <text x="980" y="540" font-size="44" fill="#FFFFFF">30<tspan fill="#EA4335">+</tspan></text>
+    <text x="980" y="572" font-size="18" font-weight="500" fill="#9C9B97">специалистов</text>
+  </g>
+
+  <!-- domain -->
+  <text x="1118" y="108" text-anchor="end" font-size="20" font-weight="600" letter-spacing="1" fill="#5c5b57">tttmarketing.kz</text>
+
+  <!-- baseline hairline -->
+  <rect x="80" y="600" width="1040" height="2" fill="url(#hair)"/>
+</svg>

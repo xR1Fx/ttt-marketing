@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="sbg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#15161b"/>
+      <stop offset="60%" stop-color="#0f0f12"/>
+      <stop offset="100%" stop-color="#0a0a0b"/>
+    </radialGradient>
+    <filter id="sglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+      @keyframes ring{0%{opacity:.45;transform:scale(.25)}100%{opacity:0;transform:scale(1)}}
+      @keyframes breathe{0%,100%{opacity:.5}50%{opacity:.72}}
+      .acc{animation:pulse 3.4s ease-in-out infinite}
+      .acc2{animation:pulse 3.4s ease-in-out infinite 1.1s}
+      .acc3{animation:pulse 3.4s ease-in-out infinite 2.2s}
+      .net{animation:breathe 6s ease-in-out infinite}
+      .ring{transform-box:fill-box;transform-origin:center;animation:ring 3.6s ease-out infinite}
+      .ring2{transform-box:fill-box;transform-origin:center;animation:ring 3.6s ease-out infinite 1.8s}
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sbg)"/>
+
+  <!-- blueprint grid -->
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <path d="M0 180H1920M0 360H1920M0 540H1920M0 720H1920M0 900H1920"/>
+    <path d="M240 0V1080M480 0V1080M720 0V1080M960 0V1080M1200 0V1080M1440 0V1080M1680 0V1080"/>
+  </g>
+
+  <!-- network: ordered, connected nodes -->
+  <g class="net" stroke="#5b78b8" stroke-opacity="0.5" stroke-width="1.4" fill="none">
+    <path d="M240 760 L480 560 L760 640 L960 380 L1240 470 L1480 300 L1700 420"/>
+    <path d="M240 760 L520 880 L820 820 L1080 900 L1360 800 L1640 870"/>
+    <path d="M480 560 L520 880M760 640 L820 820M960 380 L1080 900M1240 470 L1360 800M1480 300 L1640 870M1700 420 L1640 870"/>
+    <path d="M760 640 L1080 900M960 380 L1360 800"/>
+  </g>
+
+  <!-- plain nodes -->
+  <g fill="#9fb2da" fill-opacity="0.75">
+    <circle cx="240" cy="760" r="4"/><circle cx="480" cy="560" r="4"/><circle cx="760" cy="640" r="4"/>
+    <circle cx="1240" cy="470" r="4"/><circle cx="1700" cy="420" r="4"/><circle cx="520" cy="880" r="4"/>
+    <circle cx="820" cy="820" r="4"/><circle cx="1080" cy="900" r="4"/><circle cx="1360" cy="800" r="4"/><circle cx="1640" cy="870" r="4"/>
+  </g>
+
+  <!-- expanding "heartbeat" rings on the core node -->
+  <circle class="ring"  cx="960" cy="380" r="60" fill="none" stroke="#4285F4" stroke-width="2"/>
+  <circle class="ring2" cx="960" cy="380" r="60" fill="none" stroke="#4285F4" stroke-width="2"/>
+
+  <!-- brand-accent glowing nodes -->
+  <g filter="url(#sglow)">
+    <circle class="acc"  cx="960"  cy="380" r="7" fill="#4285F4"/>
+    <circle class="acc2" cx="1480" cy="300" r="6" fill="#FBBC05"/>
+    <circle class="acc3" cx="1080" cy="900" r="6" fill="#EA4335"/>
+  </g>
+
+  <!-- soft central structure rings -->
+  <circle cx="960" cy="500" r="360" fill="none" stroke="#4285F4" stroke-opacity="0.07" stroke-width="1.5"/>
+  <circle cx="960" cy="500" r="540" fill="none" stroke="#4285F4" stroke-opacity="0.05" stroke-width="1.5"/>
+</svg>
