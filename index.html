@@ -1119,11 +1119,11 @@ window.addEventListener('load',()=>{
       .from('.busline',{scaleX:0,duration:.35,ease:'power2.out'},'-=.05')
       .from('.cbranch',{scaleY:0,duration:.22,stagger:.04,ease:'power2.out'},'-=.1')
       .from('.team-cols .tspec',{y:18,opacity:0,scale:.96,duration:.3,stagger:.035,ease:'power2.out'},'-=.05');
-    const dirTl=gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top top',once:true}});
-    dirTl.from('.dir .name',{y:20,opacity:0,duration:.55,ease:'power3.out'})
-      .from('.dir .big',{y:40,opacity:0,duration:.8,ease:'power3.out'},'-=.3')          
-      .from('.dir .dphoto',{scale:.98,opacity:0,duration:.9,ease:'power2.out',transformOrigin:'50% 100%'},'-=.55') 
-      .from('.dir .chip',{y:24,opacity:0,scale:.85,duration:.5,stagger:.12,ease:'back.out(1.5)'},'-=.45')
+    const dirTl=gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top 80%',once:true}});
+    dirTl.from('.dir .name',{y:16,opacity:0,duration:.3,ease:'power3.out'})
+      .from('.dir .big',{y:28,opacity:0,duration:.42,ease:'power3.out'},'-=.18')
+      .from('.dir .dphoto',{scale:.98,opacity:0,duration:.5,ease:'power2.out',transformOrigin:'50% 100%'},'-=.32')
+      .from('.dir .chip',{y:20,opacity:0,scale:.9,duration:.32,stagger:.06,ease:'back.out(1.5)'},'-=.34')
       .add(()=>{
         if(!matchMedia('(min-width:760px)').matches)return; 
         gsap.utils.toArray('.dir .chip').forEach((c,i)=>{
