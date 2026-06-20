@@ -129,7 +129,7 @@
   .hero{padding:36px 0 0}
   h1.head{font-size:clamp(2.2rem,4.9vw,4.3rem);font-weight:900;line-height:1.04;margin-top:18px}
   .offer{display:inline}
-  .rot{display:inline;line-height:1.1}
+  .rot{display:inline-block;line-height:1.1;text-align:left}
   .rot .w{display:inline-block;transition:opacity .5s ease;
     background:linear-gradient(90deg,#4285F4 0%,#6366F1 50%,#FF8A3D 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
@@ -398,7 +398,7 @@
     -webkit-mask-image:linear-gradient(90deg,#000 38%,transparent);mask-image:linear-gradient(90deg,#000 38%,transparent)}
   .lc-right{right:0;background:linear-gradient(270deg,var(--bg) 30%,transparent);
     -webkit-mask-image:linear-gradient(270deg,#000 38%,transparent);mask-image:linear-gradient(270deg,#000 38%,transparent)}
-  @media(prefers-reduced-motion:reduce){.lc-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:14px 40px}.lc-track .lc-item[aria-hidden]{display:none}.lc-edge{display:none}}
+  @media(prefers-reduced-motion:reduce){.lc-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto;gap:12px 26px;padding:0 14px}.lc-track .lc-item{margin-right:0;font-size:.95rem;opacity:.92}.lc-track .lc-item[aria-hidden]{display:none}.lc-edge{display:none}}
 
   .netfx{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:.08}
 
@@ -1010,6 +1010,8 @@ window.addEventListener('load',()=>{
   const words=["денег в кассе","роста ×60","системы продаж","потока заявок"];
   const rotEl=document.getElementById('rot');
   if(rotEl){const w=rotEl.querySelector('.w');let i=0;
+    const fit=()=>{const cur=w.textContent;let max=0;words.forEach(t=>{w.textContent=t;if(w.offsetWidth>max)max=w.offsetWidth;});w.textContent=cur;rotEl.style.minWidth=Math.ceil(max)+'px';};
+    fit();addEventListener('resize',()=>requestAnimationFrame(fit),{passive:true});
     setInterval(()=>{w.classList.add('out');
       setTimeout(()=>{i=(i+1)%words.length;w.textContent=words[i];w.classList.remove('out');},500);
     },3000);
