@@ -851,7 +851,7 @@ window.addEventListener('load',()=>{
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let lenis=null;
-  if(!reduced && window.Lenis){
+  if(!reduced && window.Lenis && matchMedia('(hover:hover) and (pointer:fine)').matches){
     lenis=new Lenis({lerp:.1,smoothWheel:true});
     lenis.on('scroll',ScrollTrigger.update);
     gsap.ticker.add(t=>lenis.raf(t*1000));
@@ -1113,7 +1113,7 @@ window.addEventListener('load',()=>{
   const mm=gsap.matchMedia();
   mm.add("(prefers-reduced-motion: no-preference)",()=>{
     gsap.utils.toArray('.fu').forEach(el=>gsap.from(el,{y:26,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
-    gsap.utils.toArray('.par').forEach(img=>gsap.fromTo(img,{yPercent:-10},{yPercent:10,ease:'none',scrollTrigger:{trigger:img.closest('section')||img,start:'top bottom',end:'bottom top',scrub:true}}));
+    if(matchMedia('(hover:hover) and (pointer:fine)').matches)gsap.utils.toArray('.par').forEach(img=>gsap.fromTo(img,{yPercent:-10},{yPercent:10,ease:'none',scrollTrigger:{trigger:img.closest('section')||img,start:'top bottom',end:'bottom top',scrub:true}}));
     const teamTl=gsap.timeline({scrollTrigger:{trigger:'.team-org2',start:'top 80%',toggleActions:'restart none none reverse'}});
     teamTl.from('.team-mgmt .mcard',{y:22,opacity:0,duration:.4,stagger:.09,ease:'power3.out'})
       .from('.team-org2 .mline',{scaleX:0,scaleY:0,duration:.3,stagger:.08,ease:'power2.out'},'-=.15')
