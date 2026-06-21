@@ -223,7 +223,11 @@
   .team-trunk .tline{position:absolute;inset:0;background:var(--blue);opacity:.6;transform-origin:top}
   .team-bus{position:relative;height:2px;width:100%}
   .busline{position:absolute;left:50%;right:50%;top:0;height:2px;background:var(--blue);opacity:.6;transform-origin:center}
-  .team-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+  .team-cols{position:relative;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+  .team-cols::before{content:"";position:absolute;left:50%;top:-18px;bottom:14px;width:2px;margin-left:-1px;background:var(--blue);opacity:.4;z-index:0}
+  .tspec::after{content:"";position:absolute;top:50%;width:12px;height:2px;background:var(--blue);opacity:.4;z-index:0}
+  .team-cols .tspec:nth-child(odd)::after{right:-13px}
+  .team-cols .tspec:nth-child(even)::after{left:-13px}
   .cbranch{display:none}
   @media(min-width:820px){
     .team-mgmt{flex-direction:row;justify-content:center;gap:0}
@@ -232,6 +236,7 @@
     .mline{transform-origin:left}
     .busline{left:10%;right:10%}
     .team-cols{grid-template-columns:repeat(5,1fr);gap:14px;margin-top:30px}
+    .team-cols::before,.tspec::after{display:none}
     .cbranch{display:block;position:absolute;top:-30px;left:50%;width:2px;height:30px;margin-left:-1px;background:var(--blue);opacity:.6;transform-origin:top}
   }
   .tspec{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 12px;min-height:128px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;text-align:center;box-shadow:var(--sh-1);transition:transform .25s,border-color .25s,background .25s}
