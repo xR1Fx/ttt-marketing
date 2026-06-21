@@ -154,7 +154,7 @@
   @keyframes cwColor{0%{background:#1faa53}43%{background:#1faa53}50%{background:#2e7df6}93%{background:#2e7df6}100%{background:#1faa53}}
   @keyframes cwShowWa{0%{opacity:1}43%{opacity:1}50%{opacity:0}93%{opacity:0}100%{opacity:1}}
   @keyframes cwShowPhone{0%{opacity:0}43%{opacity:0}50%{opacity:1}93%{opacity:1}100%{opacity:0}}
-  @media(max-width:480px){.cw{--main:52px;--act:46px;--gap:10px}.cw-i{width:22px;height:22px}.cw-action svg{width:21px;height:21px}}
+  @media(max-width:480px){.cw{--main:60px;--act:52px;--gap:11px}.cw-i{width:30px;height:30px}.cw-action svg{width:27px;height:27px}}
   @media(prefers-reduced-motion:reduce){.cw-main,.cw-main::after,.cw-i,.cw-action{animation:none!important}.cw:not(.open) .cw-main{background:#1faa53}.cw:not(.open) .cw-i-wa{opacity:1}.cw:not(.open) .cw-i-phone{opacity:0}}
 
   .hero{padding:36px 0 0}
@@ -205,6 +205,7 @@
   .svc-head .tg svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
   .svc-item.open .svc-head .tg{transform:rotate(45deg);border-color:var(--blue);color:var(--blue)}
   .svc-body{max-height:0;overflow:hidden;transition:max-height .45s ease}
+  @media(hover:none){.svc-body{transition:max-height .32s ease}}
   .svc-intro{color:var(--fg2);font-size:.92rem;line-height:1.5;margin:0 2px 14px;max-width:62ch}
   .nico,.ngo{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;padding:2px 2px 26px}
@@ -1103,9 +1104,9 @@ window.addEventListener('load',()=>{
     h.addEventListener('click',()=>{
       const open=it.classList.toggle('open');
       b.style.maxHeight=open?(b.scrollHeight+20)+'px':0;
-      if(open&&!reduced)gsap.fromTo(it.querySelectorAll('.node'),{y:14,opacity:0},{y:0,opacity:1,duration:.4,stagger:.04,ease:'power2.out',overwrite:true,clearProps:'opacity,transform'});
+      if(open&&!reduced&&matchMedia('(hover:hover)').matches)gsap.fromTo(it.querySelectorAll('.node'),{y:14,opacity:0},{y:0,opacity:1,duration:.4,stagger:.04,ease:'power2.out',overwrite:true,clearProps:'opacity,transform'});
     });
-    b.addEventListener('transitionend',()=>{if(window.ScrollTrigger)ScrollTrigger.refresh();});
+    b.addEventListener('transitionend',e=>{if(e.propertyName==='max-height'&&window.ScrollTrigger)ScrollTrigger.refresh();});
   });
 
   (function(){
