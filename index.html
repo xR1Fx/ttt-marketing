@@ -123,11 +123,11 @@
   @media(min-width:880px){#mnav{display:none}}
   .cw{position:fixed;right:18px;bottom:18px;z-index:45;--main:58px;--act:50px;--gap:12px;width:var(--main);height:var(--main);transition:opacity .3s}
   body.nav-open .cw{opacity:0;pointer-events:none}
-  .cw-main{position:relative;z-index:2;width:100%;height:100%;border:none;padding:0;cursor:pointer;border-radius:50%;background:#1faa53;box-shadow:0 10px 28px -8px rgba(0,0,0,.6);transition:transform .25s ease,background .5s ease,box-shadow .3s ease}
+  .cw-main{position:relative;z-index:2;width:100%;height:100%;border:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none;user-select:none;border-radius:50%;background:#1faa53;box-shadow:0 10px 28px -8px rgba(0,0,0,.6);transition:transform .25s ease,background .5s ease,box-shadow .3s ease}
   .cw-main:hover{transform:scale(1.06)}
   .cw-main:focus-visible{outline:2px solid #fff;outline-offset:3px}
   .cw-main::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none}
-  .cw:not(.open) .cw-main::after{animation:cwPulse 2.4s ease-out infinite}
+  .cw:not(.open) .cw-main::after{animation:cwPulse 3s ease-out infinite}
   .cw-i{position:absolute;inset:0;margin:auto;width:25px;height:25px;color:#fff;transition:opacity .35s ease,transform .35s ease}
   .cw-i-phone,.cw-i-wa{fill:currentColor}
   .cw-i-phone{opacity:0}
@@ -139,7 +139,7 @@
   .cw.open .cw-main{background:#17181a;box-shadow:0 10px 26px -8px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.12)}
   .cw.open .cw-i-phone,.cw.open .cw-i-wa{opacity:0}
   .cw.open .cw-i-close{opacity:1;transform:rotate(0) scale(1)}
-  .cw-action{position:absolute;right:0;top:calc((var(--main) - var(--act))/2);width:var(--act);height:var(--act);display:grid;place-items:center;border-radius:50%;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.55);opacity:0;transform:translateX(8px) scale(.4);pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+  .cw-action{position:absolute;right:0;top:calc((var(--main) - var(--act))/2);width:var(--act);height:var(--act);display:grid;place-items:center;-webkit-tap-highlight-color:transparent;border-radius:50%;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.55);opacity:0;transform:translateX(8px) scale(.4);pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
   .cw-action svg{width:23px;height:23px;fill:currentColor}
   .cw-call{background:linear-gradient(135deg,#2e7df6,#4aa3ff)}
   .cw-wa{background:linear-gradient(135deg,#1faa53,#25d366)}
@@ -150,10 +150,10 @@
   .cw.open .cw-action{opacity:1;pointer-events:auto;transform:translateX(var(--x)) scale(1)}
   .cw.open .cw-call{transition-delay:.06s}
   .cw.open .cw-wa{transition-delay:.13s}
-  @keyframes cwPulse{0%{box-shadow:0 0 0 0 rgba(120,200,255,.45)}70%,100%{box-shadow:0 0 0 18px rgba(120,200,255,0)}}
-  @keyframes cwColor{0%,40%{background:#1faa53}50%,90%{background:#2e7df6}100%{background:#1faa53}}
-  @keyframes cwShowWa{0%,40%{opacity:1}50%,90%{opacity:0}100%{opacity:1}}
-  @keyframes cwShowPhone{0%,40%{opacity:0}50%,90%{opacity:1}100%{opacity:0}}
+  @keyframes cwPulse{0%{box-shadow:0 0 0 0 rgba(120,200,255,.5)}60%,100%{box-shadow:0 0 0 16px rgba(120,200,255,0)}}
+  @keyframes cwColor{0%{background:#1faa53}43%{background:#1faa53}50%{background:#2e7df6}93%{background:#2e7df6}100%{background:#1faa53}}
+  @keyframes cwShowWa{0%{opacity:1}43%{opacity:1}50%{opacity:0}93%{opacity:0}100%{opacity:1}}
+  @keyframes cwShowPhone{0%{opacity:0}43%{opacity:0}50%{opacity:1}93%{opacity:1}100%{opacity:0}}
   @media(max-width:480px){.cw{--main:52px;--act:46px;--gap:10px}.cw-i{width:22px;height:22px}.cw-action svg{width:21px;height:21px}}
   @media(prefers-reduced-motion:reduce){.cw-main,.cw-main::after,.cw-i,.cw-action{animation:none!important}.cw:not(.open) .cw-main{background:#1faa53}.cw:not(.open) .cw-i-wa{opacity:1}.cw:not(.open) .cw-i-phone{opacity:0}}
 
