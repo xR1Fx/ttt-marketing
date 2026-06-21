@@ -1121,12 +1121,12 @@ window.addEventListener('load',()=>{
     gsap.utils.toArray('.fu').forEach(el=>gsap.from(el,{y:26,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
     if(matchMedia('(hover:hover) and (pointer:fine)').matches)gsap.utils.toArray('.par').forEach(img=>gsap.fromTo(img,{yPercent:-10},{yPercent:10,ease:'none',scrollTrigger:{trigger:img.closest('section')||img,start:'top bottom',end:'bottom top',scrub:true}}));
     const teamTl=gsap.timeline({scrollTrigger:{trigger:'.team-org2',start:'top 80%',toggleActions:'restart none none reverse'}});
-    teamTl.from('.team-mgmt .mcard',{y:22,opacity:0,duration:.4,stagger:.09,ease:'power3.out'})
-      .from('.team-org2 .mline',{scaleX:0,scaleY:0,duration:.3,stagger:.08,ease:'power2.out'},'-=.15')
-      .from('.team-trunk .tline',{scaleY:0,duration:.25,ease:'power2.out'},'-=.05')
-      .from('.busline',{scaleX:0,duration:.35,ease:'power2.out'},'-=.05')
-      .from('.cbranch',{scaleY:0,duration:.22,stagger:.04,ease:'power2.out'},'-=.1')
-      .from('.team-cols .tspec',{y:18,opacity:0,scale:.96,duration:.3,stagger:.035,ease:'power2.out'},'-=.05');
+    teamTl.from('.team-mgmt .mcard',{y:18,opacity:0,duration:.3,stagger:.06,ease:'power3.out'})
+      .from('.team-org2 .mline',{scaleX:0,scaleY:0,duration:.22,stagger:.05,ease:'power2.out'},'-=.14')
+      .from('.team-trunk .tline',{scaleY:0,duration:.2,ease:'power2.out'},'-=.08')
+      .from('.busline',{scaleX:0,duration:.25,ease:'power2.out'},'-=.08')
+      .from('.cbranch',{scaleY:0,duration:.18,stagger:.03,ease:'power2.out'},'-=.12')
+      .from('.team-cols .tspec',{y:14,opacity:0,scale:.97,duration:.22,stagger:.025,ease:'power2.out'},'-=.08');
     const dirTl=gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top 80%',once:true}});
     dirTl.from('.dir .name',{y:16,opacity:0,duration:.3,ease:'power3.out'})
       .from('.dir .big',{y:28,opacity:0,duration:.42,ease:'power3.out'},'-=.18')
