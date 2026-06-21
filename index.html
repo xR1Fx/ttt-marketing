@@ -481,6 +481,17 @@
   .svc-list .svc-item:nth-child(n+5) .node:hover .nico,
   .svc-list .svc-item:nth-child(n+5) .node:hover .ngo{color:rgb(251,144,82)}
   @media(prefers-reduced-motion:reduce){.flow .node:hover{transform:none}}
+  /* сенсорные экраны: гасим hover нод (transform + неоновая тень), иначе при скролле под пальцем дёргает */
+  @media(hover:none){
+    .flow .node{transition:none}
+    .node:hover,.flow .node:hover,
+    .svc-list .svc-item:nth-child(-n+4) .node:hover,
+    .svc-list .svc-item:nth-child(n+5) .node:hover{transform:none;box-shadow:none;border-color:var(--line)}
+    .node:hover .nico,.node:hover .ngo,
+    .svc-list .svc-item:nth-child(n+5) .node:hover .nico,
+    .svc-list .svc-item:nth-child(n+5) .node:hover .ngo{color:var(--fg2)}
+    .node:hover .ngo{transform:none}
+  }
 
   .crew{background:var(--bg);border-top:1px solid var(--line);padding:clamp(54px,8vw,96px) 0}
   .crew-grid{display:block}
