@@ -1354,25 +1354,22 @@ window.addEventListener('load',()=>{
     gsap.from('footer .fcols > *',{y:22,opacity:0,duration:.55,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'footer',start:'top 88%'}});
   });
 
-  /* Директор — ДЕСКТОП (≥992px): pin + scrub. Заголовок улетает вверх, фото проявляется с зумом, плашки прилетают с боков (линии проявляются вместе с ними) */
+  /* Директор — ДЕСКТОП (≥992px): pin + scrub. Заголовок улетает вверх + гаснет фон-свечение, фото проявляется с зумом, плашки ВЫЛЕТАЮТ с боков */
   gsap.matchMedia().add('(min-width:992px) and (prefers-reduced-motion: no-preference)',()=>{
-    gsap.set('.dir .dphoto',{opacity:0,scale:.9,transformOrigin:'50% 100%'});
-    gsap.set('.dir .chip',{opacity:0});
-    gsap.set('.dir .c1,.dir .c3',{x:-40});   /* левые плашки — сдвиг влево */
-    gsap.set('.dir .c2,.dir .c4',{x:40});    /* правые плашки — сдвиг вправо */
+    const glow=document.querySelector('.dir .dir-glow'); if(glow)glow.style.animation='none'; /* стопим пульс, чтобы управлять opacity */
     gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top top',end:'+=1500',pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}})
       .to('.dir .name',{opacity:0,y:-30,ease:'power1.in'},0)
       .to('.dir .big',{scale:.5,y:-180,opacity:0,ease:'power2.in'},0)
-      .to('.dir .dphoto',{opacity:1,scale:1,ease:'power2.out'},0.05)
-      .to('.dir .chip',{opacity:1,x:0,stagger:.08,ease:'power2.out'},0.35);
+      .to('.dir .dir-glow',{opacity:0,ease:'power1.in'},0)
+      .fromTo('.dir .dphoto',{opacity:0,scale:.9},{opacity:1,scale:1,ease:'power2.out',transformOrigin:'50% 100%'},0.05)
+      .fromTo('.dir .c1,.dir .c3',{x:-60,opacity:0},{x:0,opacity:1,stagger:.1,ease:'power2.out'},0.1)
+      .fromTo('.dir .c2,.dir .c4',{x:60,opacity:0},{x:0,opacity:1,stagger:.1,ease:'power2.out'},0.1);
   });
-  /* Директор — МОБАЙЛ (<992px): без пина и боковых сдвигов, просто плавный stagger-reveal (фото → плашки сверху вниз) */
+  /* Директор — МОБАЙЛ (<992px): без пина и вложенного скролла. Анимация привязана к скроллу (scrub) — фото и достижения проявляются по мере листания пальцем (плавно, без лагов) */
   gsap.matchMedia().add('(max-width:991px) and (prefers-reduced-motion: no-preference)',()=>{
-    gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top 72%',once:true}})
-      .from('.dir .name',{opacity:0,y:16,duration:.4,ease:'power3.out'})
-      .from('.dir .big',{opacity:0,y:24,duration:.45,ease:'power3.out'},'-=.25')
-      .from('.dir .dphoto',{opacity:0,scale:.92,duration:.5,ease:'power2.out',transformOrigin:'50% 100%'},'-=.3')
-      .from('.dir .chip',{opacity:0,y:18,duration:.4,stagger:.1,ease:'power2.out'},'-=.25');
+    const st={trigger:'.dir',start:'top 85%',end:'top 30%',scrub:true};
+    gsap.from('.dir .dphoto',{opacity:0,y:30,scale:.95,ease:'none',scrollTrigger:st});
+    gsap.from('.dir .chip',{opacity:0,y:24,stagger:.12,ease:'none',scrollTrigger:st});
   });
 
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{
