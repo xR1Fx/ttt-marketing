@@ -545,20 +545,20 @@
     .crew-grid{display:grid;grid-template-columns:minmax(240px,26%) 1fr;gap:clamp(26px,3.2vw,52px);align-items:center}
     .crew-cards{display:flex;flex-direction:row;margin-top:0;gap:14px}
     .crew-card{position:relative;flex:1 1 0;min-width:0;height:clamp(440px,54vh,540px);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);cursor:pointer;
-      transition:flex-grow .5s cubic-bezier(.25,1,.5,1),box-shadow .5s}
+      transition:flex-grow .45s cubic-bezier(.4,0,.2,1),box-shadow .45s cubic-bezier(.4,0,.2,1)}
     .crew-card::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.92),rgba(0,0,0,.28) 56%,rgba(0,0,0,.08))}
     .crew-photo{position:absolute;inset:0;width:100%;height:100%;border-radius:0;background-size:cover;background-position:center;filter:brightness(.5) saturate(.92);transition:filter .5s,transform .6s}
     .crew-tab{display:block;position:absolute;z-index:2;left:50%;bottom:22px;transform:translateX(-50%) rotate(180deg);
       writing-mode:vertical-rl;white-space:nowrap;font-weight:800;font-size:1.02rem;letter-spacing:.02em;color:#fff;
       text-shadow:0 2px 12px rgba(0,0,0,.65);transition:opacity .3s}
-    .crew-meta{position:absolute;z-index:3;left:0;right:0;bottom:0;display:block;padding:24px;opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s;pointer-events:none}
+    .crew-meta{position:absolute;z-index:3;left:0;right:0;bottom:0;display:block;padding:24px;opacity:0;transform:translateY(12px);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1);pointer-events:none}
     .crew-name{margin:8px 0 0;font-size:1.3rem}
     .crew-role{margin-top:0;font-size:.74rem;letter-spacing:.05em}
     .crew-desc{max-height:none;opacity:1;overflow:visible;margin:10px 0 0;font-size:.88rem;transition:none}
     .crew-card.active{flex-grow:3.5;box-shadow:0 0 42px -6px rgba(var(--cc),.5),0 22px 54px -24px #000}
     .crew-card.active .crew-photo{filter:brightness(.96) saturate(1.04)}
     .crew-card.active .crew-tab{opacity:0}
-    .crew-card.active .crew-meta{opacity:1;transform:none;pointer-events:auto;transition:opacity .5s .12s,transform .5s .12s}
+    .crew-card.active .crew-meta{opacity:1;transform:none;pointer-events:auto;transition:opacity .45s .1s cubic-bezier(.4,0,.2,1),transform .45s .1s cubic-bezier(.4,0,.2,1)}
   }
   @media(prefers-reduced-motion:reduce){.crew-card,.crew-card .crew-photo,.crew-card .crew-meta{transition:none}}
 
@@ -1309,15 +1309,16 @@ window.addEventListener('load',()=>{
     const isDesk=()=>matchMedia('(min-width:992px)').matches;
     const setActive=card=>cards.forEach(x=>x.classList.toggle('active',x===card));
     let locked=cards[0]||null;   /* ПК: первая карточка зафиксирована по умолчанию */
-    let lastTap=0;
+    let lastTap=0,leaveTimer=null;
 
     cards.forEach(c=>{
-      /* ПК: ховер-превью раскрытия */
-      c.addEventListener('mouseenter',()=>{ if(isDesk())setActive(c); });
-      c.addEventListener('mouseleave',()=>{ if(isDesk())setActive(locked); });
+      /* ПК: ховер-превью с hover-intent — откат откладывается и отменяется при заходе на другую карточку (без мигания/рывков) */
+      c.addEventListener('mouseenter',()=>{ if(!isDesk())return; clearTimeout(leaveTimer); setActive(c); });
+      c.addEventListener('mouseleave',()=>{ if(!isDesk())return; clearTimeout(leaveTimer); leaveTimer=setTimeout(()=>setActive(locked),70); });
       /* клик: ПК — фиксация (lock); мобайл — обычный тап-раскрытие */
       c.addEventListener('click',()=>{
         if(isDesk()){
+          clearTimeout(leaveTimer);
           locked=(locked===c)?null:c;     /* повторный клик по зафиксированной — снять фиксацию (вернуть под ховер) */
           setActive(locked||c);           /* если сняли — оставляем открытой под курсором, закроется на mouseleave */
         }else{
