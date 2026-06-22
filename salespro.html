@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SalesPRO — ИИ-тренажёр продаж для вашего отдела</title>
+<meta name="description" content="SalesPRO — ИИ-тренажёр, на котором менеджеры отрабатывают звонки и встречи на виртуальном клиенте, а не на ваших живых. Рост конверсии за 30 дней.">
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#111110" />
+<link rel="icon" type="image/png" href="assets/newlogo-mark.png" />
+<link rel="apple-touch-icon" href="assets/newlogo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS (выровнены под фирменный стиль TTT Marketing) ============ */
+:root{
+  --bg:#111110; --s1:#1A1A19; --s2:#1E1E1E; --s3:#232322;
+  --b1:#2B2B29; --b2:#3a3a37;
+  --gold:#FBBC05; --gold2:#FFD466; --gbg:rgba(251,188,5,.10);
+  --acc:#4285F4; --abg:rgba(66,133,244,.10);
+  --grn:#2ecc71; --grbg:rgba(46,204,113,.10);
+  --red:#EA4335; --rdbg:rgba(234,67,53,.10);
+  --amb:#f39c12; --ppl:#9b59b6;
+  --t1:#FFFFFF; --t2:#9C9B97; --t3:#6b6a66;
+  --disp:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'Inter',ui-monospace,'SF Mono',monospace;
+  --wrap:1140px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body); background:var(--bg); color:var(--t1);
+  line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+section{padding:96px 0;position:relative}
+h1,h2,h3{font-family:var(--disp);line-height:1.08;letter-spacing:-.035em;font-weight:800}
+h2{font-size:clamp(28px,4.4vw,46px)}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--t2);margin-bottom:18px;font-weight:700}
+.lead{color:var(--t2);font-size:clamp(16px,1.6vw,19px);max-width:640px}
+a{color:inherit;text-decoration:none}
+.gold{color:var(--gold)}
+.grn{color:var(--grn)}
+.red{color:var(--red)}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:700;
+  font-size:16px;padding:15px 28px;border-radius:999px;border:1px solid transparent;
+  cursor:pointer;transition:transform .15s ease,box-shadow .2s ease,background .2s;
+}
+.btn:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.btn-gold{background:var(--acc);color:#fff;box-shadow:0 10px 30px -8px rgba(66,133,244,.5)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(66,133,244,.6)}
+.btn-ghost{background:var(--s2);color:var(--t1);border-color:var(--b2)}
+.btn-ghost:hover{background:var(--s3);transform:translateY(-2px)}
+
+/* ============ NAV ============ */
+nav{position:sticky;top:0;z-index:50;background:rgba(17,17,16,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--b1)}
+nav .wrap{max-width:1800px;padding:0 clamp(20px,4vw,72px)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.03em}
+.logo-mark{width:30px;height:30px;border-radius:7px;display:block}
+.logo-badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1300;display:grid;place-items:center;font-size:14px;font-weight:800}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{color:var(--t2);font-size:15px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--t1)}
+.nav-home{display:inline-flex;align-items:center;gap:6px;color:var(--t1)!important;font-weight:600}
+.nav-cta{padding:10px 20px;font-size:14px}
+@media(max-width:860px){.nav-links{gap:18px}.nav-links a:not(.nav-cta):not(.nav-home){display:none}}
+
+/* ============ HERO ============ */
+.hero{padding-top:64px;padding-bottom:80px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(34px,5.4vw,62px);font-weight:800}
+.hero h1 .u{color:var(--acc);position:relative}
+.hero .lead{margin:22px 0 30px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-trust{margin-top:26px;display:flex;gap:22px;flex-wrap:wrap;color:var(--t3);font-size:13px;font-family:var(--mono)}
+.hero-trust b{color:var(--t1)}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--abg);border:1px solid rgba(66,133,244,.28);color:#9cc1ff;font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:7px 13px;border-radius:99px;margin-bottom:24px;text-transform:uppercase;font-weight:700}
+.dot{width:7px;height:7px;border-radius:99px;background:var(--grn);box-shadow:0 0 0 3px var(--grbg)}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+
+/* ----- live battle mock ----- */
+.battle{background:linear-gradient(180deg,var(--s1),var(--s2));border:1px solid var(--b2);border-radius:20px;padding:18px;box-shadow:0 40px 80px -30px #000}
+.battle-top{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 14px;border-bottom:1px solid var(--b1);margin-bottom:14px}
+.battle-top .who{font-size:13px;color:var(--t2);font-family:var(--mono)}
+.timer{font-family:var(--mono);font-weight:700;color:var(--t2);font-size:14px}
+.msg{margin:10px 0;max-width:88%;font-size:14.5px;padding:11px 14px;border-radius:14px;animation:pop .4s ease both}
+.msg.cli{background:var(--s3);border:1px solid var(--b1);border-top-left-radius:4px}
+.msg.mgr{background:var(--abg);border:1px solid rgba(79,142,247,.3);margin-left:auto;border-top-right-radius:4px}
+.msg .tag{display:block;font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;opacity:.7}
+.coach{margin-top:14px;background:var(--grbg);border:1px solid rgba(46,204,113,.3);border-radius:13px;padding:12px 14px;font-size:13.5px;display:flex;gap:10px}
+.coach .score{font-family:var(--mono);font-weight:700;color:var(--grn);white-space:nowrap}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ============ PROBLEM ============ */
+.prob{background:radial-gradient(120% 90% at 50% 0,rgba(231,76,60,.07),transparent 60%)}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.prob-card{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:26px}
+.prob-card .big{font-family:var(--mono);font-size:34px;font-weight:700;color:var(--red);line-height:1}
+.prob-card p{color:var(--t2);margin-top:12px;font-size:15px}
+@media(max-width:760px){.prob-grid{grid-template-columns:1fr}}
+
+/* ============ STEPS ============ */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px;counter-reset:s}
+.step{background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:26px 22px;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--mono);font-weight:700;font-size:13px;color:var(--acc);letter-spacing:.1em}
+.step h3{font-size:18px;margin:14px 0 8px}
+.step p{color:var(--t2);font-size:14.5px}
+@media(max-width:860px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ============ FEATURES ============ */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.feat{background:linear-gradient(180deg,var(--s1),var(--s2));border:1px solid var(--b1);border-radius:18px;padding:28px;transition:border-color .2s,transform .2s}
+.feat:hover{border-color:var(--b2);transform:translateY(-3px)}
+.feat .ic{font-size:28px;margin-bottom:14px}
+.feat h3{font-size:18px;margin-bottom:8px}
+.feat p{color:var(--t2);font-size:14.5px}
+@media(max-width:860px){.feat-grid{grid-template-columns:1fr}}
+
+/* ============ RANKS (signature) ============ */
+.ranks{background:linear-gradient(180deg,transparent,var(--s1))}
+.ladder{display:flex;gap:10px;overflow-x:auto;padding:40px 4px 16px;scroll-snap-type:x mandatory}
+.rank{scroll-snap-align:start;flex:0 0 auto;width:128px;text-align:center;background:var(--s2);border:1px solid var(--b1);border-radius:15px;padding:20px 12px;position:relative;transition:transform .2s,border-color .2s}
+.rank:hover{transform:translateY(-5px);border-color:var(--gold)}
+.rank .em{font-size:30px}
+.rank .nm{font-family:var(--disp);font-weight:600;font-size:14px;margin:9px 0 4px}
+.rank .xp{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.rank.peak{background:var(--gbg);border-color:var(--gold)}
+.rank.peak .nm{color:var(--gold2)}
+.ladder::-webkit-scrollbar{height:6px}
+.ladder::-webkit-scrollbar-thumb{background:var(--b2);border-radius:99px}
+
+/* ============ BONUS / ACHIEVEMENTS (инструмент управления) ============ */
+.bonus{background:linear-gradient(180deg,var(--s1),transparent)}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:44px 0 8px;counter-reset:l}
+.loop-step{background:var(--s2);border:1px solid var(--b1);border-radius:14px;padding:20px 18px;position:relative}
+.loop-step::before{counter-increment:l;content:"0" counter(l);font-family:var(--mono);font-weight:700;font-size:12px;color:var(--acc);letter-spacing:.1em}
+.loop-step h3{font-size:15.5px;margin:10px 0 6px}
+.loop-step p{color:var(--t2);font-size:13.5px;line-height:1.45}
+@media(max-width:860px){.loop{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.loop{grid-template-columns:1fr}}
+
+.ledger{margin-top:30px;border:1px solid var(--b1);border-radius:18px;overflow:hidden;background:var(--s1)}
+.ledger-head,.ledger-row{display:grid;grid-template-columns:1.3fr 1.4fr auto;gap:18px;align-items:center;padding:16px 24px}
+.ledger-head{background:var(--s2);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--t2);font-weight:700}
+.ledger-row{border-top:1px solid var(--b1);transition:background .15s}
+.ledger-row:hover{background:var(--s2)}
+.ledger-row.hot{background:var(--gbg)}
+.lg-ach{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15.5px}
+.lg-ach .ic{font-size:22px}
+.lg-mean{color:var(--t2);font-size:14.5px}
+.lg-bonus{font-family:var(--mono);font-weight:700;font-size:18px;color:var(--gold2);white-space:nowrap;text-align:right}
+.ledger-row.hot .lg-bonus{color:var(--gold)}
+.lg-tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#1a1300;background:var(--gold);border-radius:6px;padding:2px 7px;margin-left:10px;vertical-align:middle}
+@media(max-width:760px){
+  .ledger-head{display:none}
+  .ledger-row{grid-template-columns:1fr auto;gap:6px 14px;padding:18px 18px}
+  .lg-mean{grid-column:1/2;order:3}
+  .lg-bonus{grid-column:2/3;order:2;align-self:start}
+}
+.bonus-note{margin-top:18px;color:var(--t3);font-size:13px;font-family:var(--mono)}
+.bonus-call{margin-top:30px;background:var(--abg);border:1px solid rgba(79,142,247,.3);border-radius:16px;padding:22px 26px;font-size:15.5px}
+.bonus-call b{color:var(--acc)}
+
+/* ============ RESULTS ============ */
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+.res{text-align:center;background:var(--s1);border:1px solid var(--b1);border-radius:16px;padding:30px 18px}
+.res .n{font-family:var(--mono);font-size:clamp(30px,4vw,42px);font-weight:700;color:var(--acc);line-height:1}
+.res .l{color:var(--t2);font-size:14px;margin-top:10px}
+.res small{display:block;color:var(--t3);font-size:11px;margin-top:6px;font-family:var(--mono)}
+@media(max-width:860px){.res-grid{grid-template-columns:repeat(2,1fr)}}
+.quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:26px}
+.quote{background:var(--s2);border:1px solid var(--b1);border-radius:16px;padding:24px}
+.quote p{font-size:15.5px}
+.quote .by{margin-top:14px;color:var(--t3);font-size:13px;font-family:var(--mono)}
+@media(max-width:760px){.quotes{grid-template-columns:1fr}}
+
+/* ============ NICHES ============ */
+.niche-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.niche{background:var(--s2);border:1px solid var(--b1);border-radius:99px;padding:11px 20px;font-size:14px;font-weight:500;color:var(--t1);display:flex;align-items:center;gap:9px}
+
+/* ============ PRICING ============ */
+.price{background:radial-gradient(110% 80% at 50% 0,var(--abg),transparent 55%)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px;align-items:stretch}
+.plan{background:var(--s1);border:1px solid var(--b1);border-radius:20px;padding:30px;display:flex;flex-direction:column}
+.plan.hot{border-color:var(--gold);background:linear-gradient(180deg,var(--gbg),var(--s1));position:relative}
+.plan.hot::after{content:"Чаще всего берут";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1300;font-size:12px;font-weight:700;font-family:var(--mono);padding:5px 13px;border-radius:99px;white-space:nowrap}
+.plan .tier{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--t2)}
+.plan .amt{font-family:var(--disp);font-weight:800;font-size:34px;margin:14px 0 2px}
+.plan .per{color:var(--t2);font-size:14px}
+.plan ul{list-style:none;margin:22px 0;display:flex;flex-direction:column;gap:11px;flex:1}
+.plan li{font-size:14.5px;color:var(--t1);display:flex;gap:10px;align-items:flex-start}
+.plan li::before{content:"✓";color:var(--grn);font-weight:700}
+.plan .btn{width:100%;justify-content:center}
+.perf{margin-top:26px;text-align:center;color:var(--t2);font-size:14px}
+.perf b{color:var(--gold2)}
+@media(max-width:860px){.price-grid{grid-template-columns:1fr}.plan.hot{order:-1}}
+
+/* ============ FAQ ============ */
+.faq{max-width:780px;margin:40px auto 0}
+details{background:var(--s1);border:1px solid var(--b1);border-radius:14px;margin-bottom:12px;overflow:hidden}
+summary{cursor:pointer;padding:20px 22px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:14px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--acc);font-size:22px;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 22px 22px;color:var(--t2);font-size:15px}
+
+/* ============ CTA / FORM ============ */
+.final{background:linear-gradient(180deg,var(--s1),var(--bg))}
+.cta-box{background:linear-gradient(135deg,var(--s2),var(--s3));border:1px solid var(--b2);border-radius:24px;padding:48px;text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 100% at 50% 0,var(--gbg),transparent 70%);pointer-events:none}
+.cta-box h2{position:relative}
+.cta-box .lead{margin:16px auto 28px}
+.form{display:flex;gap:12px;max-width:560px;margin:0 auto;flex-wrap:wrap;position:relative}
+.form input{flex:1;min-width:180px;font-size:16px;font-family:var(--body);background:var(--bg);border:1px solid var(--b2);border-radius:13px;padding:15px 18px;color:var(--t1)}
+.form input:focus{outline:none;border-color:var(--gold)}
+.form .btn{flex:0 0 auto}
+.formnote{margin-top:14px;color:var(--t3);font-size:12.5px;font-family:var(--mono);position:relative}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--b1);padding:40px 0;color:var(--t3);font-size:14px}
+.foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+.foot-in a{color:var(--t2)}
+.foot-in a:hover{color:var(--gold)}
+
+/* ============ REVEAL ============ */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.msg{animation:none}}
+
+/* ============ CONTACT WIDGET (как на главной TTT) ============ */
+.cw{position:fixed;right:18px;bottom:18px;z-index:45;--main:58px;--act:50px;--gap:12px;width:var(--main);height:var(--main);transition:opacity .3s}
+.cw-main{position:relative;z-index:2;width:100%;height:100%;border:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none;user-select:none;border-radius:50%;background:#1faa53;box-shadow:0 10px 28px -8px rgba(0,0,0,.6);transition:transform .25s ease,background .5s ease,box-shadow .3s ease}
+.cw-main:hover{transform:scale(1.06)}
+.cw-main:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cw-main::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none}
+.cw:not(.open) .cw-main::after{animation:cwPulse 3s ease-out infinite}
+.cw-i{position:absolute;inset:0;margin:auto;width:25px;height:25px;color:#fff;transition:opacity .35s ease,transform .35s ease}
+.cw-i-phone,.cw-i-wa{fill:currentColor}
+.cw-i-phone{opacity:0}
+.cw-i-wa{opacity:1}
+.cw-i-close{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;opacity:0;transform:rotate(-90deg) scale(.6)}
+.cw:not(.open) .cw-main{animation:cwColor 6s ease-in-out infinite}
+.cw:not(.open) .cw-i-wa{animation:cwShowWa 6s ease-in-out infinite}
+.cw:not(.open) .cw-i-phone{animation:cwShowPhone 6s ease-in-out infinite}
+.cw.open .cw-main{background:#17181a;box-shadow:0 10px 26px -8px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.12)}
+.cw.open .cw-i-phone,.cw.open .cw-i-wa{opacity:0}
+.cw.open .cw-i-close{opacity:1;transform:rotate(0) scale(1)}
+.cw-action{position:absolute;right:0;top:calc((var(--main) - var(--act))/2);width:var(--act);height:var(--act);display:grid;place-items:center;-webkit-tap-highlight-color:transparent;border-radius:50%;color:#fff;box-shadow:0 8px 22px -6px rgba(0,0,0,.55);opacity:0;transform:translateX(8px) scale(.4);pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+.cw-action svg{width:23px;height:23px;fill:currentColor}
+.cw-call{background:linear-gradient(135deg,#2e7df6,#4aa3ff)}
+.cw-wa{background:linear-gradient(135deg,#1faa53,#25d366)}
+.cw-call{--x:calc(-1 * (var(--main) + var(--gap)))}
+.cw-wa{--x:calc(-1 * (var(--main) + var(--gap) + var(--act) + var(--gap)))}
+.cw-action:hover{transform:translateX(var(--x)) scale(1.08)}
+.cw-action:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cw.open .cw-action{opacity:1;pointer-events:auto;transform:translateX(var(--x)) scale(1)}
+.cw.open .cw-call{transition-delay:.06s}
+.cw.open .cw-wa{transition-delay:.13s}
+@keyframes cwPulse{0%{box-shadow:0 0 0 0 rgba(120,200,255,.5)}60%,100%{box-shadow:0 0 0 16px rgba(120,200,255,0)}}
+@keyframes cwColor{0%{background:#1faa53}43%{background:#1faa53}50%{background:#2e7df6}93%{background:#2e7df6}100%{background:#1faa53}}
+@keyframes cwShowWa{0%{opacity:1}43%{opacity:1}50%{opacity:0}93%{opacity:0}100%{opacity:1}}
+@keyframes cwShowPhone{0%{opacity:0}43%{opacity:0}50%{opacity:1}93%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.cw-main,.cw-main::after,.cw-i,.cw-action{animation:none!important}.cw:not(.open) .cw-main{background:#1faa53}.cw:not(.open) .cw-i-wa{opacity:1}.cw:not(.open) .cw-i-phone{opacity:0}}
+
+/* Мобильная панель связи: две кнопки по центру внизу вместо круглого виджета */
+.mcbar{display:none}
+@media(max-width:600px){
+  .cw{display:none!important}
+  .mcbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:46;gap:10px;justify-content:center;
+    padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px));
+    background:linear-gradient(180deg,rgba(17,17,16,0),rgba(17,17,16,.94) 42%)}
+  .mcbar-btn{flex:1 1 0;max-width:210px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    height:50px;border-radius:999px;font-weight:600;font-size:.96rem;color:#fff;-webkit-tap-highlight-color:transparent;
+    box-shadow:0 10px 26px -10px rgba(0,0,0,.65);transition:transform .15s ease}
+  .mcbar-btn svg{width:20px;height:20px;fill:currentColor}
+  .mcbar-call{background:linear-gradient(135deg,#2e7df6,#4aa3ff)}
+  .mcbar-wa{background:linear-gradient(135deg,#1faa53,#25d366)}
+  .mcbar-btn:active{transform:translateY(1px)}
+  body{padding-bottom:74px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <div class="wrap nav-in">
+    <a href="index.html" class="logo" aria-label="TTT Marketing — на главную"><img class="logo-mark" src="assets/newlogo-mark.png" alt=""> TTT<span style="color:var(--t2)">Marketing</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-home">← Главная</a>
+      <a href="#how">Как работает</a>
+      <a href="#ranks">Геймификация</a>
+      <a href="#bonus">Мотивация</a>
+      <a href="#price">Тарифы</a>
+      <a href="#cta" class="btn btn-gold nav-cta">Получить демо</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header id="top" class="hero">
+  <div class="wrap hero-grid">
+    <div class="rv in">
+      <span class="pill"><span class="dot"></span> ИИ-тренажёр продаж · работает в браузере</span>
+      <h1>Хватит учить менеджеров <span class="u">на живых клиентах</span></h1>
+      <p class="lead">SalesPRO — тренажёр, где менеджеры отрабатывают звонки и встречи на <b>ИИ-клиенте</b>: с возражениями вашей ниши, коучем в реальном времени и оценкой каждого диалога. Ошибаются на симуляторе — закрывают сделки в поле.</p>
+      <div class="hero-cta">
+        <a href="#cta" class="btn btn-gold">Бесплатный замер отдела →</a>
+        <a href="#how" class="btn btn-ghost">Как это работает</a>
+      </div>
+      <div class="hero-trust">
+        <span>⭐ <b>10</b> воинских званий</span>
+        <span>⚔️ <b>15-мин</b> бой с клиентом</span>
+        <span>🚀 запуск за <b>1 день</b></span>
+      </div>
+    </div>
+
+    <!-- live battle mock (signature) -->
+    <div class="battle rv in" aria-hidden="true">
+      <div class="battle-top">
+        <span class="who">⚔️ Бой · клиент «Скептик» · сложно</span>
+        <span class="timer">14:32</span>
+      </div>
+      <div class="msg cli"><span class="tag">ИИ-клиент</span>Дорого. У конкурентов то же самое дешевле.</div>
+      <div class="msg mgr"><span class="tag">Менеджер</span>Понимаю. А с чем именно сравниваете — с ценой или с результатом, который получаете?</div>
+      <div class="msg cli"><span class="tag">ИИ-клиент</span>Ну… по факту с ценой. Результат пока не считал.</div>
+      <div class="coach"><span class="score">+8 / коуч</span><span>Сильный ход: перевёл с цены на ценность. Дальше — закрепи цифрой выгоды.</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PROBLEM ===================== -->
+<section id="problem" class="prob">
+  <div class="wrap">
+    <p class="eyebrow rv">Сколько стоит необученный менеджер</p>
+    <h2 class="rv">Каждый «слитый» звонок — это деньги,<br>которые уже не вернуть</h2>
+    <div class="prob-grid">
+      <div class="prob-card rv"><div class="big">3–6 мес</div><p>новичок выходит на план — и всё это время тренируется на ваших реальных клиентах.</p></div>
+      <div class="prob-card rv"><div class="big">≈70%</div><p>скриптов и приёмов не используется в полях: на тренингах кивают, в звонке забывают.</p></div>
+      <div class="prob-card rv"><div class="big">0</div><p>объективных данных, кто и где сливает сделку. РОП слушает звонки вручную и наугад.</p></div>
+    </div>
+    <p class="lead rv" style="margin-top:34px">Тренинг раз в квартал не решает это. Навык продаж ставится только повторением — а повторять не на ком и некогда.</p>
+  </div>
+</section>
+
+<!-- ===================== HOW ===================== -->
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow rv">Как это работает</p>
+    <h2 class="rv">Полигон для отдела продаж —<br>от найма до выполнения плана</h2>
+    <div class="steps">
+      <div class="step rv"><h3>Квалификация</h3><p>SalesIQ проверяет кандидата в ролевой игре ещё до найма — мотивация + скоринг.</p></div>
+      <div class="step rv"><h3>Бой с ИИ</h3><p>15-минутная тренировка с виртуальным клиентом вашей ниши. Коуч подсказывает прямо в диалоге.</p></div>
+      <div class="step rv"><h3>Учёба</h3><p>5 уровней, 10 модулей, квизы. Разбор «плохой / хороший диалог» на примерах вашего продукта.</p></div>
+      <div class="step rv"><h3>Рост</h3><p>XP, звания, стрик, копилка фраз. Менеджер видит прогресс — и хочет его продолжать.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="inside">
+  <div class="wrap">
+    <p class="eyebrow rv">Что внутри</p>
+    <h2 class="rv">Не курс. Тренажёр, в который<br>возвращаются каждый день</h2>
+    <div class="feat-grid">
+      <div class="feat rv"><div class="ic">🔍</div><h3>SalesIQ</h3><p>Квалификация кандидатов: мотивация, ролевая игра и автоматический скоринг. Найм без сюрпризов.</p></div>
+      <div class="feat rv"><div class="ic">⚔️</div><h3>Бой</h3><p>Тренировка с ИИ-клиентом на 15 минут. Возражения вашей ниши, три уровня сложности, коучинг в реальном времени.</p></div>
+      <div class="feat rv"><div class="ic">📚</div><h3>Учёба</h3><p>5 уровней и 10 модулей с квизами и примерами диалогов из вашей сферы. XP за каждое прохождение.</p></div>
+      <div class="feat rv"><div class="ic">💬</div><h3>Копилка фраз</h3><p>Лучшие речевые обороты из тренировок собираются в общую базу команды. Готовые формулировки под рукой.</p></div>
+      <div class="feat rv"><div class="ic">🏠</div><h3>Профиль и история</h3><p>XP, звание, стрик, достижения и история последних тренировок каждого менеджера.</p></div>
+      <div class="feat rv"><div class="ic">📊</div><h3>Видимость для РОП</h3><p>Объективный балл по каждому диалогу. Видно, кто растёт, а кто буксует — без ручного прослушивания.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RANKS (signature) ===================== -->
+<section id="ranks" class="ranks">
+  <div class="wrap">
+    <p class="eyebrow rv">Геймификация, которая держит</p>
+    <h2 class="rv">Менеджер растёт по службе —<br>от Стажёра до Легенды продаж</h2>
+    <p class="lead rv">10 воинских званий и XP за каждую тренировку. Люди тренируются сами, потому что хотят следующую «звёздочку» — а не потому что заставил РОП.</p>
+  </div>
+  <div class="wrap">
+    <div class="ladder rv">
+      <div class="rank"><div class="em">🪖</div><div class="nm">Стажёр</div><div class="xp">0 XP</div></div>
+      <div class="rank"><div class="em">⭐</div><div class="nm">Рядовой</div><div class="xp">100 XP</div></div>
+      <div class="rank"><div class="em">🎯</div><div class="nm">Ефрейтор</div><div class="xp">300 XP</div></div>
+      <div class="rank"><div class="em">💪</div><div class="nm">Сержант</div><div class="xp">700 XP</div></div>
+      <div class="rank"><div class="em">🔰</div><div class="nm">Лейтенант</div><div class="xp">1 500 XP</div></div>
+      <div class="rank"><div class="em">🎖️</div><div class="nm">Капитан</div><div class="xp">3 000 XP</div></div>
+      <div class="rank"><div class="em">⚔️</div><div class="nm">Майор</div><div class="xp">6 000 XP</div></div>
+      <div class="rank"><div class="em">🦅</div><div class="nm">Полковник</div><div class="xp">10 000 XP</div></div>
+      <div class="rank"><div class="em">🏆</div><div class="nm">Генерал</div><div class="xp">18 000 XP</div></div>
+      <div class="rank peak"><div class="em">👑</div><div class="nm">Легенда продаж</div><div class="xp">30 000 XP</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BONUS / MANAGEMENT TOOL ===================== -->
+<section id="bonus" class="bonus">
+  <div class="wrap">
+    <p class="eyebrow rv">Инструмент управления отделом</p>
+    <h2 class="rv">Достижение в тренажёре —<br>премия в кассе сотрудника</h2>
+    <p class="lead rv">Геймификация работает не сама по себе. Вы привязываете достижения к деньгам: задаёте, за какой навык и результат платите бонус. Система фиксирует объективно — кто закрыл сделку, добил балл 9+, удержал стрик. Менеджер сам идёт за наградой и в процессе растит ваши продажи. <b class="gold">Премия за результат, а не за присутствие.</b></p>
+
+    <!-- цикл управления -->
+    <div class="loop rv">
+      <div class="loop-step"><h3>Задаёте сетку</h3><p>Решаете, какие достижения премируете и на сколько. Прозрачные правила для всей команды.</p></div>
+      <div class="loop-step"><h3>Сотрудник стремится</h3><p>Видит путь к бонусу и идёт за ним сам — без ручного давления РОПа.</p></div>
+      <div class="loop-step"><h3>Система фиксирует</h3><p>Достижение засчитывается объективно по данным тренажёра. Никаких «казалось, старался».</p></div>
+      <div class="loop-step"><h3>Продажи растут</h3><p>Премируемое поведение — это и есть навыки, которые закрывают сделки в полях.</p></div>
+    </div>
+
+    <!-- сетка бонусов -->
+    <div class="ledger rv">
+      <div class="ledger-head">
+        <span>Достижение</span><span>Что это значит для бизнеса</span><span>Бонус</span>
+      </div>
+      <div class="ledger-row">
+        <div class="lg-ach"><span class="ic">💰</span> Продал!</div>
+        <div class="lg-mean">Первая закрытая сделка на тренажёре — навык доведён до результата</div>
+        <div class="lg-bonus">5 000 ₸</div>
+      </div>
+      <div class="ledger-row hot">
+        <div class="lg-ach"><span class="ic">🤝</span> Продавец <span class="lg-tag">пример</span></div>
+        <div class="lg-mean">5 сделок закрыто — менеджер стабильно доводит диалог до «да»</div>
+        <div class="lg-bonus">10 000 ₸</div>
+      </div>
+      <div class="ledger-row">
+        <div class="lg-ach"><span class="ic">⭐</span> Совершенство</div>
+        <div class="lg-mean">Балл коуча 9+ — эталонная отработка возражений</div>
+        <div class="lg-bonus">15 000 ₸</div>
+      </div>
+      <div class="ledger-row">
+        <div class="lg-ach"><span class="ic">🌟</span> Недельный воин</div>
+        <div class="lg-mean">7 дней тренировок подряд — навык ставится повторением</div>
+        <div class="lg-bonus">7 000 ₸</div>
+      </div>
+      <div class="ledger-row">
+        <div class="lg-ach"><span class="ic">🎯</span> Снайпер</div>
+        <div class="lg-mean">20 отработанных диалогов — глубокая практика, а не разовый тренинг</div>
+        <div class="lg-bonus">10 000 ₸</div>
+      </div>
+      <div class="ledger-row">
+        <div class="lg-ach"><span class="ic">🚀</span> Ракета</div>
+        <div class="lg-mean">1000 XP — вовлечённость и системная работа над навыком</div>
+        <div class="lg-bonus">12 000 ₸</div>
+      </div>
+    </div>
+    <p class="bonus-note rv">Суммы — пример. Вы настраиваете сетку под свой ФОТ: какие достижения премируете и на сколько.</p>
+
+    <div class="bonus-call rv">🎯 Так геймификация превращается в <b>KPI-систему мотивации</b>: прозрачные правила, объективный счёт, рост продаж без выгорания РОПа на ручном контроле. Всего <b>12 достижений</b> — от «Первой крови» до закрытия сделок — и каждое можно подвязать к бонусу.</div>
+  </div>
+</section>
+
+<!-- ===================== RESULTS ===================== -->
+<section id="results">
+  <div class="wrap">
+    <p class="eyebrow rv">Результат</p>
+    <h2 class="rv">Замеряем отдел до и после.<br>Платите за рост, а не за «занятость»</h2>
+    <div class="res-grid">
+      <div class="res rv"><div class="n">+27%</div><div class="l">к конверсии звонков</div><small>пример · впишите свой кейс</small></div>
+      <div class="res rv"><div class="n">×2</div><div class="l">быстрее ввод новичка</div><small>пример · впишите свой кейс</small></div>
+      <div class="res rv"><div class="n">15 мин</div><div class="l">тренировка в день</div><small>без отрыва от работы</small></div>
+      <div class="res rv"><div class="n">100%</div><div class="l">звонков с оценкой</div><small>объективный балл коуча</small></div>
+    </div>
+    <div class="quotes">
+      <div class="quote rv"><p>«[Вставьте реальный отзыв клиента: что изменилось в отделе за первый месяц.]»</p><div class="by">— Имя, должность · Компания</div></div>
+      <div class="quote rv"><p>«[Вставьте реальный отзыв: конкретная цифра — конверсия, средний чек, скорость найма.]»</p><div class="by">— Имя, должность · Компания</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NICHES ===================== -->
+<section id="niches">
+  <div class="wrap">
+    <p class="eyebrow rv">Кому подходит</p>
+    <h2 class="rv">Настраиваем под вашу нишу:<br>ваши продукты, клиенты и возражения</h2>
+    <div class="niche-grid rv">
+      <span class="niche">🚗 Автосалоны</span>
+      <span class="niche">🏋️ Фитнес и здоровье</span>
+      <span class="niche">🏢 Недвижимость</span>
+      <span class="niche">🏦 Банки и финансы</span>
+      <span class="niche">💻 IT / SaaS</span>
+      <span class="niche">📡 Услуги и подписки</span>
+      <span class="niche">🎓 Образование</span>
+      <span class="niche">＋ ваша ниша</span>
+    </div>
+    <p class="lead rv" style="margin-top:30px">Заполняем продукты с ценами, типы клиентов и реальные возражения вашего отдела — и тренажёр говорит на языке вашего бизнеса.</p>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section id="price" class="price">
+  <div class="wrap">
+    <p class="eyebrow rv">Тарифы</p>
+    <h2 class="rv">Внедрение за один день.<br>Дальше — оплата за результат</h2>
+    <div class="price-grid">
+      <div class="plan rv">
+        <span class="tier">🥉 Старт</span>
+        <div class="amt">$300</div>
+        <div class="per">setup + $100 / мес</div>
+        <ul>
+          <li>Кастомизация под вашу нишу</li>
+          <li>Все 5 разделов тренажёра</li>
+          <li>До небольшого отдела</li>
+          <li>Запуск и обучение РОП</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Выбрать Старт</a>
+      </div>
+      <div class="plan hot rv">
+        <span class="tier">🥈 Бизнес</span>
+        <div class="amt">$600</div>
+        <div class="per">setup + $200 / мес</div>
+        <ul>
+          <li>Всё из «Старт»</li>
+          <li>Расширенные модули и квизы</li>
+          <li>Замер отдела до / после</li>
+          <li>Performance-бонусы за рост</li>
+        </ul>
+        <a href="#cta" class="btn btn-gold">Выбрать Бизнес</a>
+      </div>
+      <div class="plan rv">
+        <span class="tier">🥇 Корпорат</span>
+        <div class="amt">$1500</div>
+        <div class="per">setup + $400 / мес</div>
+        <ul>
+          <li>Всё из «Бизнес»</li>
+          <li>Полный ребрендинг под компанию</li>
+          <li>Экспорт в Google Sheets / Telegram</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost">Выбрать Корпорат</a>
+      </div>
+    </div>
+    <p class="perf rv">💡 <b>Performance-модель:</b> платите бонусом за рост балла, конверсии и выполнения плана — нам выгодно, чтобы ваш отдел рос.</p>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow rv">Частые вопросы</p>
+    <h2 class="rv">Закрываем сомнения</h2>
+    <div class="faq">
+      <details class="rv" open><summary>Это сложно внедрить?<span></span></summary><p>Нет. Тренажёр работает в браузере, без установки и интеграций с CRM. Кастомизацию под вашу нишу делаем за один день — вы получаете готовую ссылку для команды.</p></details>
+      <details class="rv"><summary>Чем это лучше обычного тренинга?</summary><p>Тренинг — раз в квартал, тренажёр — каждый день. Менеджер повторяет навык на ИИ-клиенте сколько нужно, ошибается без потери реальных сделок, а РОП видит объективный балл по каждому диалогу.</p></details>
+      <details class="rv"><summary>А менеджеры вообще будут им пользоваться?</summary><p>В этом и смысл геймификации: звания, XP, стрик и копилка фраз. Люди возвращаются сами, потому что видят прогресс — а не потому что обязали.</p></details>
+      <details class="rv"><summary>Как вы замеряете результат?</summary><p>Перед стартом фиксируем метрики отдела (конверсия, скорость найма, средний балл). Через месяц сравниваем. На тарифах с performance-моделью часть оплаты привязана к этому росту.</p></details>
+      <details class="rv"><summary>В каких нишах уже работает?</summary><p>Авто, фитнес, недвижимость, банки, IT, образование, услуги и подписки. Под новую нишу настраиваем продукты, типы клиентов и возражения вашего отдела.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section id="cta" class="final">
+  <div class="wrap">
+    <div class="cta-box rv">
+      <h2>Посмотрите, где ваш отдел<br>теряет сделки — бесплатно</h2>
+      <p class="lead">Покажем тренажёр на вашем продукте и сделаем бесплатный замер отдела. 20 минут — и вы видите слабые места в звонках команды.</p>
+      <form class="form" onsubmit="return sendLead(event)">
+        <input type="text" id="lead-name" placeholder="Имя" required>
+        <input type="text" id="lead-contact" placeholder="Телефон или Telegram" required>
+        <button type="submit" class="btn btn-gold">Получить демо →</button>
+      </form>
+      <p class="formnote">Берём ограниченное число внедрений в месяц — отвечаем в течение дня.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot-in">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="assets/newlogo-mark.png" alt="" style="width:26px;height:26px;border-radius:6px">
+      <span><b style="color:var(--t1)">TTT</b><span style="color:var(--t2)">Marketing</span> · <span class="gold">SalesPRO</span> — ИИ-тренажёр продаж · Алматы</span>
+    </div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap">
+      <a href="index.html">← На главную</a>
+      <a href="https://salespro.kz" target="_blank" rel="noopener">salespro.kz</a>
+      <a href="https://t.me/Timur_tanirtt" target="_blank" rel="noopener">Telegram @Timur_tanirtt</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Плавающий виджет связи: звонок/WhatsApp (десктоп) -->
+<div class="cw" id="contactWidget">
+  <a class="cw-action cw-call" href="tel:+77007998440" aria-label="Позвонить" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+  </a>
+  <a class="cw-action cw-wa" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20SalesPRO." target="_blank" rel="noopener" aria-label="Написать в WhatsApp" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.21a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+  </a>
+  <button class="cw-main" id="cwMain" type="button" aria-label="Связаться" aria-expanded="false">
+    <svg class="cw-i cw-i-phone" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+    <svg class="cw-i cw-i-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.21a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+    <svg class="cw-i cw-i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+</div>
+
+<!-- Мобильная панель связи: две кнопки внизу по центру (видна только на телефонах) -->
+<div class="mcbar" aria-label="Быстрая связь">
+  <a class="mcbar-btn mcbar-call" href="tel:+77007998440"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>Позвонить</a>
+  <a class="mcbar-btn mcbar-wa" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20SalesPRO." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.21a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>WhatsApp</a>
+</div>
+
+<script>
+/* Контактный виджет (десктоп) */
+(function(){var w=document.getElementById('contactWidget'),m=document.getElementById('cwMain');if(!w||!m)return;
+function set(o){w.classList.toggle('open',o);m.setAttribute('aria-expanded',o?'true':'false');m.setAttribute('aria-label',o?'Закрыть':'Связаться');}
+m.addEventListener('click',function(e){e.stopPropagation();set(!w.classList.contains('open'));});
+w.querySelectorAll('.cw-action').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+document.addEventListener('click',function(e){if(w.classList.contains('open')&&!w.contains(e.target))set(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});})();
+</script>
+
+<script>
+/* Scroll reveal */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv:not(.in)').forEach(el=>io.observe(el));
+
+/* Lead form → Telegram (без бэкенда; замените на свою отправку/CRM) */
+function sendLead(e){
+  e.preventDefault();
+  const n=document.getElementById('lead-name').value.trim();
+  const c=document.getElementById('lead-contact').value.trim();
+  const text=encodeURIComponent('Заявка с сайта SalesPRO\nИмя: '+n+'\nКонтакт: '+c);
+  window.open('https://t.me/Timur_tanirtt?text='+text,'_blank');
+  return false;
+}
+</script>
+</body>
+</html>

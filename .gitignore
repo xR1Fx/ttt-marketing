@@ -10,3 +10,9 @@ desktop.ini
 # Logs / temp
 *.log
 *.tmp
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Local backup snapshots
+_backup-pre-animations/

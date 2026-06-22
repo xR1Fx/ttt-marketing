@@ -77,17 +77,23 @@
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);font-weight:600}
   .mk{width:18px;height:18px;flex:none}
 
-  header.bar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(17,17,16,.9),rgba(17,17,16,0));backdrop-filter:blur(10px);transition:background .3s,border-color .3s}
-  header.bar.scrolled{background:rgba(15,15,14,.88);border-bottom:1px solid var(--line)}
+  header.bar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(17,17,16,.94),rgba(17,17,16,.6));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+  header.bar.scrolled{background:rgba(14,14,13,.9);border-bottom-color:var(--line)}
+  header.bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,transparent 6%,rgba(66,133,244,.55) 30%,rgba(109,93,252,.6) 50%,rgba(66,133,244,.55) 70%,transparent 94%);
+    box-shadow:0 0 14px rgba(66,133,244,.35);opacity:.55;transition:opacity .3s}
+  header.bar.scrolled::after{opacity:1}
   .bar-in{display:flex;align-items:center;gap:22px;height:64px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-.03em;margin-right:auto}
   .bar-actions{display:none;align-items:center;gap:18px}
   @media(min-width:880px){.bar-actions{display:flex}}
   .bar-phone{font-size:.9rem;font-weight:600;color:var(--fg);white-space:nowrap;transition:color .2s}
   .bar-phone:hover{color:var(--blue)}
-  .bar-cta{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#fff;font-weight:600;font-size:.88rem;
-    padding:10px 18px;border-radius:999px;white-space:nowrap;transition:transform .2s,box-shadow .2s}
-  .bar-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px -8px rgba(66,133,244,.65)}
+  .bar-cta{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#4285F4,#6d5dfc);color:#fff;font-weight:600;font-size:.88rem;
+    padding:11px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 22px -10px rgba(66,133,244,.7),inset 0 1px 0 rgba(255,255,255,.18);
+    transition:transform .25s cubic-bezier(.25,1,.5,1),box-shadow .3s}
+  .bar-cta:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 0 28px -6px rgba(109,93,252,.7),0 14px 30px -12px rgba(66,133,244,.78)}
+  .bar-cta:active{transform:translateY(0) scale(.99)}
   .nav-links a.active{color:var(--fg)}
   .nav-links a.active::after{transform:scaleX(1);transform-origin:left}
   .logo .m{width:30px;height:30px}
@@ -156,6 +162,22 @@
   @keyframes cwShowPhone{0%{opacity:0}43%{opacity:0}50%{opacity:1}93%{opacity:1}100%{opacity:0}}
   @media(max-width:480px){.cw{--main:60px;--act:52px;--gap:11px}.cw-i{width:30px;height:30px}.cw-action svg{width:27px;height:27px}}
   @media(prefers-reduced-motion:reduce){.cw-main,.cw-main::after,.cw-i,.cw-action{animation:none!important}.cw:not(.open) .cw-main{background:#1faa53}.cw:not(.open) .cw-i-wa{opacity:1}.cw:not(.open) .cw-i-phone{opacity:0}}
+  /* Мобильная панель связи: две кнопки по центру внизу вместо круглого виджета */
+  .mcbar{display:none}
+  @media(max-width:600px){
+    .cw{display:none!important}
+    .mcbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:46;gap:10px;justify-content:center;
+      padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px));
+      background:linear-gradient(180deg,rgba(17,17,16,0),rgba(17,17,16,.94) 42%)}
+    .mcbar-btn{flex:1 1 0;max-width:210px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      height:50px;border-radius:999px;font-weight:600;font-size:.96rem;color:#fff;-webkit-tap-highlight-color:transparent;
+      box-shadow:0 10px 26px -10px rgba(0,0,0,.65);transition:transform .15s ease}
+    .mcbar-btn svg{width:20px;height:20px;fill:currentColor}
+    .mcbar-call{background:linear-gradient(135deg,#2e7df6,#4aa3ff)}
+    .mcbar-wa{background:linear-gradient(135deg,#1faa53,#25d366)}
+    .mcbar-btn:active{transform:translateY(1px)}
+    body{padding-bottom:74px}
+  }
 
   .hero{padding:36px 0 0}
   h1.head{font-size:clamp(2.2rem,4.9vw,4.3rem);font-weight:900;line-height:1.04;margin-top:18px}
@@ -285,7 +307,7 @@
   .proof-title{font-size:clamp(2.4rem,7vw,5rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-top:12px}
   .proof-sub{margin:14px 0 0;color:#b6b5b0;font-size:clamp(1rem,2.4vw,1.12rem);max-width:56ch;line-height:1.5}
   .proof-slider{position:relative;z-index:10;margin-top:26px}
-  .proof-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain;padding:6px clamp(16px,5vw,24px)}
+  .proof-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:none;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain;padding:6px clamp(16px,5vw,24px)}
   .proof-track::-webkit-scrollbar{display:none}
   .pcard{position:relative;flex:0 0 84vw;max-width:360px;aspect-ratio:4/3;scroll-snap-align:center;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--panel);transition:transform .35s cubic-bezier(.25,1,.5,1),box-shadow .35s}
   .pcard .pimg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s ease;z-index:0}
@@ -294,12 +316,17 @@
   .ptag{display:inline-block;margin-bottom:10px;font-size:.72rem;font-weight:700;color:rgb(var(--gc));background:rgba(var(--gc),.16);border:1px solid rgba(var(--gc),.45);padding:4px 11px;border-radius:999px}
   .pcard h3{font-size:1.25rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.15}
   .pres{margin-top:6px;font-size:.86rem;color:rgba(255,255,255,.82);line-height:1.4}
+  .pcase{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:8px 15px;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;background:rgba(var(--gc),.18);border:1px solid rgba(var(--gc),.55);backdrop-filter:blur(4px);cursor:pointer;text-decoration:none;transition:background .22s,border-color .22s,box-shadow .22s,transform .22s}
+  .pcase svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .22s}
+  .pcase:hover{background:rgba(var(--gc),.34);border-color:rgb(var(--gc));box-shadow:0 0 22px -6px rgba(var(--gc),.7)}
+  .pcase:hover svg{transform:translateX(3px)}
+  .pcase:focus-visible{outline:2px solid rgb(var(--gc));outline-offset:2px}
   .prev-btn,.next-btn{display:none}
   @media(min-width:768px){
     .proof{padding:clamp(60px,7vw,92px) 0}
     .proof-head{padding-bottom:70px}            
     .proof-slider{margin-top:-50px}             
-    .proof-track{overflow-x:hidden;scroll-snap-type:none;gap:24px;padding:32px clamp(20px,4vw,60px)}
+    .proof-track{overflow-x:auto;scroll-snap-type:none;gap:24px;padding:32px clamp(20px,4vw,60px)}
     .pcard{flex:0 0 calc(25% - 18px);max-width:none;aspect-ratio:4/3}   
     .pcard:hover{transform:scale(1.03);box-shadow:0 0 38px -4px rgba(var(--gc),.55);z-index:3}
     .pcard:hover .pimg{transform:scale(1.05)}
@@ -310,34 +337,41 @@
   }
   .clients-more{margin:24px auto 0;text-align:center;color:var(--fg2);font-size:.95rem}
   .clients-more b{color:#fff}
-  .dir{position:relative;min-height:auto;overflow:hidden;background:radial-gradient(120% 85% at 50% 0%,#1b1b1a,#0e0e0d 72%);padding:40px 16px 44px;text-align:center}
-  .dir::before{content:"";position:absolute;z-index:1;left:50%;top:14%;transform:translateX(-50%);width:min(86%,360px);height:min(50%,360px);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(66,133,244,.26),rgba(99,102,241,.12) 42%,transparent 68%);filter:blur(8px);pointer-events:none;animation:dirGlow 7s ease-in-out infinite}
-  @keyframes dirGlow{0%,100%{opacity:.82;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
-  @media(prefers-reduced-motion:reduce){.dir::before{animation:none}}
-  .dir .name{position:relative;z-index:4;font-size:clamp(.82rem,1.5vw,.95rem);letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);font-weight:600}
-  .dir h2.big{position:relative;z-index:2;font-size:clamp(2.4rem,12vw,4rem);font-weight:900;line-height:.95;margin:4px 0 0;text-align:center}
-  .dir .dphoto{position:relative;z-index:3;display:block;margin:clamp(14px,3vh,26px) auto 0;width:min(72%,300px);height:auto;filter:drop-shadow(0 26px 55px rgba(0,0,0,.2))}
-  .dir-chips{position:relative;z-index:4;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;align-items:stretch;gap:12px;width:100%;max-width:440px;margin:clamp(22px,3.5vh,30px) auto 0}
-  .dir .chip{position:relative;z-index:4;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(26,26,25,.82);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:11px 13px;font-weight:600;font-size:.8rem;line-height:1.3;will-change:transform}
-  @media(min-width:760px){
-    .dir{position:relative;min-height:100svh;padding:0;text-align:initial} 
-    .dir .name{position:absolute;top:max(60px,7svh);left:0;right:0;text-align:center}
-    .dir h2.big{position:absolute;top:calc(max(60px,7svh) + 18px);left:0;right:0;text-align:center;font-size:clamp(3rem,15vw,9rem);line-height:.9}
-    .dir .dphoto{position:absolute;bottom:0;left:0;right:0;margin:0 auto;width:min(46%,520px)}
-    .dir::before{top:auto;bottom:4%;width:min(86%,620px);height:min(72%,600px)}
-    .dir-chips{position:absolute;inset:0;display:block;max-width:none;margin:0}
-    .dir .chip{position:absolute;display:block;text-align:left;max-width:230px;border-radius:999px;font-size:.92rem;padding:11px 18px}
-    .dir .c1{top:40%;left:auto;right:calc(50% + clamp(150px,18vw,280px))}
-    .dir .c2{top:34%;right:auto;left:calc(50% + clamp(150px,18vw,280px))}
-    .dir .c3{top:auto;bottom:30%;left:auto;right:calc(50% + clamp(150px,17vw,255px))}
-    .dir .c4{top:auto;bottom:24%;right:auto;left:calc(50% + clamp(150px,17vw,255px))}
-    .dir .chip::before,.dir .chip::after{content:"";position:absolute;top:50%;transform:translateY(-50%);pointer-events:none}
-    .dir .chip::before{height:1px;width:32px}
-    .dir .chip::after{width:5px;height:5px;border-radius:50%;background:#7c7bff;box-shadow:0 0 8px rgba(124,123,255,.85)}
-    .dir .c1::before,.dir .c3::before{left:100%;margin-left:8px;background:linear-gradient(90deg,rgba(124,123,255,.6),transparent)}
-    .dir .c2::before,.dir .c4::before{right:100%;margin-right:8px;background:linear-gradient(270deg,rgba(124,123,255,.6),transparent)}
-    .dir .c1::after,.dir .c3::after{left:calc(100% + 40px)}
-    .dir .c2::after,.dir .c4::after{right:calc(100% + 40px)}
+  /* ===== Директор — премиальный 3D-параллакс блок ===== */
+  .dir{position:relative;min-height:auto;overflow:hidden;background:radial-gradient(120% 78% at 50% 100%,#15121f 0%,#0b0b0b 68%);padding:48px 18px 46px;text-align:center}
+  .dir-layer{will-change:transform}
+  .dir .name{position:relative;z-index:4;font-size:clamp(.78rem,1.5vw,.95rem);letter-spacing:.28em;text-transform:uppercase;color:var(--fg2);font-weight:600}
+  .dir h2.big{position:relative;z-index:2;font-size:clamp(2.4rem,12vw,4rem);font-weight:800;letter-spacing:-.04em;line-height:.92;margin:6px 0 0;text-align:center}
+  .dir-mid{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:300px;margin-top:14px}
+  .dir-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(86%,420px);height:300px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 50% 58%,rgba(124,92,255,.5) 0%,rgba(79,142,247,.26) 40%,transparent 70%);filter:blur(24px);animation:dirGlow 6s ease-in-out infinite}
+  @keyframes dirGlow{0%,100%{opacity:.72;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.08)}}
+  @media(prefers-reduced-motion:reduce){.dir-glow{animation:none}}
+  .dir .dphoto{position:relative;z-index:3;display:block;width:min(72%,320px);height:auto;margin:0 auto;filter:drop-shadow(0 26px 55px rgba(0,0,0,.45))}
+  .dir-chips{position:relative;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:10px;width:100%;max-width:460px;margin:22px auto 0}
+  .dir .chip{position:relative;pointer-events:auto;width:100%;will-change:transform}
+  .dir .chip-card{position:relative;display:flex;align-items:center;gap:11px;text-align:left;background:rgba(255,255,255,.045);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 16px;font-weight:600;font-size:.9rem;line-height:1.3;color:#fff;transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s,background .3s}
+  .dir .chip-card::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:#8b5cf6;box-shadow:0 0 10px 2px rgba(139,92,246,.85)}
+  .dir .chip-card:hover,.dir .chip-card:focus-visible{transform:scale(1.04);border-color:rgba(139,92,246,.9);background:rgba(139,92,246,.1);box-shadow:0 0 26px -4px rgba(139,92,246,.5)}
+  @media(min-width:992px){
+    .dir{min-height:min(82svh,820px);padding:0;text-align:initial}
+    .dir-bg,.dir-mid,.dir-chips{position:absolute;inset:0;margin:0;max-width:none;display:block;min-height:0}
+    .dir .name{position:absolute;top:max(48px,5.5svh);left:0;right:0;text-align:center}
+    .dir h2.big{position:absolute;top:calc(max(48px,5.5svh) + 16px);left:0;right:0;text-align:center;font-size:clamp(3rem,13vw,8rem);line-height:.9}
+    .dir-glow{bottom:4%;width:min(60%,620px);height:min(72%,600px)}
+    .dir .dphoto{position:absolute;bottom:0;left:0;right:0;margin:0 auto;width:min(42%,500px)}
+    .dir .chip{position:absolute;width:auto}
+    .dir .chip-card{display:block;max-width:240px;border-radius:16px;font-size:.92rem;padding:11px 18px}
+    .dir .chip-card::before{position:absolute;top:50%;transform:translateY(-50%);width:6px;height:6px}
+    .dir .chip-card::after{content:"";position:absolute;top:50%;transform:translateY(-50%);height:1px;width:30px;pointer-events:none}
+    .dir .c1{top:40%;right:calc(50% + clamp(150px,18vw,285px))}
+    .dir .c2{top:32%;left:calc(50% + clamp(150px,18vw,285px))}
+    .dir .c3{top:60%;right:calc(50% + clamp(135px,16vw,250px))}
+    .dir .c4{top:66%;left:calc(50% + clamp(135px,16vw,250px))}
+    .dir .c1 .chip-card::before,.dir .c3 .chip-card::before{left:calc(100% + 34px)}
+    .dir .c2 .chip-card::before,.dir .c4 .chip-card::before{right:calc(100% + 34px)}
+    .dir .c1 .chip-card::after,.dir .c3 .chip-card::after{left:100%;margin-left:8px;background:linear-gradient(90deg,rgba(139,92,246,.6),transparent)}
+    .dir .c2 .chip-card::after,.dir .c4 .chip-card::after{right:100%;margin-right:8px;background:linear-gradient(270deg,rgba(139,92,246,.6),transparent)}
   }
   .clogos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:760px;margin:26px auto 0;width:100%}
   .clogo{border:1px solid var(--line);border-radius:12px;padding:16px 10px;text-align:center;font-weight:700;font-size:.9rem;background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:54px}
@@ -384,7 +418,8 @@
   .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
   .lenis.lenis-stopped{overflow:hidden}
   #preload{position:fixed;inset:0;z-index:300;background:var(--bg);display:grid;place-items:center;
-    animation:plout .55s ease 1.5s forwards}
+    animation:plout .5s ease 1.2s forwards}
+  #preload.is-done{animation:plout .45s ease forwards}
   #preload .pl-logo{width:88px;height:88px;object-fit:contain;animation:plpulse 1.1s ease-in-out infinite;
     filter:drop-shadow(0 0 26px rgba(66,133,244,.35))}
   #preload::before{content:"";position:absolute;top:50%;left:50%;width:134px;height:134px;margin:-67px 0 0 -67px;
@@ -539,6 +574,25 @@
   .lead-submit:active{transform:scale(.99)}
   .lead-submit:focus-visible{outline:2px solid #fff;outline-offset:3px}
   @media(prefers-reduced-motion:reduce){.field-input,.lead-submit{transition:none}.lead-submit:hover{transform:none}}
+  .off-sub{margin:10px 0 0;color:var(--fg2);font-size:.96rem;line-height:1.5;max-width:46ch}
+  .field-phone{position:relative}
+  .field-phone .field-input{padding-left:50px}
+  .ph-flag{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:1.15rem;line-height:1;pointer-events:none}
+  .budget{margin-top:2px}
+  .budget-label{display:block;color:var(--fg2);font-size:.88rem;line-height:1.4;margin-bottom:22px}
+  .range-wrap{position:relative;padding-top:4px}
+  .range-bubble{position:absolute;top:-24px;left:6%;transform:translateX(-50%);background:var(--blue);color:#fff;font-weight:700;font-size:.82rem;padding:3px 10px;border-radius:999px;white-space:nowrap;pointer-events:none;box-shadow:0 6px 16px -6px rgba(66,133,244,.7)}
+  .range-bubble::after{content:"";position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--blue);border-bottom:0}
+  .range{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;outline:none;cursor:pointer;
+    background:linear-gradient(90deg,var(--blue) 0%,var(--blue) var(--p,4%),#2b2b29 var(--p,4%),#2b2b29 100%)}
+  .range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 4px 12px -2px rgba(0,0,0,.5);cursor:pointer;transition:transform .15s}
+  .range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+  .range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--blue);box-shadow:0 4px 12px -2px rgba(0,0,0,.5);cursor:pointer}
+  .range::-moz-range-track{height:6px;border-radius:999px;background:#2b2b29}
+  .range::-moz-range-progress{height:6px;border-radius:999px;background:var(--blue)}
+  .range:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:999px}
+  .range-ends{display:flex;justify-content:space-between;margin-top:14px;color:var(--fg2);font-size:.8rem}
+  @media(prefers-reduced-motion:reduce){.range::-webkit-slider-thumb{transition:none}}
 
   .sysflow{position:relative;overflow:hidden;background:#0e0e0d;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(56px,9vw,110px) 0}
   .sysflow .sys-bg{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover;z-index:0;opacity:.16;filter:saturate(.9)}
@@ -591,6 +645,12 @@
 <div id="preload" aria-hidden="true">
   <img class="pl-logo" src="assets/newlogo-mark.png" alt="TTT Marketing">
 </div>
+<script>
+/* Прелоадер: прячем по реальной готовности (DOMContentLoaded) с минимальным показом ~350мс; CSS-таймер 1.2с — запасной */
+(function(){var p=document.getElementById('preload');if(!p)return;var t=Date.now(),MIN=350;
+function done(){setTimeout(function(){p.classList.add('is-done');},Math.max(0,MIN-(Date.now()-t)));}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',done);else done();})();
+</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="ttt" viewBox="0 0 48 48">
   <image href="assets/newlogo-mark.png" x="0" y="0" width="48" height="48" preserveAspectRatio="xMidYMid meet"/>
@@ -599,7 +659,7 @@
 <header class="bar">
   <div class="wrap bar-in">
     <div class="logo"><svg class="m"><use href="#ttt"/></svg> TTT<span style="color:var(--fg2)">Marketing</span></div>
-    <nav class="nav-links"><a href="#services">Услуги</a><a href="#clients">Кейсы</a><a href="#contact">Контакты</a></nav>
+    <nav class="nav-links"><a href="#services">Услуги</a><a href="#clients">Кейсы</a><a href="salespro.html">SalesPRO</a><a href="#contact">Контакты</a></nav>
     <div class="bar-actions">
       <a class="bar-phone" href="tel:+77007998440">+7 700 799 84 40</a>
       <a class="bar-cta" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%83%D1%8E%20%D0%B4%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D1%83%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D0%B0." target="_blank" rel="noopener">Бесплатный аудит</a>
@@ -612,6 +672,7 @@
   <button class="mnav-close" type="button" aria-label="Закрыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <a href="#services">Услуги</a>
   <a href="#clients">Кейсы</a>
+  <a href="salespro.html">SalesPRO</a>
   <a href="#contact">Контакты</a>
   <a class="mn-cta" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D1%83." target="_blank" rel="noopener">Написать в WhatsApp →</a>
 </nav>
@@ -795,14 +856,19 @@
 
   <div class="cover">
   <section class="sec dir cscreen">
-    <div class="name">Танирбергенов Тимур Тимурович</div>
-    <h2 class="big">Директор</h2>
-    <img class="dphoto" src="assets/director.webp" alt="Танирбергенов Тимур Тимурович — директор и основатель TTT Marketing" loading="lazy" decoding="async">
-    <div class="dir-chips">
-      <span class="chip c1">Основатель TTTMarketing</span>
-      <span class="chip c2">Работа с 200+ бизнесами</span>
-      <span class="chip c3">Эксперт: Facebook и Google Ads</span>
-      <span class="chip c4">20+ лет в маркетинге и продажах</span>
+    <div class="dir-layer dir-bg">
+      <div class="name">Танирбергенов Тимур Тимурович</div>
+      <h2 class="big">Директор</h2>
+    </div>
+    <div class="dir-layer dir-mid">
+      <span class="dir-glow" aria-hidden="true"></span>
+      <img class="dphoto" src="assets/director.webp" alt="Танирбергенов Тимур Тимурович — директор и основатель TTT Marketing" loading="lazy" decoding="async">
+    </div>
+    <div class="dir-layer dir-chips">
+      <span class="chip c1"><span class="chip-card">Основатель TTTMarketing</span></span>
+      <span class="chip c2"><span class="chip-card">Работа с 200+ бизнесами</span></span>
+      <span class="chip c3"><span class="chip-card">Эксперт: Facebook и Google Ads</span></span>
+      <span class="chip c4"><span class="chip-card">20+ лет в маркетинге и продажах</span></span>
     </div>
   </section>
 
@@ -839,23 +905,23 @@
     <div class="proof-slider">
       <button class="prev-btn" type="button" aria-label="Предыдущие кейсы"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="proof-track" id="proofTrack" data-lenis-prevent-touch>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-talresort.jpg')"></div><div class="pcard-body"><h3>TAL RESORT</h3><p class="pres">Курорт: маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-qazaq.jpg')"></div><div class="pcard-body"><h3>Qazaq Grill</h3><p class="pres">+36 точек, упакована франшиза</p></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-adalqol.jpg')"></div><div class="pcard-body"><h3>AdalQol</h3><p class="pres">Маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-azag.jpg')"></div><div class="pcard-body"><h3>Заводы АЗАГ</h3><p class="pres">Сайт, продакшн, продажи и колл-центр</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-rahat.jpg')"></div><div class="pcard-body"><h3>Стоматология «Рахат»</h3><p class="pres">Стоматология, медцентр, роддома — единая система</p></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-yufka.jpg')"></div><div class="pcard-body"><h3>Чудо-Юфка</h3><p class="pres">Упаковка бренда и рост сети точек</p></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Corsa.jpg')"></div><div class="pcard-body"><h3>БАД Corsa365</h3><p class="pres">Запуск и продвижение бренда</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/Sman.jpg')"></div><div class="pcard-body"><h3>Sman</h3><p class="pres">Маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Qulpynai.jpg')"></div><div class="pcard-body"><h3>Qulpynai</h3><p class="pres">Продвижение бренда</p></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/AltynOrda.webp')"></div><div class="pcard-body"><h3>ALTYN ORDA</h3><p class="pres">Маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/AppleResort.webp')"></div><div class="pcard-body"><h3>Apple Resort</h3><p class="pres">Курорт: маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Miracle.webp')"></div><div class="pcard-body"><h3>ЭКО Miracle IVF</h3><p class="pres">Привлечение пациентов</p></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Tagam.jpg')"></div><div class="pcard-body"><h3>Tagam</h3><p class="pres">Сеть столовых</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/GDAGroup.jpg')"></div><div class="pcard-body"><h3>GDA Group</h3><p class="pres">Маркетинг под ключ</p></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Biotmin.webp')"></div><div class="pcard-body"><h3>Biotmin</h3><p class="pres">Здоровье и продвижение</p></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/CLUB100.jpg')"></div><div class="pcard-body"><h3>CLUB100</h3><p class="pres">Поток клиентов</p></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-atapark.jpg')"></div><div class="pcard-body"><h3>АТА PARK</h3><p class="pres">Продвижение и трафик</p></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-talresort.jpg')"></div><div class="pcard-body"><h3>TAL RESORT</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-qazaq.jpg')"></div><div class="pcard-body"><h3>Qazaq Grill</h3><p class="pres">+36 точек, упакована франшиза</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-adalqol.jpg')"></div><div class="pcard-body"><h3>AdalQol</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-azag.jpg')"></div><div class="pcard-body"><h3>Заводы АЗАГ</h3><p class="pres">Сайт, продакшн, продажи и колл-центр</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-rahat.jpg')"></div><div class="pcard-body"><h3>Стоматология «Рахат»</h3><p class="pres">Стоматология, медцентр, роддома — единая система</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-yufka.jpg')"></div><div class="pcard-body"><h3>Чудо-Юфка</h3><p class="pres">Упаковка бренда и рост сети точек</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Corsa.jpg')"></div><div class="pcard-body"><h3>БАД Corsa365</h3><p class="pres">Запуск и продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/Sman.jpg')"></div><div class="pcard-body"><h3>Sman</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Qulpynai.jpg')"></div><div class="pcard-body"><h3>Qulpynai</h3><p class="pres">Продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/AltynOrda.webp')"></div><div class="pcard-body"><h3>ALTYN ORDA</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/AppleResort.webp')"></div><div class="pcard-body"><h3>Apple Resort</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Miracle.webp')"></div><div class="pcard-body"><h3>ЭКО Miracle IVF</h3><p class="pres">Привлечение пациентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Tagam.jpg')"></div><div class="pcard-body"><h3>Tagam</h3><p class="pres">Сеть столовых</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/GDAGroup.jpg')"></div><div class="pcard-body"><h3>GDA Group</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Biotmin.webp')"></div><div class="pcard-body"><h3>Biotmin</h3><p class="pres">Здоровье и продвижение</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/CLUB100.jpg')"></div><div class="pcard-body"><h3>CLUB100</h3><p class="pres">Поток клиентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-atapark.jpg')"></div><div class="pcard-body"><h3>АТА PARK</h3><p class="pres">Продвижение и трафик</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
       </div>
       <button class="next-btn" type="button" aria-label="Следующие кейсы"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
@@ -872,7 +938,7 @@
 </main>
 
 <section class="sec office" id="contact">
-  <div class="wrap office-grid fu"><div class="office-info"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> наш офис</div><h2 class="t" style="margin-top:14px">Улица Тимирязева, 42 к15/109</h2><p class="t-sub">Офис 503 · 5 этаж · Алматы</p></div><div class="office-formhead"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> обратная связь</div><h3 class="off-title">Остались вопросы?<br>Напишите нам</h3></div><div class="office-map"><iframe class="map" src="https://maps.google.com/maps?q=%D0%A2%D0%B8%D0%BC%D0%B8%D1%80%D1%8F%D0%B7%D0%B5%D0%B2%D0%B0%2042%2C%20%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B&z=16&output=embed" loading="lazy" title="Офис TTT Marketing на карте — Тимирязева 42, Алматы" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;display:block"></iframe></div><form class="ofeed" id="officeForm" novalidate><input class="field-input" type="text" name="name" placeholder="Имя" autocomplete="name" required><input class="field-input" type="tel" name="phone" placeholder="+7 (___) ___ - __ - __" autocomplete="tel" required><textarea class="field-input field-area" name="message" placeholder="Сообщение"></textarea><button type="submit" class="lead-submit ofeed-submit">Отправить</button></form></div>
+  <div class="wrap office-grid fu"><div class="office-info"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> наш офис</div><h2 class="t" style="margin-top:14px">Улица Тимирязева, 42 к15/109</h2><p class="t-sub">Офис 503 · 5 этаж · Алматы</p></div><div class="office-formhead"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> обратная связь</div><h3 class="off-title">Давайте мы вам поможем</h3><p class="off-sub">Оставьте контактные данные — и получите бесплатную консультацию</p></div><div class="office-map"><iframe class="map" src="https://maps.google.com/maps?q=%D0%A2%D0%B8%D0%BC%D0%B8%D1%80%D1%8F%D0%B7%D0%B5%D0%B2%D0%B0%2042%2C%20%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B&z=16&output=embed" loading="lazy" title="Офис TTT Marketing на карте — Тимирязева 42, Алматы" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;display:block"></iframe></div><form class="ofeed" id="officeForm" novalidate><input class="field-input" type="text" name="name" placeholder="Имя" autocomplete="name" required><div class="field-phone"><span class="ph-flag" aria-hidden="true">🇰🇿</span><input class="field-input" type="tel" name="phone" placeholder="+7 (000) 000-00-00" inputmode="tel" autocomplete="tel" required></div><input class="field-input" type="text" name="niche" placeholder="Какая у вас ниша?" autocomplete="off"><div class="budget"><label class="budget-label" for="budgetRange">Ориентировочный бюджет на продвижение в месяц (₸)</label><div class="range-wrap"><output class="range-bubble" id="budgetOut" for="budgetRange">600 000 ₸</output><input class="range" type="range" id="budgetRange" name="budget" min="300000" max="10000000" step="50000" value="600000" aria-label="Бюджет на продвижение в месяц"></div><div class="range-ends"><span>300 000</span><span>10 000 000</span></div></div><button type="submit" class="lead-submit ofeed-submit">Отправить</button></form></div>
 </section>
 
 <footer>
@@ -899,6 +965,13 @@
     <svg class="cw-i cw-i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
   </button>
 </div>
+
+<!-- Мобильная панель связи: две кнопки внизу по центру (видна только на телефонах) -->
+<div class="mcbar" aria-label="Быстрая связь">
+  <a class="mcbar-btn mcbar-call" href="tel:+77007998440"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>Позвонить</a>
+  <a class="mcbar-btn mcbar-wa" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D1%83." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.86 9.86 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.21a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.25 3.74.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>WhatsApp</a>
+</div>
+
 <script>
 (function(){var w=document.getElementById('contactWidget'),m=document.getElementById('cwMain');if(!w||!m)return;
 function set(o){w.classList.toggle('open',o);m.setAttribute('aria-expanded',o?'true':'false');m.setAttribute('aria-label',o?'Закрыть':'Связаться');}
@@ -906,15 +979,29 @@ m.addEventListener('click',function(e){e.stopPropagation();set(!w.classList.cont
 w.querySelectorAll('.cw-action').forEach(function(a){a.addEventListener('click',function(){set(false);});});
 document.addEventListener('click',function(e){if(w.classList.contains('open')&&!w.contains(e.target))set(false);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});})();
+
+/* Ползунок бюджета: значение, заливка трека и позиция пузырька */
+(function(){var r=document.getElementById('budgetRange'),out=document.getElementById('budgetOut');if(!r||!out)return;
+function upd(){var min=+r.min,max=+r.max,val=+r.value,pct=(val-min)/(max-min)*100;
+r.style.setProperty('--p',pct+'%');
+out.textContent=val.toLocaleString('ru-RU')+' ₸';
+out.style.left=Math.min(Math.max(pct,6),94)+'%';}
+r.addEventListener('input',upd);upd();})();
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/MotionPathPlugin.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/MorphSVGPlugin.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script defer>
 window.addEventListener('load',()=>{
   if(!window.gsap)return;
   gsap.registerPlugin(ScrollTrigger);
+  [window.SplitText,window.DrawSVGPlugin,window.MotionPathPlugin,window.Flip,window.MorphSVGPlugin].forEach(p=>{if(p)gsap.registerPlugin(p);});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let lenis=null;
@@ -1139,6 +1226,57 @@ window.addEventListener('load',()=>{
     },{passive:false,capture:true});
   })();
 
+  /* Авто-карусель «200+ проектов»: плавно едет вправо, бесшовно зациклена; можно листать самому (свайп на телефоне, колесо/кнопки на ПК) — авто-движение паузится на взаимодействие и возобновляется после полной остановки прокрутки */
+  (function(){
+    const track=document.getElementById('proofTrack');if(!track)return;
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    const originals=[...track.children].filter(n=>n.classList&&n.classList.contains('pcard'));
+    if(originals.length<2)return;
+    const frag=document.createDocumentFragment();
+    originals.forEach(o=>{const c=o.cloneNode(true);c.setAttribute('data-clone','1');c.setAttribute('aria-hidden','true');c.tabIndex=-1;frag.appendChild(c);});
+    track.insertBefore(frag,track.firstChild);
+    let period=0;
+    function measure(){
+      const c=track.querySelector('[data-clone]');
+      period=c?originals[0].offsetLeft-c.offsetLeft:0;
+      if(period<=0)period=track.scrollWidth/2;   /* запасной вариант, если измерение не удалось */
+    }
+    measure();track.scrollLeft=period;
+    addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
+
+    const SPEED=1.0;
+    let hold=false,touching=false,idleI=null;
+
+    function pause(){hold=true;if(idleI){clearInterval(idleI);idleI=null;}}
+    function settleThenResume(){            /* возобновляем только когда лента реально перестала ехать (учёт инерции) */
+      if(idleI)clearInterval(idleI);
+      let last=track.scrollLeft,stable=0;
+      idleI=setInterval(()=>{
+        if(touching)return;
+        const now=track.scrollLeft;
+        if(Math.abs(now-last)<0.5){if(++stable>=3){clearInterval(idleI);idleI=null;hold=false;}}
+        else stable=0;
+        last=now;
+      },120);
+    }
+
+    track.addEventListener('touchstart',()=>{touching=true;pause();},{passive:true});
+    track.addEventListener('touchend',()=>{touching=false;settleThenResume();},{passive:true});
+    track.addEventListener('touchcancel',()=>{touching=false;settleThenResume();},{passive:true});
+    track.addEventListener('wheel',()=>{pause();settleThenResume();},{passive:true});
+    const pv=document.querySelector('.prev-btn'),nx=document.querySelector('.next-btn');
+    [pv,nx].forEach(b=>{if(b)b.addEventListener('click',()=>{pause();settleThenResume();});});
+
+    (function frame(){
+      if(!hold&&!touching&&period>0){
+        let x=track.scrollLeft-SPEED;
+        if(x<=0)x+=period;
+        track.scrollLeft=x;
+      }
+      requestAnimationFrame(frame);
+    })();
+  })();
+
   (function(){
     const cloud=document.querySelector('.proof .logocloud'),track=cloud&&cloud.querySelector('.lc-track');
     if(!track)return;
@@ -1169,11 +1307,13 @@ window.addEventListener('load',()=>{
       const fd=new FormData(form);
       const name=(fd.get('name')||'').toString().trim();
       const phone=(fd.get('phone')||'').toString().trim();
-      const msg=(fd.get('message')||'').toString().trim();
-      let text='Здравствуйте! Обратная связь с сайта TTT Marketing.';
+      const niche=(fd.get('niche')||'').toString().trim();
+      const budget=(fd.get('budget')||'').toString().trim();
+      let text='Здравствуйте! Заявка с сайта TTT Marketing.';
       if(name)text+='\nИмя: '+name;
       if(phone)text+='\nТелефон: '+phone;
-      if(msg)text+='\nСообщение: '+msg;
+      if(niche)text+='\nНиша: '+niche;
+      if(budget)text+='\nБюджет/мес: '+Number(budget).toLocaleString('ru-RU')+' ₸';
       window.open('https://wa.me/77007998440?text='+encodeURIComponent(text),'_blank','noopener');
     });
   })();
@@ -1193,29 +1333,40 @@ window.addEventListener('load',()=>{
     dirTl.from('.dir .name',{y:16,opacity:0,duration:.3,ease:'power3.out'})
       .from('.dir .big',{y:28,opacity:0,duration:.42,ease:'power3.out'},'-=.18')
       .from('.dir .dphoto',{scale:.98,opacity:0,duration:.5,ease:'power2.out',transformOrigin:'50% 100%'},'-=.32')
-      .from('.dir .chip',{y:20,opacity:0,scale:.9,duration:.32,stagger:.06,ease:'back.out(1.5)'},'-=.34')
-      .add(()=>{
-        if(!matchMedia('(min-width:760px)').matches)return; 
-        gsap.utils.toArray('.dir .chip').forEach((c,i)=>{
-          const d=i%2?1:-1, amp=3+(i%2);
-          gsap.to(c,{y:d*amp,rotation:d*0.4,duration:4.6+i*0.5,ease:'sine.inOut',repeat:-1,yoyo:true});
-        });
-      });
-    if(matchMedia('(hover:hover) and (pointer:fine)').matches){
-      const dsec=document.querySelector('.dir'),dchips=document.querySelector('.dir-chips');
-      if(dsec&&dchips){
-        dsec.addEventListener('pointermove',e=>{const r=dsec.getBoundingClientRect();
-          gsap.to(dchips,{x:((e.clientX-r.left)/r.width-.5)*30,y:((e.clientY-r.top)/r.height-.5)*22,duration:.6,ease:'power2.out'});});
-        dsec.addEventListener('pointerleave',()=>gsap.to(dchips,{x:0,y:0,duration:.8,ease:'power3.out'}));
-      }
-    }
-    gsap.from('.proof-track .pcard',{y:30,opacity:0,scale:.96,duration:.5,stagger:.08,ease:'power3.out',clearProps:'transform',scrollTrigger:{trigger:'.proof-track',start:'top 85%'}});
+      .from('.dir .chip',{opacity:0,duration:.4,stagger:.06,ease:'power2.out'},'-=.30');
+    /* Карточки «200+ проектов» теперь оживляет авто-карусель (см. IIFE ниже), одноразовый reveal убран */
     gsap.from('footer .fcols > *',{y:22,opacity:0,duration:.55,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'footer',start:'top 88%'}});
+  });
+
+  /* Директор — глубокий 3D-параллакс при скролле (только десктоп ≥992px; на <992 — статичный вертикальный список) */
+  gsap.matchMedia().add('(min-width:992px) and (prefers-reduced-motion: no-preference)',()=>{
+    const stv=()=>({trigger:'.dir',start:'top bottom',end:'bottom top',scrub:1});
+    /* Задний план (ФИО + заголовок) — медленнее всего */
+    gsap.fromTo('.dir-bg',{yPercent:4},{yPercent:-4,ease:'none',scrollTrigger:stv()});
+    /* Средний план (фигура + свечение) — средняя скорость */
+    gsap.fromTo('.dir-mid',{yPercent:9},{yPercent:-9,ease:'none',scrollTrigger:stv()});
+    /* Передний план (плашки) — лёгкий симметричный параллакс (в центре экрана = на своих местах) */
+    gsap.fromTo('.dir .c1',{x:12,y:28},{x:-12,y:-28,ease:'none',scrollTrigger:stv()});
+    gsap.fromTo('.dir .c2',{x:-12,y:28},{x:12,y:-28,ease:'none',scrollTrigger:stv()});
+    gsap.fromTo('.dir .c3',{x:12,y:-28},{x:-12,y:28,ease:'none',scrollTrigger:stv()});
+    gsap.fromTo('.dir .c4',{x:-12,y:-28},{x:12,y:28,ease:'none',scrollTrigger:stv()});
   });
 
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{
     const ob=document.querySelector('.svc-item.open .svc-body');
     if(ob)ob.style.maxHeight=(ob.scrollHeight+20)+'px';
+
+    /* Волна 1 — построчный 3D-reveal заголовков секций (SplitText) */
+    if(window.gsap&&window.SplitText&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      gsap.utils.toArray('.sec-h h2.t, .proof-title, .off-title').forEach(h=>{
+        const sp=new SplitText(h,{type:'lines',linesClass:'sl-line'});
+        gsap.set(h,{perspective:600});
+        gsap.from(sp.lines,{yPercent:60,opacity:0,rotationX:-32,transformOrigin:'50% 100%',
+          duration:.9,ease:'power3.out',stagger:.12,
+          scrollTrigger:{trigger:h,start:'top 85%'}});
+      });
+    }
+
     if(window.ScrollTrigger)ScrollTrigger.refresh();
   });
   if(window.ScrollTrigger){
