@@ -337,33 +337,30 @@
   }
   .clients-more{margin:24px auto 0;text-align:center;color:var(--fg2);font-size:.95rem}
   .clients-more b{color:#fff}
-  /* ===== Директор — Split-Screen «журнал с инсайтами» ===== */
-  .dir{position:relative;padding:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#15121f 0%,#0b0b0b 70%)}
-  .dir-left{position:relative;display:flex;justify-content:center;align-items:flex-end;padding:28px 18px 0}
-  .dir-glow{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(86%,420px);height:340px;border-radius:50%;pointer-events:none;z-index:0;
-    background:radial-gradient(circle at 50% 55%,rgba(124,92,255,.5) 0%,rgba(79,142,247,.26) 42%,transparent 70%);filter:blur(26px);animation:dirGlow 6s ease-in-out infinite}
+  /* ===== Директор / CEO — компактный статусный двухколоночник ===== */
+  .dir{position:relative;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#15121f 0%,#0b0b0b 70%);padding:clamp(44px,9vw,72px) 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(22px,5vw,34px)}
+  .dir-figure{position:relative;display:flex;flex-direction:column;align-items:center}
+  .dir-glow{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);width:min(80%,340px);height:min(80%,340px);border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(124,92,255,.5) 0%,rgba(79,142,247,.26) 42%,transparent 70%);filter:blur(26px);animation:dirGlow 6s ease-in-out infinite}
   @keyframes dirGlow{0%,100%{opacity:.72}50%{opacity:1}}
   @media(prefers-reduced-motion:reduce){.dir-glow{animation:none}}
-  .dir .dphoto{position:relative;z-index:2;display:block;width:min(80%,360px);height:auto;margin:0 auto;filter:drop-shadow(0 26px 55px rgba(0,0,0,.5))}
-  .dir-right{padding:6px 20px 44px}
-  .dir-head{text-align:center;padding:10px 0 8px}
-  .dir .name{font-size:clamp(.78rem,3.2vw,.92rem);letter-spacing:.26em;text-transform:uppercase;color:var(--fg2);font-weight:600}
-  .dir h2.big{font-size:clamp(2.6rem,13vw,4rem);font-weight:800;letter-spacing:-.04em;line-height:.95;margin:6px 0 0;text-align:center;color:#fff}
-  .dir-article{padding:26px 0;border-top:1px solid rgba(255,255,255,.08)}
-  .dir-article h3{font-size:clamp(1.4rem,5.6vw,1.9rem);font-weight:800;letter-spacing:-.02em;line-height:1.18;color:#fff}
-  .dir-article p{margin-top:12px;color:#c9c8c4;font-size:1.04rem;line-height:1.62}
+  .dir .dphoto{position:relative;z-index:2;display:block;width:min(72%,300px);height:auto;filter:drop-shadow(0 22px 50px rgba(0,0,0,.5))}
+  .dir-id{position:relative;z-index:2;margin-top:14px}
+  .dir .name{font-size:clamp(1.1rem,4.6vw,1.4rem);font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.2}
+  .dir-role{margin-top:5px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgb(66,133,244)}
+  .dir-text{position:relative;z-index:2;max-width:600px}
+  .dir-text .eyebrow{justify-content:center}
+  .dir-quote{margin:14px 0 0;font-size:clamp(1.2rem,4.4vw,1.5rem);font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.01em}
+  .dir-bio{margin:16px 0 0;color:#c9c8c4;font-size:1.02rem;line-height:1.62}
   @media(min-width:992px){
-    .dir{display:flex;align-items:flex-start;gap:0;background:radial-gradient(80% 90% at 24% 50%,#15121f 0%,#0b0b0b 72%)}
-    .dir-left{flex:0 0 45%;max-width:45%;position:sticky;top:0;height:100svh;align-items:center;padding:0}
-    .dir-glow{bottom:auto;top:50%;transform:translate(-50%,-50%);width:min(66%,560px);height:min(70%,620px)}
-    .dir .dphoto{width:min(80%,460px)}
-    .dir-right{flex:0 0 55%;max-width:55%;padding:0 clamp(40px,5vw,90px)}
-    .dir-head{min-height:100svh;display:flex;flex-direction:column;justify-content:center;text-align:left;padding:0}
-    .dir .name{text-align:left}
-    .dir h2.big{text-align:left;font-size:clamp(3rem,6vw,5.5rem);line-height:.92;margin-top:10px}
-    .dir-article{min-height:80vh;display:flex;flex-direction:column;justify-content:center;border-top:none;padding:48px 0}
-    .dir-article h3{font-size:clamp(1.9rem,2.6vw,2.6rem)}
-    .dir-article p{margin-top:16px;font-size:clamp(1.05rem,1.3vw,1.22rem);max-width:46ch}
+    .dir{flex-direction:row;align-items:center;justify-content:center;gap:clamp(40px,6vw,90px);padding:clamp(72px,9vh,120px) clamp(40px,5vw,80px);text-align:left;background:radial-gradient(80% 90% at 28% 50%,#15121f 0%,#0b0b0b 72%)}
+    .dir-figure{flex:0 0 auto}
+    .dir .dphoto{width:min(100%,400px)}
+    .dir-glow{width:min(92%,440px);height:min(92%,440px);top:42%}
+    .dir-text{flex:0 1 600px}
+    .dir-text .eyebrow{justify-content:flex-start}
+    .dir-quote{font-size:clamp(1.5rem,2.2vw,2rem)}
+    .dir-bio{font-size:clamp(1.05rem,1.2vw,1.18rem)}
   }
   .clogos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:760px;margin:26px auto 0;width:100%}
   .clogo{border:1px solid var(--line);border-radius:12px;padding:16px 10px;text-align:center;font-weight:700;font-size:.9rem;background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:54px}
@@ -862,28 +859,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </section>
 
   <div class="cover">
-  <section class="sec dir cscreen">
-    <div class="dir-left">
+  <section class="sec dir">
+    <div class="dir-figure fu">
       <span class="dir-glow" aria-hidden="true"></span>
-      <img class="dphoto" src="assets/director.webp" alt="Танирбергенов Тимур Тимурович — директор и основатель TTTMarketing" loading="lazy" decoding="async">
-    </div>
-    <div class="dir-right">
-      <div class="dir-head">
+      <img class="dphoto" src="assets/director.webp" alt="Танирбергенов Тимур Тимурович — CEO и основатель TTTMarketing" loading="lazy" decoding="async">
+      <div class="dir-id">
         <div class="name">Танирбергенов Тимур Тимурович</div>
-        <h2 class="big">Директор</h2>
+        <div class="dir-role">CEO · Основатель</div>
       </div>
-      <article class="dir-article">
-        <h3>Маркетинг, который окупается: опыт 200+ бизнесов</h3>
-        <p>За годы работы TTT Marketing мы вывели четкую формулу: бизнесу нужны не просто красивые охваты, а измеримый поток заявок. Мы не строим иллюзий, а внедряем рабочие связки, которые приносят реальную прибыль с первых недель запуска.</p>
-      </article>
-      <article class="dir-article">
-        <h3>Комплексный трафик: синергия Facebook и Google Ads</h3>
-        <p>Современный рынок не прощает ставки на один источник. Мы объединяем мощь таргетированной рекламы и точность контекстного поиска в единую экосистему. Это позволяет выжимать максимум лидов даже в перегретых нишах.</p>
-      </article>
-      <article class="dir-article">
-        <h3>20+ лет в продажах и автоматизации процессов</h3>
-        <p>Маркетинг без выстроенного отдела продаж — это слив бюджета. Мы помогаем настроить CRM, выстроить логику обработки лидов и дожимать каждую заявку. Наша цель — довести клиента от клика до кассы.</p>
-      </article>
+    </div>
+    <div class="dir-text fu">
+      <div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> слово директора</div>
+      <blockquote class="dir-quote">«Мы продаём не услуги, а результат. Каждый вложенный тенге должен возвращаться прибылью — иначе это не маркетинг, а трата бюджета.»</blockquote>
+      <p class="dir-bio">20+ лет в маркетинге и продажах, более 200 реализованных проектов. Тимур лично выстраивает стратегию и отвечает за результат каждого клиента — от первой заявки до сделки.</p>
     </div>
   </section>
 
@@ -1394,21 +1382,7 @@ window.addEventListener('load',()=>{
     gsap.from('footer .fcols > *',{y:22,opacity:0,duration:.55,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'footer',start:'top 88%'}});
   });
 
-  /* Директор Split-Screen — ДЕСКТОП (≥992px): левая зона держится через CSS position:sticky, правая лента статей скроллится. GSAP: заголовок улетает вверх, статьи проявляются снизу */
-  gsap.matchMedia().add('(min-width:992px) and (prefers-reduced-motion: no-preference)',()=>{
-    gsap.to('.dir-head',{opacity:0,scale:.95,y:-40,ease:'none',scrollTrigger:{trigger:'.dir-head',start:'top top',end:'bottom 35%',scrub:true}});
-    gsap.utils.toArray('.dir-article').forEach(a=>{
-      gsap.from(a,{opacity:0,y:50,ease:'none',scrollTrigger:{trigger:a,start:'top 88%',end:'top 55%',scrub:true}});
-    });
-  });
-  /* Директор Split-Screen — МОБАЙЛ (<992px): без пина и разделения, вертикальная статья. Каждый блок мягко проявляется (opacity) при доскролле */
-  gsap.matchMedia().add('(max-width:991px) and (prefers-reduced-motion: no-preference)',()=>{
-    gsap.from('.dir-left',{opacity:0,y:20,duration:.5,ease:'power2.out',scrollTrigger:{trigger:'.dir-left',start:'top 86%',once:true}});
-    gsap.from('.dir-head',{opacity:0,y:18,duration:.5,ease:'power2.out',scrollTrigger:{trigger:'.dir-head',start:'top 90%',once:true}});
-    gsap.utils.toArray('.dir-article').forEach(a=>{
-      gsap.from(a,{opacity:0,y:16,duration:.5,ease:'power2.out',scrollTrigger:{trigger:a,start:'top 88%',once:true}});
-    });
-  });
+  /* Директор — компактный двухколоночный блок; мягкое появление через общий .fu reveal (старые pin/scrub убраны) */
 
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{
     const ob=document.querySelector('.svc-item.open .svc-body');
