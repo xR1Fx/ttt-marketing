@@ -69,7 +69,19 @@ nav .wrap{max-width:1800px;padding:0 clamp(20px,4vw,72px)}
 .nav-links a:hover{color:var(--t1)}
 .nav-home{display:inline-flex;align-items:center;gap:6px;color:var(--t1)!important;font-weight:600}
 .nav-cta{padding:10px 20px;font-size:14px}
-@media(max-width:860px){.nav-links{gap:18px}.nav-links a:not(.nav-cta):not(.nav-home){display:none}}
+/* мобильное меню (гамбургер) */
+.menu{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;position:relative;z-index:60}
+.menu span{width:26px;height:2px;background:var(--t1);border-radius:2px;transition:transform .3s ease,opacity .2s}
+body.nav-open .menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+body.nav-open .menu span:nth-child(2){opacity:0}
+body.nav-open .menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;inset:0;z-index:55;background:rgba(17,17,16,.97);backdrop-filter:blur(14px);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 28px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility .3s}
+body.nav-open .mnav{opacity:1;visibility:visible;transform:none}
+body.nav-open{overflow:hidden}
+.mnav a{font-family:var(--disp);font-weight:800;font-size:clamp(1.7rem,7.5vw,2.4rem);letter-spacing:-.03em;color:var(--t1);padding:10px 2px;width:max-content;max-width:100%}
+.mnav a:hover,.mnav a:active{color:var(--gold)}
+.mnav .mn-cta{margin-top:22px;background:var(--acc);color:#fff;border-radius:999px;padding:14px 30px;font-size:1.15rem}
+@media(max-width:860px){.nav-links{display:none}.menu{display:flex}}
 
 /* ============ HERO ============ */
 .hero{padding-top:64px;padding-bottom:80px}
@@ -301,8 +313,19 @@ footer{border-top:1px solid var(--b1);padding:40px 0;color:var(--t3);font-size:1
       <a href="#price">Тарифы</a>
       <a href="#cta" class="btn btn-gold nav-cta">Получить демо</a>
     </div>
+    <button class="menu" id="menuBtn" type="button" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+
+<!-- Мобильное меню -->
+<div id="mnav" class="mnav">
+  <a href="index.html">← Главная</a>
+  <a href="#how">Как работает</a>
+  <a href="#ranks">Геймификация</a>
+  <a href="#bonus">Мотивация</a>
+  <a href="#price">Тарифы</a>
+  <a href="#cta" class="mn-cta">Получить демо →</a>
+</div>
 
 <!-- ===================== HERO ===================== -->
 <header id="top" class="hero">
@@ -602,6 +625,18 @@ function sendLead(e){
   window.open('https://t.me/Timur_tanirtt?text='+text,'_blank');
   return false;
 }
+</script>
+
+<script>
+/* Мобильное меню (гамбургер) */
+(function(){
+  var btn=document.getElementById('menuBtn'),mnav=document.getElementById('mnav');
+  if(!btn||!mnav)return;
+  function set(o){document.body.classList.toggle('nav-open',o);btn.setAttribute('aria-expanded',o?'true':'false');btn.setAttribute('aria-label',o?'Закрыть меню':'Меню');}
+  btn.addEventListener('click',function(){set(!document.body.classList.contains('nav-open'));});
+  mnav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+})();
 </script>
 </body>
 </html>

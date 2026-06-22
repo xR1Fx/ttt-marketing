@@ -181,6 +181,8 @@
 
   .hero{padding:36px 0 0}
   h1.head{font-size:clamp(2.2rem,4.9vw,4.3rem);font-weight:900;line-height:1.04;margin-top:18px}
+  /* мобайл: запрещаем перенос строк (br всё равно даёт 2 строки) + мельче кегль, чтобы строка не вылезала за экран → ровно 2 строки */
+  @media(max-width:600px){h1.head{white-space:nowrap;font-size:clamp(1.25rem,5.6vw,1.85rem);line-height:1.12}}
   .offer{display:inline}
   .rot{display:inline-block;line-height:1.1;text-align:left}
   .rot .w{display:inline-block;transition:opacity .5s ease;
