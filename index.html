@@ -645,6 +645,11 @@
   /* секции, которые наезжают сверху — непрозрачный фон + скруглённый верх и тень для эффекта «карты» */
   .global-stack-wrapper > .numbers{background:var(--bg)}
   .global-stack-wrapper > section + section{border-radius:24px 24px 0 0;box-shadow:0 -22px 55px -22px rgba(0,0,0,.75)}
+
+  /* ===== СИСТЕМА — Zoom on Scroll: слово увеличивается и вылетает на зрителя ===== */
+  .sysflow{min-height:100svh;display:grid;place-items:center}
+  @supports(min-height:100dvh){.sysflow{min-height:100dvh}}
+  .sys-title{will-change:transform,opacity;transform-origin:50% 50%}
 </style>
 </head>
 <body>
@@ -732,14 +737,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="swipe-hint">← листай свайпом →</div>
     </div>
   </section>
+  </div>
 
   <section class="sysflow" id="system">
     <img class="par sys-bg" src="assets/system.jpg" alt="" loading="lazy">
     <div class="wrap sys-inner">
-      <div class="eyebrow fu" style="justify-content:center"><svg class="mk"><use href="#ttt"/></svg> как мы работаем</div>
-      <h2 class="sys-title fu">СИСТЕМА</h2>
-      <p class="sys-sub fu">Не разовые задачи, а единый управляемый контур. Каждый этап усиливает следующий — и снова по кругу.</p>
-      <div class="sys-cycle fu">
+      <div class="eyebrow" style="justify-content:center"><svg class="mk"><use href="#ttt"/></svg> как мы работаем</div>
+      <h2 class="sys-title">СИСТЕМА</h2>
+      <p class="sys-sub">Не разовые задачи, а единый управляемый контур. Каждый этап усиливает следующий — и снова по кругу.</p>
+      <div class="sys-cycle">
         <div class="sys-node" style="--gc:66,133,244"><span class="sys-num">01</span><h3>Аналитика</h3><p>Считаем, где теряются и где растут деньги</p></div>
         <span class="sys-arrow" aria-hidden="true">→</span>
         <div class="sys-node" style="--gc:251,188,5"><span class="sys-num">02</span><h3>Стратегия</h3><p>Строим план роста под цели бизнеса</p></div>
@@ -750,10 +756,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <span class="sys-arrow" aria-hidden="true">→</span>
         <div class="sys-node" style="--gc:251,188,5"><span class="sys-num">05</span><h3>Рост</h3><p>Масштабируем то, что приносит прибыль</p></div>
       </div>
-      <div class="sys-loop fu"><span class="sys-loop-ico" aria-hidden="true">↻</span> цикл повторяется — каждый виток сильнее предыдущего</div>
+      <div class="sys-loop"><span class="sys-loop-ico" aria-hidden="true">↻</span> цикл повторяется — каждый виток сильнее предыдущего</div>
     </div>
   </section>
-  </div>
 
   <section class="sec" id="services">
     <div class="wrap sec-h fu"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> комплексный маркетинг · от 1 500 000 ₸/мес</div><h2 class="t" style="margin-top:14px">Один договор — весь маркетинг</h2><p class="t-sub">Восемь направлений под ключ. Каждое — отдельная страница услуги.</p></div>
@@ -1329,6 +1334,19 @@ window.addEventListener('load',()=>{
       if(budget)text+='\nБюджет/мес: '+Number(budget).toLocaleString('ru-RU')+' ₸';
       window.open('https://wa.me/77007998440?text='+encodeURIComponent(text),'_blank','noopener');
     });
+  })();
+
+  // СИСТЕМА — Zoom on Scroll: слово увеличивается и вылетает на зрителя, структура проявляется снизу (ПК + мобайл)
+  (function(){
+    if(reduced)return;
+    const sec=document.querySelector('.sysflow'),word=sec&&sec.querySelector('.sys-title');
+    if(!sec||!word)return;
+    const reveal=sec.querySelectorAll('.sys-sub,.sys-cycle,.sys-loop'),eb=sec.querySelector('.eyebrow');
+    gsap.set(reveal,{opacity:0,y:40});
+    gsap.timeline({scrollTrigger:{trigger:sec,start:'top top',end:'+=140%',pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}})
+      .to(eb,{opacity:0,duration:.25,ease:'power1.in'},0)
+      .to(word,{scale:24,opacity:0,duration:.7,ease:'power2.in'},0)
+      .to(reveal,{opacity:1,y:0,duration:.45,stagger:.06,ease:'power2.out'},0.4);
   })();
 
   const mm=gsap.matchMedia();
