@@ -1317,7 +1317,7 @@ window.addEventListener('load',()=>{
     cards.forEach((card,i)=>{gsap.set(card,{zIndex:i+1});});
     cards.forEach((card,i)=>{
       if(i>=cards.length-1)return;
-      gsap.fromTo(card,{scale:1,opacity:1},{scale:.96,opacity:.85,ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 78%',end:'top 110px',scrub:true}});
+      gsap.fromTo(card,{scale:1,filter:'brightness(1)'},{scale:.96,filter:'brightness(0.82)',ease:'none',scrollTrigger:{trigger:cards[i+1],start:'top 78%',end:'top 110px',scrub:true}});
     });
   });
 
