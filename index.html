@@ -527,7 +527,8 @@
   .crew-lead .btn{margin-top:24px}
   /* ===== МОБАЙЛ (<992px): аккордеон-шторки + накладывающиеся карты (sticky-stack) ===== */
   @media(max-width:991px){
-    .crew-cards{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+    .crew{isolation:isolate}
+    .crew-cards{display:flex;flex-direction:column;gap:14px;margin-top:26px;padding-bottom:30px}
     .crew-card{position:sticky;top:90px;display:flex;align-items:flex-start;gap:14px;width:100%;padding:14px;border-radius:16px;border:1px solid var(--line);background:#0b0b0b;overflow:hidden;cursor:pointer;will-change:transform;transition:border-color .3s,box-shadow .3s,background .3s}
     .crew-tab{display:none}
     .crew-photo{flex:0 0 auto;width:58px;height:58px;border-radius:12px;background-size:cover;background-position:center top;transition:width .4s cubic-bezier(.22,1,.36,1),height .4s cubic-bezier(.22,1,.36,1)}
