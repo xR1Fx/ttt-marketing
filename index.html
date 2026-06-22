@@ -528,14 +528,14 @@
   /* ===== МОБАЙЛ (<992px): аккордеон-шторки + накладывающиеся карты (sticky-stack) ===== */
   @media(max-width:991px){
     .crew-cards{display:flex;flex-direction:column;gap:14px;margin-top:26px}
-    .crew-card{position:sticky;top:84px;display:flex;align-items:flex-start;gap:14px;width:100%;padding:14px;border-radius:16px;border:1px solid var(--line);background:var(--panel);overflow:hidden;cursor:pointer;will-change:transform;transition:border-color .3s,box-shadow .3s,background .3s}
+    .crew-card{position:sticky;top:90px;display:flex;align-items:flex-start;gap:14px;width:100%;padding:14px;border-radius:16px;border:1px solid var(--line);background:#0b0b0b;overflow:hidden;cursor:pointer;will-change:transform;transition:border-color .3s,box-shadow .3s,background .3s}
     .crew-tab{display:none}
     .crew-photo{flex:0 0 auto;width:58px;height:58px;border-radius:12px;background-size:cover;background-position:center top;transition:width .4s cubic-bezier(.22,1,.36,1),height .4s cubic-bezier(.22,1,.36,1)}
     .crew-meta{flex:1;min-width:0;display:flex;flex-direction:column;z-index:2}
     .crew-name{order:1;margin:0;font-size:1.06rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.2}
     .crew-role{order:2;margin-top:3px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgb(var(--cc))}
     .crew-desc{order:3;max-height:0;opacity:0;overflow:hidden;margin:0;font-size:.9rem;line-height:1.5;color:rgba(255,255,255,.82);transition:max-height .45s ease,opacity .35s ease,margin .45s ease}
-    .crew-card.active{border-color:rgba(var(--cc),.6);background:rgba(var(--cc),.08);box-shadow:0 0 30px -8px rgba(var(--cc),.6)}
+    .crew-card.active{border-color:rgba(var(--cc),.6);background:linear-gradient(0deg,rgba(var(--cc),.12),rgba(var(--cc),.12)),#0b0b0b;box-shadow:0 0 30px -8px rgba(var(--cc),.6)}
     .crew-card.active .crew-photo{width:88px;height:88px}
     .crew-card.active .crew-desc{max-height:240px;opacity:1;margin-top:9px}
   }
