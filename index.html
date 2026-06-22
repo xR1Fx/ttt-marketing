@@ -354,7 +354,7 @@
   .dir .chip-card::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:#8b5cf6;box-shadow:0 0 10px 2px rgba(139,92,246,.85)}
   .dir .chip-card:hover,.dir .chip-card:focus-visible{transform:scale(1.04);border-color:rgba(139,92,246,.9);background:rgba(139,92,246,.1);box-shadow:0 0 26px -4px rgba(139,92,246,.5)}
   @media(min-width:992px){
-    .dir{min-height:min(82svh,820px);padding:0;text-align:initial}
+    .dir{min-height:100svh;padding:0;text-align:initial}
     .dir-bg,.dir-mid,.dir-chips{position:absolute;inset:0;margin:0;max-width:none;display:block;min-height:0}
     .dir .name{position:absolute;top:max(48px,5.5svh);left:0;right:0;text-align:center}
     .dir h2.big{position:absolute;top:calc(max(48px,5.5svh) + 16px);left:0;right:0;text-align:center;font-size:clamp(3rem,13vw,8rem);line-height:.9}
@@ -1349,27 +1349,30 @@ window.addEventListener('load',()=>{
       .from('.busline',{scaleX:0,duration:.25,ease:'power2.out'},'-=.08')
       .from('.cbranch',{scaleY:0,duration:.18,stagger:.03,ease:'power2.out'},'-=.12')
       .from('.team-cols .tspec',{y:14,opacity:0,scale:.97,duration:.22,stagger:.025,ease:'power2.out'},'-=.08');
-    const dirTl=gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top 80%',once:true}});
-    dirTl.from('.dir .name',{y:16,opacity:0,duration:.3,ease:'power3.out'})
-      .from('.dir .big',{y:28,opacity:0,duration:.42,ease:'power3.out'},'-=.18')
-      .from('.dir .dphoto',{scale:.98,opacity:0,duration:.5,ease:'power2.out',transformOrigin:'50% 100%'},'-=.32')
-      .from('.dir .chip',{opacity:0,duration:.4,stagger:.06,ease:'power2.out'},'-=.30');
-    /* Карточки «200+ проектов» теперь оживляет авто-карусель (см. IIFE ниже), одноразовый reveal убран */
+    /* Директор анимируется отдельными matchMedia-блоками ниже (pin+scrub на ПК / stagger на мобиле) */
+    /* Карточки «200+ проектов» оживляет авто-карусель (см. IIFE ниже) */
     gsap.from('footer .fcols > *',{y:22,opacity:0,duration:.55,stagger:.08,ease:'power3.out',scrollTrigger:{trigger:'footer',start:'top 88%'}});
   });
 
-  /* Директор — глубокий 3D-параллакс при скролле (только десктоп ≥992px; на <992 — статичный вертикальный список) */
+  /* Директор — ДЕСКТОП (≥992px): pin + scrub. Заголовок улетает вверх, фото проявляется с зумом, плашки прилетают с боков (линии проявляются вместе с ними) */
   gsap.matchMedia().add('(min-width:992px) and (prefers-reduced-motion: no-preference)',()=>{
-    const stv=()=>({trigger:'.dir',start:'top bottom',end:'bottom top',scrub:1});
-    /* Задний план (ФИО + заголовок) — медленнее всего */
-    gsap.fromTo('.dir-bg',{yPercent:4},{yPercent:-4,ease:'none',scrollTrigger:stv()});
-    /* Средний план (фигура + свечение) — средняя скорость */
-    gsap.fromTo('.dir-mid',{yPercent:9},{yPercent:-9,ease:'none',scrollTrigger:stv()});
-    /* Передний план (плашки) — лёгкий симметричный параллакс (в центре экрана = на своих местах) */
-    gsap.fromTo('.dir .c1',{x:12,y:28},{x:-12,y:-28,ease:'none',scrollTrigger:stv()});
-    gsap.fromTo('.dir .c2',{x:-12,y:28},{x:12,y:-28,ease:'none',scrollTrigger:stv()});
-    gsap.fromTo('.dir .c3',{x:12,y:-28},{x:-12,y:28,ease:'none',scrollTrigger:stv()});
-    gsap.fromTo('.dir .c4',{x:-12,y:-28},{x:12,y:28,ease:'none',scrollTrigger:stv()});
+    gsap.set('.dir .dphoto',{opacity:0,scale:.9,transformOrigin:'50% 100%'});
+    gsap.set('.dir .chip',{opacity:0});
+    gsap.set('.dir .c1,.dir .c3',{x:-40});   /* левые плашки — сдвиг влево */
+    gsap.set('.dir .c2,.dir .c4',{x:40});    /* правые плашки — сдвиг вправо */
+    gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top top',end:'+=1500',pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}})
+      .to('.dir .name',{opacity:0,y:-30,ease:'power1.in'},0)
+      .to('.dir .big',{scale:.5,y:-180,opacity:0,ease:'power2.in'},0)
+      .to('.dir .dphoto',{opacity:1,scale:1,ease:'power2.out'},0.05)
+      .to('.dir .chip',{opacity:1,x:0,stagger:.08,ease:'power2.out'},0.35);
+  });
+  /* Директор — МОБАЙЛ (<992px): без пина и боковых сдвигов, просто плавный stagger-reveal (фото → плашки сверху вниз) */
+  gsap.matchMedia().add('(max-width:991px) and (prefers-reduced-motion: no-preference)',()=>{
+    gsap.timeline({scrollTrigger:{trigger:'.dir',start:'top 72%',once:true}})
+      .from('.dir .name',{opacity:0,y:16,duration:.4,ease:'power3.out'})
+      .from('.dir .big',{opacity:0,y:24,duration:.45,ease:'power3.out'},'-=.25')
+      .from('.dir .dphoto',{opacity:0,scale:.92,duration:.5,ease:'power2.out',transformOrigin:'50% 100%'},'-=.3')
+      .from('.dir .chip',{opacity:0,y:18,duration:.4,stagger:.1,ease:'power2.out'},'-=.25');
   });
 
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{
