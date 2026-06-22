@@ -58,7 +58,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Russo+One&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#111110; --panel:#1A1A19; --ink:#1E1E1E; --fg:#FFFFFF; --fg2:#9C9B97; --line:#2B2B29;
@@ -306,6 +306,14 @@
   .proof-head{text-align:left}
   .proof-title{font-size:clamp(2.4rem,7vw,5rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-top:12px}
   .proof-sub{margin:14px 0 0;color:#b6b5b0;font-size:clamp(1rem,2.4vw,1.12rem);max-width:56ch;line-height:1.5}
+  .proof-filters{display:flex;gap:10px;margin:22px -4px 0;padding:2px 4px 4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .proof-filters::-webkit-scrollbar{display:none}
+  .pf-btn{flex:0 0 auto;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--fg2);font-weight:600;font-size:.88rem;letter-spacing:-.01em;padding:9px 18px;border-radius:999px;white-space:nowrap;transition:color .22s,border-color .22s,background .22s,box-shadow .22s}
+  .pf-btn:hover{color:#fff;border-color:rgba(66,133,244,.5)}
+  .pf-btn.active{color:#fff;border-color:rgba(66,133,244,.7);background:linear-gradient(135deg,rgba(66,133,244,.22),rgba(109,93,252,.22));box-shadow:0 0 18px -6px rgba(66,133,244,.55)}
+  .pf-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .proof-track{transition:opacity .2s ease}
+  .pcard.pf-hidden{display:none}
   .proof-slider{position:relative;z-index:10;margin-top:26px}
   .proof-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:none;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain;padding:6px clamp(16px,5vw,24px)}
   .proof-track::-webkit-scrollbar{display:none}
@@ -350,8 +358,13 @@
   .dir-role{margin-top:5px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgb(66,133,244)}
   .dir-text{position:relative;z-index:2;max-width:600px}
   .dir-text .eyebrow{justify-content:center}
-  .dir-quote{margin:14px 0 0;font-size:clamp(1.2rem,4.4vw,1.5rem);font-weight:700;line-height:1.4;color:#fff;letter-spacing:-.01em}
-  .dir-bio{margin:16px 0 0;color:#c9c8c4;font-size:1.02rem;line-height:1.62}
+  .dir-quote{margin:0;font-size:clamp(1.1rem,3.9vw,1.32rem);font-weight:700;line-height:1.42;color:#fff;letter-spacing:-.01em}
+  .dir-bio{margin:18px 0 0;color:#c4c3bf;font-size:.98rem;line-height:1.66}
+  .dir-bio b,.dir-bio strong{color:#fff;font-weight:700}
+  .dir-link{display:inline-flex;align-items:center;gap:9px;margin-top:24px;padding:12px 24px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font-weight:700;font-size:.95rem;text-decoration:none;transition:border-color .25s,background .25s,transform .25s}
+  .dir-link svg{width:16px;height:16px;transition:transform .25s}
+  .dir-link:hover{border-color:rgba(66,133,244,.7);background:rgba(66,133,244,.12);transform:translateY(-1px)}
+  .dir-link:hover svg{transform:translateX(3px)}
   @media(min-width:992px){
     .dir{flex-direction:row;align-items:center;justify-content:center;gap:clamp(40px,6vw,90px);padding:clamp(72px,9vh,120px) clamp(40px,5vw,80px);text-align:left;background:radial-gradient(80% 90% at 28% 50%,#15121f 0%,#0b0b0b 72%)}
     .dir-figure{flex:0 0 auto}
@@ -359,8 +372,8 @@
     .dir-glow{width:min(92%,440px);height:min(92%,440px);top:42%}
     .dir-text{flex:0 1 600px}
     .dir-text .eyebrow{justify-content:flex-start}
-    .dir-quote{font-size:clamp(1.5rem,2.2vw,2rem)}
-    .dir-bio{font-size:clamp(1.05rem,1.2vw,1.18rem)}
+    .dir-quote{font-size:clamp(1.3rem,1.85vw,1.65rem)}
+    .dir-bio{font-size:clamp(1rem,1.05vw,1.1rem);padding-left:18px;border-left:2px solid rgba(66,133,244,.45)}
   }
   .clogos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:760px;margin:26px auto 0;width:100%}
   .clogo{border:1px solid var(--line);border-radius:12px;padding:16px 10px;text-align:center;font-weight:700;font-size:.9rem;background:var(--panel);display:flex;align-items:center;justify-content:center;min-height:54px}
@@ -594,7 +607,8 @@
   .sysflow .sys-bg{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover;z-index:0;opacity:.16;filter:saturate(.9)}
   .sysflow::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 50% 0%,rgba(14,14,13,.35),#0e0e0d 78%)}
   .sys-inner{position:relative;z-index:2}
-  .sys-title{text-align:center;margin:14px 0 0;font-size:clamp(2.6rem,9vw,7rem);font-weight:900;letter-spacing:-.04em;line-height:1;color:#fff;text-shadow:0 0 40px rgba(66,133,244,.18)}
+  .sys-words{text-align:center}
+  .sys-w{display:block;font-family:"Russo One",-apple-system,sans-serif;font-size:clamp(2.4rem,8.4vw,6.4rem);font-weight:400;letter-spacing:.005em;line-height:1.04;color:rgba(255,255,255,.18)}
   .sys-sub{max-width:54ch;margin:16px auto 0;text-align:center;color:var(--fg2);font-size:clamp(1rem,2.4vw,1.16rem);line-height:1.55}
   .sys-cycle{margin-top:clamp(32px,5vw,60px);display:flex;align-items:stretch;justify-content:center;gap:8px;flex-wrap:nowrap}
   .sys-node{flex:1 1 0;min-width:0;background:rgba(255,255,255,.03);border:1px solid var(--line);border-top:2px solid rgb(var(--gc));border-radius:14px;padding:18px 16px 16px;transition:transform .3s ease,box-shadow .3s,background .3s}
@@ -607,9 +621,12 @@
     color:var(--fg2);font-size:.92rem;font-weight:600;padding:10px 18px;border:1px dashed var(--line);border-radius:999px;background:rgba(255,255,255,.02);text-align:center}
   .sys-loop-ico{color:var(--blue);font-size:1.15rem;font-weight:800}
   @media(max-width:860px){
-    .sys-cycle{flex-direction:column;align-items:stretch;gap:0;max-width:440px;margin-left:auto;margin-right:auto}
-    .sys-node{flex:none}
-    .sys-arrow{justify-content:center;transform:rotate(90deg);padding:9px 0;font-size:1.1rem}
+    .sys-cycle{flex-direction:column;align-items:stretch;gap:0;max-width:440px;margin-left:auto;margin-right:auto;margin-top:clamp(16px,3vw,26px)}
+    .sys-node{flex:none;padding:13px 15px 12px}
+    .sys-node p{margin-top:5px;font-size:.82rem;line-height:1.4}
+    .sys-arrow{justify-content:center;transform:rotate(90deg);padding:5px 0;font-size:1rem}
+    .sys-sub{margin-top:12px}
+    .sys-loop{margin-top:clamp(14px,2.5vw,20px)}
   }
   @media(prefers-reduced-motion:reduce){.sys-node{transition:none}}
 
@@ -636,8 +653,28 @@
   @supports(min-height:100dvh){.sysflow{min-height:100dvh}}
   .sysflow .sys-inner{width:100%;box-sizing:border-box;padding-left:20px;padding-right:20px}
   /* слово «СИСТЕМА» — идеально по центру экрана (X и Y), увеличивается строго из центра */
-  .sys-title{position:absolute;inset:0;z-index:3;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;width:100%;pointer-events:none;will-change:transform,opacity;transform-origin:center center}
-  @media(max-width:768px){.sys-title{font-size:clamp(1.9rem,9vw,3rem)}}
+  .sys-words{position:absolute;inset:0;z-index:3;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(28px,5.5vw,68px);width:100%;text-align:center;pointer-events:none}
+  .sys-title{will-change:transform,opacity;transform-origin:center center}
+  @media(max-width:768px){.sys-w{font-size:clamp(1.9rem,9vw,3rem)}.sys-words{justify-content:flex-start;padding-top:clamp(78px,13vh,150px);gap:clamp(48px,11vh,130px)}}
+  /* без анимации (reduced-motion): три слова — обычный заголовок в потоке, без наложения на контент */
+  @media(prefers-reduced-motion:reduce){
+    .sys-words{position:static;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:.45em;margin:0 0 10px}
+    .sys-w{color:#fff;font-size:clamp(1.7rem,5.5vw,2.6rem)}
+    .sys-hint{display:none}
+  }
+  /* мобайл/планшет: контент колонкой выше экрана — прижимаем к верху с отступом,
+     чтобы строка «как мы работаем» не пряталась под липкую шапку (слово зумится отдельно) */
+  @media(max-width:860px){
+    .sysflow{justify-content:flex-start;padding-top:clamp(82px,13vh,118px);padding-bottom:clamp(34px,7vh,60px)}
+  }
+  .sys-hint{display:none}
+  @media(max-width:768px){
+    .sys-hint{display:flex;flex-direction:column;align-items:center;gap:7px;position:absolute;left:0;right:0;bottom:clamp(40px,11vh,84px);z-index:4;
+      color:var(--fg2);font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;pointer-events:none}
+    .sys-hint svg{width:20px;height:20px;animation:sysHintBob 1.6s ease-in-out infinite}
+  }
+  @keyframes sysHintBob{0%,100%{transform:translateY(0);opacity:.65}50%{transform:translateY(5px);opacity:1}}
+  @media(prefers-reduced-motion:reduce){.sys-hint svg{animation:none}}
 </style>
 </head>
 <body>
@@ -727,7 +764,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   <section class="sysflow" id="system">
     <img class="par sys-bg" src="assets/system.jpg" alt="" loading="lazy">
-    <h2 class="sys-title">СИСТЕМА</h2>
+    <h2 class="sys-words" aria-label="Хаос. Порядок. Система.">
+      <span class="sys-w">ХАОС</span>
+      <span class="sys-w">ПОРЯДОК</span>
+      <span class="sys-w sys-title">СИСТЕМА</span>
+    </h2>
+    <div class="sys-hint" aria-hidden="true">листайте<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
     <div class="wrap sys-inner">
       <div class="eyebrow" style="justify-content:center"><svg class="mk"><use href="#ttt"/></svg> как мы работаем</div>
       <p class="sys-sub">Не разовые задачи, а единый управляемый контур. Каждый этап усиливает следующий — и снова по кругу.</p>
@@ -869,9 +911,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       </div>
     </div>
     <div class="dir-text fu">
-      <div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> слово директора</div>
       <blockquote class="dir-quote">«Хороший маркетинг измеряется не охватами, а чистой прибылью. Мы берём на себя всю техническую и творческую сложность процесса, чтобы бизнес наших клиентов рос стабильно и прогнозируемо.»</blockquote>
       <p class="dir-bio">20+ лет в маркетинге и продажах, более 200 реализованных проектов. Тимур лично выстраивает стратегию и отвечает за результат каждого клиента — от первой заявки до сделки.</p>
+      <a class="dir-link" href="founder.html">Об основателе<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </section>
 
@@ -884,8 +926,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         <a class="btn btn-pri" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D1%83." target="_blank" rel="noopener">Связаться с нами</a>
       </div>
       <div class="crew-cards" id="crewCards" data-lenis-prevent-touch>
-        <article class="crew-card active" style="--cc:66,133,244"><div class="crew-photo" style="background-image:url('assets/team-timur.jpg')"></div><span class="crew-tab">Тимур</span><div class="crew-meta"><span class="crew-role">CEO · основатель</span><h3 class="crew-name">Тимур</h3><p class="crew-desc">20+ лет в маркетинге и продажах. Отвечает за стратегию и результат каждого проекта.</p></div></article>
-        <article class="crew-card" style="--cc:234,67,53"><div class="crew-photo" style="background-image:url('assets/team-sahrab.jpg')"></div><span class="crew-tab">Сахраб</span><div class="crew-meta"><span class="crew-role">Директор</span><h3 class="crew-name">Сахраб</h3><p class="crew-desc">Управляет операционкой агентства и координирует работу всех отделов.</p></div></article>
+        <article class="crew-card active" style="--cc:234,67,53"><div class="crew-photo" style="background-image:url('assets/team-sahrab.jpg')"></div><span class="crew-tab">Сахраб</span><div class="crew-meta"><span class="crew-role">Директор</span><h3 class="crew-name">Сахраб</h3><p class="crew-desc">Управляет операционкой агентства и координирует работу всех отделов.</p></div></article>
         <article class="crew-card" style="--cc:251,188,5"><div class="crew-photo" style="background-image:url('assets/team-ualihan.jpg')"></div><span class="crew-tab">Уалихан</span><div class="crew-meta"><span class="crew-role">Старший маркетолог</span><h3 class="crew-name">Уалихан</h3><p class="crew-desc">Ведёт маркетинговую стратегию клиентов и связки, которые приносят заявки.</p></div></article>
         <article class="crew-card" style="--cc:66,133,244"><div class="crew-photo" style="background-image:url('assets/team-aruna.jpg')"></div><span class="crew-tab">Аруна</span><div class="crew-meta"><span class="crew-role">Проектный менеджер</span><h3 class="crew-name">Аруна</h3><p class="crew-desc">Ведёт проекты клиентов от брифа до результата, держит сроки и команду в одном ритме.</p></div></article>
         <article class="crew-card" style="--cc:234,67,53"><div class="crew-photo" style="background-image:url('assets/team-sergey.jpg')"></div><span class="crew-tab">Сергей</span><div class="crew-meta"><span class="crew-role">Видеограф</span><h3 class="crew-name">Сергей</h3><p class="crew-desc">Снимает и монтирует рекламный и контентный видеоряд для брендов.</p></div></article>
@@ -904,27 +945,34 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> нам доверяют</div>
       <h2 class="proof-title">200+ проектов</h2>
       <p class="proof-sub">Результаты в цифрах и кейсы брендов, которые растут вместе с нами</p>
+      <div class="proof-filters" id="proofFilters" role="tablist" aria-label="Фильтр кейсов по категориям">
+        <button class="pf-btn active" type="button" data-filter="all" aria-selected="true">Все</button>
+        <button class="pf-btn" type="button" data-filter="mkt">Маркетинг под ключ</button>
+        <button class="pf-btn" type="button" data-filter="web">Сайты</button>
+        <button class="pf-btn" type="button" data-filter="ads">Реклама и трафик</button>
+        <button class="pf-btn" type="button" data-filter="brand">Брендинг</button>
+      </div>
     </div>
     <div class="proof-slider">
       <button class="prev-btn" type="button" aria-label="Предыдущие кейсы"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="proof-track" id="proofTrack" data-lenis-prevent-touch>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-talresort.jpg')"></div><div class="pcard-body"><h3>TAL RESORT</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-qazaq.jpg')"></div><div class="pcard-body"><h3>Qazaq Grill</h3><p class="pres">+36 точек, упакована франшиза</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-adalqol.jpg')"></div><div class="pcard-body"><h3>AdalQol</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-azag.jpg')"></div><div class="pcard-body"><h3>Заводы АЗАГ</h3><p class="pres">Сайт, продакшн, продажи и колл-центр</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-rahat.jpg')"></div><div class="pcard-body"><h3>Стоматология «Рахат»</h3><p class="pres">Стоматология, медцентр, роддома — единая система</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-yufka.jpg')"></div><div class="pcard-body"><h3>Чудо-Юфка</h3><p class="pres">Упаковка бренда и рост сети точек</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Corsa.jpg')"></div><div class="pcard-body"><h3>БАД Corsa365</h3><p class="pres">Запуск и продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/Sman.jpg')"></div><div class="pcard-body"><h3>Sman</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Qulpynai.jpg')"></div><div class="pcard-body"><h3>Qulpynai</h3><p class="pres">Продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/AltynOrda.webp')"></div><div class="pcard-body"><h3>ALTYN ORDA</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/AppleResort.webp')"></div><div class="pcard-body"><h3>Apple Resort</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Miracle.webp')"></div><div class="pcard-body"><h3>ЭКО Miracle IVF</h3><p class="pres">Привлечение пациентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Tagam.jpg')"></div><div class="pcard-body"><h3>Tagam</h3><p class="pres">Сеть столовых</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/GDAGroup.jpg')"></div><div class="pcard-body"><h3>GDA Group</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Biotmin.webp')"></div><div class="pcard-body"><h3>Biotmin</h3><p class="pres">Здоровье и продвижение</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/CLUB100.jpg')"></div><div class="pcard-body"><h3>CLUB100</h3><p class="pres">Поток клиентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
-        <article class="pcard" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-atapark.jpg')"></div><div class="pcard-body"><h3>АТА PARK</h3><p class="pres">Продвижение и трафик</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt web ads" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-talresort.jpg')"></div><div class="pcard-body"><h3>TAL RESORT</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="brand mkt" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-qazaq.jpg')"></div><div class="pcard-body"><h3>Qazaq Grill</h3><p class="pres">+36 точек, упакована франшиза</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-adalqol.jpg')"></div><div class="pcard-body"><h3>AdalQol</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="web mkt ads" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/client-azag.jpg')"></div><div class="pcard-body"><h3>Заводы АЗАГ</h3><p class="pres">Сайт, продакшн, продажи и колл-центр</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt ads" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-rahat.jpg')"></div><div class="pcard-body"><h3>Стоматология «Рахат»</h3><p class="pres">Стоматология, медцентр, роддома — единая система</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="brand mkt" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/client-yufka.jpg')"></div><div class="pcard-body"><h3>Чудо-Юфка</h3><p class="pres">Упаковка бренда и рост сети точек</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="brand ads" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Corsa.jpg')"></div><div class="pcard-body"><h3>БАД Corsa365</h3><p class="pres">Запуск и продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/Sman.jpg')"></div><div class="pcard-body"><h3>Sman</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="brand ads" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Qulpynai.jpg')"></div><div class="pcard-body"><h3>Qulpynai</h3><p class="pres">Продвижение бренда</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt web" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/AltynOrda.webp')"></div><div class="pcard-body"><h3>ALTYN ORDA</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt web ads" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/AppleResort.webp')"></div><div class="pcard-body"><h3>Apple Resort</h3><p class="pres">Курорт: маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="ads mkt" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Miracle.webp')"></div><div class="pcard-body"><h3>ЭКО Miracle IVF</h3><p class="pres">Привлечение пациентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/Tagam.jpg')"></div><div class="pcard-body"><h3>Tagam</h3><p class="pres">Сеть столовых</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="mkt web" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/GDAGroup.jpg')"></div><div class="pcard-body"><h3>GDA Group</h3><p class="pres">Маркетинг под ключ</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="brand ads" style="--gc:251,188,5"><div class="pimg" style="background-image:url('assets/Biotmin.webp')"></div><div class="pcard-body"><h3>Biotmin</h3><p class="pres">Здоровье и продвижение</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="ads mkt" style="--gc:66,133,244"><div class="pimg" style="background-image:url('assets/CLUB100.jpg')"></div><div class="pcard-body"><h3>CLUB100</h3><p class="pres">Поток клиентов</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="pcard" data-cat="ads" style="--gc:234,67,53"><div class="pimg" style="background-image:url('assets/client-atapark.jpg')"></div><div class="pcard-body"><h3>АТА PARK</h3><p class="pres">Продвижение и трафик</p><a class="pcase" href="#"><span>Посмотреть кейс</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
       </div>
       <button class="next-btn" type="button" aria-label="Следующие кейсы"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
@@ -1203,7 +1251,7 @@ window.addEventListener('load',()=>{
     const track=document.getElementById('proofTrack');if(!track)return;
     const prev=document.querySelector('.prev-btn'),next=document.querySelector('.next-btn');
     const maxX=()=>track.scrollWidth-track.clientWidth;
-    const step=()=>{const c=track.querySelector('.pcard');if(!c)return track.clientWidth*0.8;
+    const step=()=>{const c=track.querySelector('.pcard:not(.pf-hidden)');if(!c)return track.clientWidth*0.8;
       const gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap)||24;
       return c.getBoundingClientRect().width+gap;};
     let target=track.scrollLeft,raf=null;
@@ -1232,26 +1280,33 @@ window.addEventListener('load',()=>{
   /* Авто-карусель «200+ проектов»: плавно едет вправо, бесшовно зациклена; можно листать самому (свайп на телефоне, колесо/кнопки на ПК) — авто-движение паузится на взаимодействие и возобновляется после полной остановки прокрутки */
   (function(){
     const track=document.getElementById('proofTrack');if(!track)return;
-    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    const bar=document.getElementById('proofFilters');
+    const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
     const originals=[...track.children].filter(n=>n.classList&&n.classList.contains('pcard'));
     if(originals.length<2)return;
-    const frag=document.createDocumentFragment();
-    originals.forEach(o=>{const c=o.cloneNode(true);c.setAttribute('data-clone','1');c.setAttribute('aria-hidden','true');c.tabIndex=-1;frag.appendChild(c);});
-    track.insertBefore(frag,track.firstChild);
-    let period=0;
+
+    let period=0,filtered=false,hold=false,touching=false,idleI=null;
+    const SPEED=1.0;
+
+    /* клоны нужны только для бесшовного авто-цикла — при reduced-motion не создаём */
+    if(!reduced){
+      const frag=document.createDocumentFragment();
+      originals.forEach(o=>{const c=o.cloneNode(true);c.setAttribute('data-clone','1');c.setAttribute('aria-hidden','true');c.tabIndex=-1;frag.appendChild(c);});
+      track.insertBefore(frag,track.firstChild);
+    }
+
     function measure(){
+      if(reduced||filtered){period=0;return;}
       const c=track.querySelector('[data-clone]');
       period=c?originals[0].offsetLeft-c.offsetLeft:0;
       if(period<=0)period=track.scrollWidth/2;   /* запасной вариант, если измерение не удалось */
     }
-    measure();track.scrollLeft=period;
+    measure();if(period>0)track.scrollLeft=period;
     addEventListener('resize',()=>requestAnimationFrame(measure),{passive:true});
-
-    const SPEED=1.0;
-    let hold=false,touching=false,idleI=null;
 
     function pause(){hold=true;if(idleI){clearInterval(idleI);idleI=null;}}
     function settleThenResume(){            /* возобновляем только когда лента реально перестала ехать (учёт инерции) */
+      if(filtered||reduced)return;
       if(idleI)clearInterval(idleI);
       let last=track.scrollLeft,stable=0;
       idleI=setInterval(()=>{
@@ -1270,14 +1325,42 @@ window.addEventListener('load',()=>{
     const pv=document.querySelector('.prev-btn'),nx=document.querySelector('.next-btn');
     [pv,nx].forEach(b=>{if(b)b.addEventListener('click',()=>{pause();settleThenResume();});});
 
-    (function frame(){
-      if(!hold&&!touching&&period>0){
+    if(!reduced)(function frame(){
+      if(!filtered&&!hold&&!touching&&period>0){
         let x=track.scrollLeft-SPEED;
         if(x<=0)x+=period;
         track.scrollLeft=x;
       }
       requestAnimationFrame(frame);
     })();
+
+    /* ===== Фильтрация кейсов по категориям =====
+       data-cat у карточки = список категорий через пробел (mkt/web/ads/brand).
+       «Все» — показываем всё и возобновляем авто-цикл; иначе — паузим цикл,
+       прячем клоны (чтобы не было дублей) и оставляем только подходящие карточки. */
+    if(bar){
+      const btns=[...bar.querySelectorAll('.pf-btn')];
+      function apply(cat){
+        filtered=(cat!=='all');
+        [...track.querySelectorAll('.pcard')].forEach(card=>{
+          const isClone=card.hasAttribute('data-clone');
+          let show;
+          if(cat==='all')show=true;
+          else if(isClone)show=false;
+          else show=(card.dataset.cat||'').split(/\s+/).includes(cat);
+          card.classList.toggle('pf-hidden',!show);
+        });
+        if(filtered){pause();track.scrollLeft=0;}
+        else{requestAnimationFrame(()=>{measure();if(period>0)track.scrollLeft=period;hold=false;});}
+      }
+      btns.forEach(b=>b.addEventListener('click',()=>{
+        if(b.classList.contains('active'))return;
+        btns.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false');});
+        b.classList.add('active');b.setAttribute('aria-selected','true');
+        if(!reduced)track.style.opacity='0';
+        setTimeout(()=>{apply(b.dataset.filter);if(!reduced)track.style.opacity='1';},reduced?0:180);
+      }));
+    }
   })();
 
   (function(){
@@ -1357,13 +1440,43 @@ window.addEventListener('load',()=>{
   // СИСТЕМА — Zoom on Scroll: слово увеличивается и вылетает на зрителя, структура проявляется снизу (ПК + мобайл)
   (function(){
     if(reduced)return;
-    const sec=document.querySelector('.sysflow'),word=sec&&sec.querySelector('.sys-title');
-    if(!sec||!word)return;
+    const sec=document.querySelector('.sysflow');
+    const sys=sec&&sec.querySelector('.sys-title');
+    if(!sec||!sys)return;
+    const words=[...sec.querySelectorAll('.sys-w')];   /* [ХАОС, ПОРЯДОК, СИСТЕМА] */
+    const lead=words.filter(w=>w!==sys);                /* первые два слова */
     const reveal=sec.querySelectorAll('.eyebrow,.sys-sub,.sys-cycle,.sys-loop');
-    gsap.set(reveal,{opacity:0,y:40});
-    gsap.timeline({scrollTrigger:{trigger:sec,start:'top top',end:'+=140%',pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}})
-      .to(word,{scale:24,opacity:0,transformOrigin:'center center',duration:.7,ease:'power2.in'},0)
-      .to(reveal,{opacity:1,y:0,duration:.45,stagger:.06,ease:'power2.out'},0.4);
+    const hint=sec.querySelector('.sys-hint');
+    const GRAY='rgba(255,255,255,0.18)',LIT='#ffffff';
+    const SH0='0px 0px 0px rgba(66,133,244,0)',SH1='0px 0px 38px rgba(66,133,244,0.32)';
+    /* Серые слова → по скроллу последовательно «загораются» (ХАОС, ПОРЯДОК, СИСТЕМА),
+       затем первые два гаснут и «СИСТЕМА» вылетает зумом, после — проявляются этапы.
+       Один scrub-таймлайн → плавно и обратимо на ПК и мобиле. */
+    gsap.matchMedia().add({mob:'(max-width:768px)',desk:'(min-width:769px)'},(ctx)=>{
+      const mob=ctx.conditions.mob;
+      const pinEnd=mob?'+=190%':'+=320%';
+      gsap.set(words,{color:GRAY,textShadow:SH0});
+      gsap.set(reveal,{opacity:0,y:40});
+      const tl=gsap.timeline({defaults:{ease:'power1.inOut'},scrollTrigger:{trigger:sec,start:'top top',end:pinEnd,pin:true,scrub:1,anticipatePin:1,invalidateOnRefresh:true}});
+      if(mob){
+        /* мобайл: ХАОС и ПОРЯДОК загораются быстро (меньше скролла),
+           «СИСТЕМА» — та же плавная длительность зума, что и на ПК */
+        tl.to(words[0],{color:LIT,textShadow:SH1,duration:.3},0.05)
+          .to(words[1],{color:LIT,textShadow:SH1,duration:.3},0.4)
+          .to(words[2],{color:LIT,textShadow:SH1,duration:.45},0.85)
+          .to(lead,{opacity:0,duration:.5,ease:'power1.in'},1.45)
+          .to(sys,{scale:20,opacity:0,transformOrigin:'center center',duration:1.6,ease:'power1.in'},1.55)
+          .to(reveal,{opacity:1,y:0,duration:.7,stagger:.07,ease:'power2.out'},2.65);
+      }else{
+        tl.to(words[0],{color:LIT,textShadow:SH1,duration:.55},0.2)
+          .to(words[1],{color:LIT,textShadow:SH1,duration:.55},0.8)
+          .to(words[2],{color:LIT,textShadow:SH1,duration:.55},1.55)
+          .to(lead,{opacity:0,duration:.6,ease:'power1.in'},2.35)
+          .to(sys,{scale:24,opacity:0,transformOrigin:'center center',duration:1.6,ease:'power1.in'},2.45)
+          .to(reveal,{opacity:1,y:0,duration:.7,stagger:.07,ease:'power2.out'},3.55);
+      }
+      if(hint)tl.to(hint,{opacity:0,duration:.3,ease:'power1.in'},0.2);
+    });
   })();
 
   const mm=gsap.matchMedia();
