@@ -635,17 +635,6 @@
     .ofeed .field-area{flex:1}
   }
 
-  /* ===== GLOBAL SECTION STACKING — наплыв целых секций друг на друга ===== */
-  /* Каждая секция «прилипает» к верху и накрывается следующей (нативный sticky = плавно на ПК и мобиле) */
-  .global-stack-wrapper{position:relative;z-index:1}
-  .global-stack-wrapper > section{position:sticky;top:0;min-height:100svh}
-  @supports(min-height:100dvh){.global-stack-wrapper > section{min-height:100dvh}}
-  /* hero — нижняя в стопке, прозрачная (видна фон-сеть) */
-  .global-stack-wrapper > .hero{background:transparent}
-  /* секции, которые наезжают сверху — непрозрачный фон + скруглённый верх и тень для эффекта «карты» */
-  .global-stack-wrapper > .numbers{background:var(--bg)}
-  .global-stack-wrapper > section + section{border-radius:24px 24px 0 0;box-shadow:0 -22px 55px -22px rgba(0,0,0,.75)}
-
   /* ===== СИСТЕМА — Zoom on Scroll: слово увеличивается и вылетает на зрителя ===== */
   .sysflow{min-height:100svh;display:grid;place-items:center}
   @supports(min-height:100dvh){.sysflow{min-height:100dvh}}
@@ -694,7 +683,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </nav>
 
 <main id="main" tabindex="-1">
-  <div class="global-stack-wrapper">
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
@@ -737,7 +725,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="swipe-hint">← листай свайпом →</div>
     </div>
   </section>
-  </div>
 
   <section class="sysflow" id="system">
     <img class="par sys-bg" src="assets/system.jpg" alt="" loading="lazy">
