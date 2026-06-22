@@ -634,6 +634,17 @@
     .ofeed{margin-top:0;width:100%;max-width:520px;margin-left:auto;align-self:stretch}
     .ofeed .field-area{flex:1}
   }
+
+  /* ===== GLOBAL SECTION STACKING — наплыв целых секций друг на друга ===== */
+  /* Каждая секция «прилипает» к верху и накрывается следующей (нативный sticky = плавно на ПК и мобиле) */
+  .global-stack-wrapper{position:relative;z-index:1}
+  .global-stack-wrapper > section{position:sticky;top:0;min-height:100svh}
+  @supports(min-height:100dvh){.global-stack-wrapper > section{min-height:100dvh}}
+  /* hero — нижняя в стопке, прозрачная (видна фон-сеть) */
+  .global-stack-wrapper > .hero{background:transparent}
+  /* секции, которые наезжают сверху — непрозрачный фон + скруглённый верх и тень для эффекта «карты» */
+  .global-stack-wrapper > .numbers{background:var(--bg)}
+  .global-stack-wrapper > section + section{border-radius:24px 24px 0 0;box-shadow:0 -22px 55px -22px rgba(0,0,0,.75)}
 </style>
 </head>
 <body>
@@ -678,6 +689,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </nav>
 
 <main id="main" tabindex="-1">
+  <div class="global-stack-wrapper">
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
@@ -741,6 +753,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="sys-loop fu"><span class="sys-loop-ico" aria-hidden="true">↻</span> цикл повторяется — каждый виток сильнее предыдущего</div>
     </div>
   </section>
+  </div>
 
   <section class="sec" id="services">
     <div class="wrap sec-h fu"><div class="eyebrow"><svg class="mk"><use href="#ttt"/></svg> комплексный маркетинг · от 1 500 000 ₸/мес</div><h2 class="t" style="margin-top:14px">Один договор — весь маркетинг</h2><p class="t-sub">Восемь направлений под ключ. Каждое — отдельная страница услуги.</p></div>
