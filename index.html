@@ -636,9 +636,12 @@
   }
 
   /* ===== СИСТЕМА — Zoom on Scroll: слово увеличивается и вылетает на зрителя ===== */
-  .sysflow{min-height:100svh;display:grid;place-items:center}
+  .sysflow{width:100%;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
   @supports(min-height:100dvh){.sysflow{min-height:100dvh}}
-  .sys-title{will-change:transform,opacity;transform-origin:50% 50%}
+  .sysflow .sys-inner{width:100%;box-sizing:border-box;padding-left:20px;padding-right:20px}
+  /* слово «СИСТЕМА» — идеально по центру экрана (X и Y), увеличивается строго из центра */
+  .sys-title{position:absolute;inset:0;z-index:3;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;width:100%;pointer-events:none;will-change:transform,opacity;transform-origin:center center}
+  @media(max-width:768px){.sys-title{font-size:clamp(1.9rem,9vw,3rem)}}
 </style>
 </head>
 <body>
@@ -728,9 +731,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   <section class="sysflow" id="system">
     <img class="par sys-bg" src="assets/system.jpg" alt="" loading="lazy">
+    <h2 class="sys-title">СИСТЕМА</h2>
     <div class="wrap sys-inner">
       <div class="eyebrow" style="justify-content:center"><svg class="mk"><use href="#ttt"/></svg> как мы работаем</div>
-      <h2 class="sys-title">СИСТЕМА</h2>
       <p class="sys-sub">Не разовые задачи, а единый управляемый контур. Каждый этап усиливает следующий — и снова по кругу.</p>
       <div class="sys-cycle">
         <div class="sys-node" style="--gc:66,133,244"><span class="sys-num">01</span><h3>Аналитика</h3><p>Считаем, где теряются и где растут деньги</p></div>
@@ -1328,11 +1331,10 @@ window.addEventListener('load',()=>{
     if(reduced)return;
     const sec=document.querySelector('.sysflow'),word=sec&&sec.querySelector('.sys-title');
     if(!sec||!word)return;
-    const reveal=sec.querySelectorAll('.sys-sub,.sys-cycle,.sys-loop'),eb=sec.querySelector('.eyebrow');
+    const reveal=sec.querySelectorAll('.eyebrow,.sys-sub,.sys-cycle,.sys-loop');
     gsap.set(reveal,{opacity:0,y:40});
     gsap.timeline({scrollTrigger:{trigger:sec,start:'top top',end:'+=140%',pin:true,scrub:true,anticipatePin:1,invalidateOnRefresh:true}})
-      .to(eb,{opacity:0,duration:.25,ease:'power1.in'},0)
-      .to(word,{scale:24,opacity:0,duration:.7,ease:'power2.in'},0)
+      .to(word,{scale:24,opacity:0,transformOrigin:'center center',duration:.7,ease:'power2.in'},0)
       .to(reveal,{opacity:1,y:0,duration:.45,stagger:.06,ease:'power2.out'},0.4);
   })();
 
