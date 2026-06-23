@@ -204,6 +204,8 @@
   .t-sub{color:var(--fg2);margin-top:12px;max-width:42ch}
 
   .numbers{min-height:auto;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(20px,4vw,40px)}
+  /* десктоп: цифры в одну строку → секция короткая; добавляем воздух снизу, чтобы блок «СИСТЕМА» не выглядывал */
+  @media(min-width:768px){.numbers{padding-top:clamp(48px,8vh,96px);padding-bottom:clamp(90px,13vh,160px)}}
   .nrow{display:grid;grid-template-columns:1fr 1fr;gap:26px 18px;align-items:start}
   .ncard{position:relative;padding:18px 14px 16px;border-radius:14px;display:flex;flex-direction:column;transition:transform .3s ease,background .3s}
   .ncard:nth-child(3n+1){--ac:var(--blue)}
@@ -1557,7 +1559,7 @@ window.addEventListener('load',()=>{
        Один scrub-таймлайн → плавно и обратимо на ПК и мобиле. */
     gsap.matchMedia().add({mob:'(max-width:768px)',desk:'(min-width:769px)'},(ctx)=>{
       const mob=ctx.conditions.mob;
-      const pinEnd=mob?'+=190%':'+=320%';
+      const pinEnd=mob?'+=120%':'+=320%';
       gsap.set(words,{color:GRAY,textShadow:SH0});
       gsap.set(reveal,{opacity:0,y:40});
       const tl=gsap.timeline({defaults:{ease:'power1.inOut'},scrollTrigger:{trigger:sec,start:'top top',end:pinEnd,pin:true,scrub:1,anticipatePin:mob?0:1,invalidateOnRefresh:true}});
