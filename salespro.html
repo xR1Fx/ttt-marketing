@@ -23,6 +23,8 @@
   --red:#EA4335; --rdbg:rgba(234,67,53,.10);
   --amb:#f39c12; --ppl:#9b59b6;
   --t1:#FFFFFF; --t2:#9C9B97; --t3:#6b6a66;
+  /* алиасы под общий шаблон шапки/футера (значения совпадают с главной) */
+  --fg:#FFFFFF; --fg2:#9C9B97; --line:#2B2B29; --blue:#4285F4;
   --disp:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:'Inter',ui-monospace,'SF Mono',monospace;
@@ -57,31 +59,51 @@ a{color:inherit;text-decoration:none}
 .btn-ghost{background:var(--s2);color:var(--t1);border-color:var(--b2)}
 .btn-ghost:hover{background:var(--s3);transform:translateY(-2px)}
 
-/* ============ NAV ============ */
-nav{position:sticky;top:0;z-index:50;background:rgba(17,17,16,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--b1)}
-nav .wrap{max-width:1800px;padding:0 clamp(20px,4vw,72px)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.03em}
+/* ============ HEADER (унифицирован с главной) ============ */
+header.bar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(17,17,16,.94),rgba(17,17,16,.6));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+header.bar.scrolled{background:rgba(14,14,13,.9);border-bottom-color:var(--line)}
+header.bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent 6%,rgba(66,133,244,.55) 30%,rgba(109,93,252,.6) 50%,rgba(66,133,244,.55) 70%,transparent 94%);box-shadow:0 0 14px rgba(66,133,244,.35);opacity:.55;transition:opacity .3s}
+header.bar.scrolled::after{opacity:1}
+.bar-in{display:flex;align-items:center;gap:22px;height:64px;max-width:1800px;margin:0 auto;padding:0 clamp(20px,4vw,72px)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:1.15rem;letter-spacing:-.03em;margin-right:auto}
+.logo .m{width:30px;height:30px}
 .logo-mark{width:30px;height:30px;border-radius:7px;display:block}
 .logo-badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1300;display:grid;place-items:center;font-size:14px;font-weight:800}
-.nav-links{display:flex;gap:30px;align-items:center}
-.nav-links a{color:var(--t2);font-size:15px;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--t1)}
-.nav-home{display:inline-flex;align-items:center;gap:6px;color:var(--t1)!important;font-weight:600}
-.nav-cta{padding:10px 20px;font-size:14px}
-/* мобильное меню (гамбургер) */
-.menu{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;position:relative;z-index:60}
-.menu span{width:26px;height:2px;background:var(--t1);border-radius:2px;transition:transform .3s ease,opacity .2s}
-body.nav-open .menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-body.nav-open .menu span:nth-child(2){opacity:0}
-body.nav-open .menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mnav{position:fixed;inset:0;z-index:55;background:rgba(17,17,16,.97);backdrop-filter:blur(14px);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 28px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility .3s}
-body.nav-open .mnav{opacity:1;visibility:visible;transform:none}
+.bar-actions{display:none;align-items:center;gap:18px}
+@media(min-width:880px){.bar-actions{display:flex}}
+.bar-phone{font-size:.9rem;font-weight:600;color:var(--fg);white-space:nowrap;transition:color .2s}
+.bar-phone:hover{color:var(--blue)}
+.bar-cta{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#4285F4,#6d5dfc);color:#fff;font-weight:600;font-size:.88rem;padding:11px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 22px -10px rgba(66,133,244,.7),inset 0 1px 0 rgba(255,255,255,.18);transition:transform .25s cubic-bezier(.25,1,.5,1),box-shadow .3s}
+.bar-cta:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 0 28px -6px rgba(109,93,252,.7),0 14px 30px -12px rgba(66,133,244,.78)}
+.bar-cta:active{transform:translateY(0) scale(.99)}
+.nav-links{display:none;gap:28px}.nav-links a{font-size:.9rem;color:var(--fg2);font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--fg)}
+.nav-home{display:inline-flex;align-items:center;gap:6px;color:var(--fg)!important;font-weight:600}
+.menu{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;position:relative;z-index:60}
+.menu span{width:26px;height:2px;background:var(--fg);border-radius:2px;transition:transform .3s ease,opacity .2s;transform-origin:center}
+body.nav-open .menu span:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+body.nav-open .menu span:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+@media(min-width:880px){.nav-links{display:flex}.menu{display:none}}
+#mnav{position:fixed;inset:0;z-index:50;background:rgba(17,17,16,.97);backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 26px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility .3s}
+body.nav-open #mnav{opacity:1;visibility:visible;transform:none}
+body.nav-open header.bar{z-index:60}
 body.nav-open{overflow:hidden}
-.mnav a{font-family:var(--disp);font-weight:800;font-size:clamp(1.7rem,7.5vw,2.4rem);letter-spacing:-.03em;color:var(--t1);padding:10px 2px;width:max-content;max-width:100%}
-.mnav a:hover,.mnav a:active{color:var(--gold)}
-.mnav .mn-cta{margin-top:22px;background:var(--acc);color:#fff;border-radius:999px;padding:14px 30px;font-size:1.15rem}
-@media(max-width:860px){.nav-links{display:none}.menu{display:flex}}
+#mnav a{position:relative;display:inline-block;width:max-content;max-width:100%;font-size:clamp(1.9rem,9vw,2.6rem);font-weight:800;letter-spacing:-.035em;color:var(--fg);padding:12px 2px;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+body.nav-open #mnav a{opacity:1;transform:none}
+body.nav-open #mnav a:nth-of-type(1){transition-delay:.04s}
+body.nav-open #mnav a:nth-of-type(2){transition-delay:.10s}
+body.nav-open #mnav a:nth-of-type(3){transition-delay:.16s}
+body.nav-open #mnav a:nth-of-type(4){transition-delay:.22s}
+body.nav-open #mnav a:nth-of-type(5){transition-delay:.28s}
+body.nav-open #mnav a:nth-of-type(6){transition-delay:.34s}
+@media(prefers-reduced-motion:reduce){body.nav-open #mnav a{transition-delay:0s}}
+.mnav-close{position:absolute;top:16px;right:16px;z-index:3;width:46px;height:46px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:50%;cursor:pointer;transition:background .2s,transform .2s}
+.mnav-close:hover{background:rgba(255,255,255,.12);transform:rotate(90deg)}
+.mnav-close svg{width:20px;height:20px;fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round}
+#mnav a:not(.mn-cta)::after{content:"";position:absolute;left:2px;right:2px;bottom:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,#4285F4,#6366F1,#FF8A3D);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+#mnav a:not(.mn-cta):hover::after,#mnav a:not(.mn-cta):active::after,#mnav a:not(.mn-cta):focus-visible::after{transform:scaleX(1)}
+#mnav a:not(.mn-cta):hover,#mnav a:not(.mn-cta):active,#mnav a:not(.mn-cta):focus-visible{background:linear-gradient(90deg,#4285F4,#6366F1,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+#mnav .mn-cta{align-self:stretch;width:auto;margin-top:24px;border-radius:999px;background:linear-gradient(135deg,#4285F4,#6d5dfc);color:#fff;text-align:center;font-size:1.05rem;font-weight:600;padding:17px;letter-spacing:-.01em;box-shadow:0 10px 26px -12px rgba(66,133,244,.6)}
+@media(min-width:880px){#mnav{display:none}}
 
 /* ============ HERO ============ */
 .hero{padding-top:64px;padding-bottom:80px}
@@ -236,10 +258,19 @@ details p{padding:0 22px 22px;color:var(--t2);font-size:15px}
 .formnote{margin-top:14px;color:var(--t3);font-size:12.5px;font-family:var(--mono);position:relative}
 
 /* ============ FOOTER ============ */
-footer{border-top:1px solid var(--b1);padding:40px 0;color:var(--t3);font-size:14px}
-.foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
-.foot-in a{color:var(--t2)}
-.foot-in a:hover{color:var(--gold)}
+/* ============ FOOTER (унифицирован с главной) ============ */
+footer{border-top:1px solid var(--line);margin-top:40px;padding:40px 0}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:30px 20px}
+.fbrand{grid-column:1/-1;display:flex;flex-direction:column;gap:8px}
+.fbrand .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1.15rem;margin-right:0}
+.fbrand .logo .m{width:30px;height:30px}
+.fbrand .logo-mark{width:30px;height:30px;border-radius:7px}
+.fbrand p{color:var(--fg2);font-size:.9rem}
+footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:14px;font-weight:600}
+.fcol a{display:block;color:var(--fg);font-size:.96rem;margin-bottom:11px;font-weight:500}
+.fcol a:hover{color:var(--blue)}
+.fbottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:#5c5b57}
+@media(min-width:760px){.fcols{grid-template-columns:1.5fr 1fr 1fr 1.3fr}.fbrand{grid-column:auto}}
 
 /* ============ REVEAL ============ */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
@@ -301,31 +332,34 @@ footer{border-top:1px solid var(--b1);padding:40px 0;color:var(--t3);font-size:1
 </head>
 <body>
 
-<!-- ===================== NAV ===================== -->
-<nav>
-  <div class="wrap nav-in">
-    <a href="index.html" class="logo" aria-label="TTTMarketing — на главную"><img class="logo-mark" src="assets/newlogo-mark.png" alt=""><span class="logo-name">TTT<span style="color:var(--t2)">Marketing</span></span></a>
-    <div class="nav-links">
+<!-- ===================== HEADER (унифицирован с главной) ===================== -->
+<header class="bar">
+  <div class="bar-in">
+    <a href="index.html" class="logo" aria-label="TTTMarketing — на главную"><img class="logo-mark" src="assets/newlogo-mark.png" alt=""><span class="logo-name">TTT<span style="color:var(--fg2)">Marketing</span></span></a>
+    <nav class="nav-links">
       <a href="index.html" class="nav-home">← Главная</a>
       <a href="#how">Как работает</a>
       <a href="#ranks">Геймификация</a>
       <a href="#bonus">Мотивация</a>
       <a href="#price">Тарифы</a>
-      <a href="#cta" class="btn btn-gold nav-cta">Получить демо</a>
+    </nav>
+    <div class="bar-actions">
+      <a class="bar-phone" href="tel:+77007998440">+7 700 799 84 40</a>
+      <a class="bar-cta" href="#cta">Получить демо</a>
     </div>
-    <button class="menu" id="menuBtn" type="button" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="menu" id="menuBtn" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
   </div>
-</nav>
+</header>
 
-<!-- Мобильное меню -->
-<div id="mnav" class="mnav">
+<nav id="mnav" aria-label="Мобильное меню">
+  <button class="mnav-close" type="button" aria-label="Закрыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <a href="index.html">← Главная</a>
   <a href="#how">Как работает</a>
   <a href="#ranks">Геймификация</a>
   <a href="#bonus">Мотивация</a>
   <a href="#price">Тарифы</a>
-  <a href="#cta" class="mn-cta">Получить демо →</a>
-</div>
+  <a class="mn-cta" href="#cta">Получить демо →</a>
+</nav>
 
 <!-- ===================== HERO ===================== -->
 <header id="top" class="hero">
@@ -565,19 +599,15 @@ footer{border-top:1px solid var(--b1);padding:40px 0;color:var(--t3);font-size:1
   </div>
 </section>
 
-<!-- ===================== FOOTER ===================== -->
+<!-- ===================== FOOTER (унифицирован с главной) ===================== -->
 <footer>
-  <div class="wrap foot-in">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="assets/newlogo-mark.png" alt="" style="width:26px;height:26px;border-radius:6px">
-      <span><b style="color:var(--t1)">TTT</b><span style="color:var(--t2)">Marketing</span> · <span class="gold">SalesPRO</span> — ИИ-тренажёр продаж · Алматы</span>
-    </div>
-    <div style="display:flex;gap:22px;flex-wrap:wrap">
-      <a href="index.html">← На главную</a>
-      <a href="https://salespro.kz" target="_blank" rel="noopener">salespro.kz</a>
-      <a href="https://t.me/Timur_tanirtt" target="_blank" rel="noopener">Telegram @Timur_tanirtt</a>
-    </div>
+  <div class="wrap fcols">
+    <div class="fbrand"><div class="logo"><img class="logo-mark" src="assets/newlogo-mark.png" alt=""><span class="logo-name">TTT<span style="color:var(--fg2)">Marketing</span></span></div><p><span class="gold">SalesPRO</span> — ИИ-тренажёр продаж · Алматы</p></div>
+    <div class="fcol"><h4>SalesPRO</h4><a href="#how">Как работает</a><a href="#ranks">Геймификация</a><a href="#bonus">Мотивация</a><a href="#price">Тарифы</a></div>
+    <div class="fcol"><h4>Компания</h4><a href="index.html">Главная</a><a href="founder.html">Об основателе</a><a href="https://salespro.kz" target="_blank" rel="noopener">salespro.kz</a></div>
+    <div class="fcol"><h4>Свяжитесь с нами</h4><a href="tel:+77007998440">+7 700 799 84 40</a><a href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20SalesPRO." target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/Timur_tanirtt" target="_blank" rel="noopener">Telegram</a></div>
   </div>
+  <div class="wrap fbottom"><span>2016–2026 © TTTMarketing</span><span>tttmarketing.kz</span></div>
 </footer>
 
 <!-- Плавающий виджет связи: звонок/WhatsApp (десктоп) -->
@@ -632,10 +662,14 @@ function sendLead(e){
 (function(){
   var btn=document.getElementById('menuBtn'),mnav=document.getElementById('mnav');
   if(!btn||!mnav)return;
-  function set(o){document.body.classList.toggle('nav-open',o);btn.setAttribute('aria-expanded',o?'true':'false');btn.setAttribute('aria-label',o?'Закрыть меню':'Меню');}
+  function set(o){document.body.classList.toggle('nav-open',o);btn.setAttribute('aria-expanded',o?'true':'false');btn.setAttribute('aria-label',o?'Закрыть меню':'Открыть меню');}
   btn.addEventListener('click',function(){set(!document.body.classList.contains('nav-open'));});
+  var close=mnav.querySelector('.mnav-close');
+  if(close)close.addEventListener('click',function(){set(false);});
   mnav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  var bar=document.querySelector('header.bar');
+  if(bar){var onScroll=function(){bar.classList.toggle('scrolled',window.scrollY>10);};onScroll();window.addEventListener('scroll',onScroll,{passive:true});}
 })();
 </script>
 </body>

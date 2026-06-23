@@ -48,14 +48,47 @@
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);font-weight:600}
   .mk{width:18px;height:18px;flex:none}
 
-  /* ---- header ---- */
-  header.bar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(17,17,16,.94),rgba(17,17,16,.6));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05)}
-  .bar-in{display:flex;align-items:center;gap:22px;height:64px;max-width:1100px;margin:0 auto;padding:0 clamp(20px,4vw,72px)}
+  /* ---- header (унифицирован с главной) ---- */
+  header.bar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(17,17,16,.94),rgba(17,17,16,.6));backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s}
+  header.bar.scrolled{background:rgba(14,14,13,.9);border-bottom-color:var(--line)}
+  header.bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent 6%,rgba(66,133,244,.55) 30%,rgba(109,93,252,.6) 50%,rgba(66,133,244,.55) 70%,transparent 94%);box-shadow:0 0 14px rgba(66,133,244,.35);opacity:.55;transition:opacity .3s}
+  header.bar.scrolled::after{opacity:1}
+  .bar-in{display:flex;align-items:center;gap:22px;height:64px;max-width:1800px;margin:0 auto;padding:0 clamp(20px,4vw,72px)}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;letter-spacing:-.03em;margin-right:auto}
   .logo .m{width:30px;height:30px}
-  .back{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:var(--fg2);padding:9px 16px;border-radius:999px;border:1px solid var(--line);transition:color .2s,border-color .2s,background .2s}
-  .back:hover{color:#fff;border-color:rgba(66,133,244,.6);background:rgba(66,133,244,.08)}
-  .back svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .bar-actions{display:none;align-items:center;gap:18px}
+  @media(min-width:880px){.bar-actions{display:flex}}
+  .bar-phone{font-size:.9rem;font-weight:600;color:var(--fg);white-space:nowrap;transition:color .2s}
+  .bar-phone:hover{color:var(--blue)}
+  .bar-cta{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#4285F4,#6d5dfc);color:#fff;font-weight:600;font-size:.88rem;padding:11px 20px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 22px -10px rgba(66,133,244,.7),inset 0 1px 0 rgba(255,255,255,.18);transition:transform .25s cubic-bezier(.25,1,.5,1),box-shadow .3s}
+  .bar-cta:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 0 28px -6px rgba(109,93,252,.7),0 14px 30px -12px rgba(66,133,244,.78)}
+  .bar-cta:active{transform:translateY(0) scale(.99)}
+  .nav-links{display:none;gap:28px}.nav-links a{font-size:.9rem;color:var(--fg2);font-weight:500;transition:color .2s}.nav-links a:hover{color:var(--fg)}
+  .menu{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;position:relative;z-index:60}
+  .menu span{width:26px;height:2px;background:var(--fg);border-radius:2px;transition:transform .3s ease,opacity .2s;transform-origin:center}
+  body.nav-open .menu span:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+  body.nav-open .menu span:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+  @media(min-width:880px){.nav-links{display:flex}.menu{display:none}}
+  #mnav{position:fixed;inset:0;z-index:50;background:rgba(17,17,16,.97);backdrop-filter:blur(12px);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 26px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .3s,visibility .3s}
+  body.nav-open #mnav{opacity:1;visibility:visible;transform:none}
+  body.nav-open header.bar{z-index:60}
+  body.nav-open{overflow:hidden}
+  #mnav a{position:relative;display:inline-block;width:max-content;max-width:100%;font-size:clamp(1.9rem,9vw,2.6rem);font-weight:800;letter-spacing:-.035em;color:var(--fg);padding:12px 2px;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+  body.nav-open #mnav a{opacity:1;transform:none}
+  body.nav-open #mnav a:nth-of-type(1){transition-delay:.04s}
+  body.nav-open #mnav a:nth-of-type(2){transition-delay:.10s}
+  body.nav-open #mnav a:nth-of-type(3){transition-delay:.16s}
+  body.nav-open #mnav a:nth-of-type(4){transition-delay:.22s}
+  body.nav-open #mnav a:nth-of-type(5){transition-delay:.28s}
+  @media(prefers-reduced-motion:reduce){body.nav-open #mnav a{transition-delay:0s}}
+  .mnav-close{position:absolute;top:16px;right:16px;z-index:3;width:46px;height:46px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:50%;cursor:pointer;transition:background .2s,transform .2s}
+  .mnav-close:hover{background:rgba(255,255,255,.12);transform:rotate(90deg)}
+  .mnav-close svg{width:20px;height:20px;fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round}
+  #mnav a:not(.mn-cta)::after{content:"";position:absolute;left:2px;right:2px;bottom:6px;height:2px;border-radius:2px;background:linear-gradient(90deg,#4285F4,#6366F1,#FF8A3D);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  #mnav a:not(.mn-cta):hover::after,#mnav a:not(.mn-cta):active::after,#mnav a:not(.mn-cta):focus-visible::after{transform:scaleX(1)}
+  #mnav a:not(.mn-cta):hover,#mnav a:not(.mn-cta):active,#mnav a:not(.mn-cta):focus-visible{background:linear-gradient(90deg,#4285F4,#6366F1,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  #mnav .mn-cta{align-self:stretch;width:auto;margin-top:24px;border-radius:999px;background:linear-gradient(135deg,#4285F4,#6d5dfc);color:#fff;text-align:center;font-size:1.05rem;font-weight:600;padding:17px;letter-spacing:-.01em;box-shadow:0 10px 26px -12px rgba(66,133,244,.6)}
+  @media(min-width:880px){#mnav{display:none}}
 
   /* ---- hero ---- */
   .f-hero{position:relative;overflow:hidden;background:radial-gradient(90% 90% at 30% 0%,#15121f 0%,#0b0b0b 70%);padding:clamp(40px,8vw,86px) 0 clamp(34px,6vw,60px)}
@@ -104,9 +137,18 @@
   .btn-ghost{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font-weight:700;font-size:.95rem;padding:14px 26px;border-radius:999px;transition:border-color .25s,background .25s}
   .btn-ghost:hover{border-color:rgba(66,133,244,.7);background:rgba(66,133,244,.12)}
 
-  /* ---- footer ---- */
-  footer{border-top:1px solid var(--line);margin-top:clamp(40px,7vw,72px);padding:34px 0}
-  .fbottom{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;color:var(--fg2);font-size:.85rem}
+  /* ---- footer (унифицирован с главной) ---- */
+  footer{border-top:1px solid var(--line);margin-top:clamp(40px,7vw,72px);padding:40px 0}
+  .fcols{display:grid;grid-template-columns:1fr 1fr;gap:30px 20px}
+  .fbrand{grid-column:1/-1;display:flex;flex-direction:column;gap:8px}
+  .fbrand .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1.15rem;margin-right:0}
+  .fbrand .logo .m{width:30px;height:30px}
+  .fbrand p{color:var(--fg2);font-size:.9rem}
+  footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);margin-bottom:14px;font-weight:600}
+  .fcol a{display:block;color:var(--fg);font-size:.96rem;margin-bottom:11px;font-weight:500}
+  .fcol a:hover{color:var(--blue)}
+  .fbottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:.78rem;color:#5c5b57}
+  @media(min-width:760px){.fcols{grid-template-columns:1.5fr 1fr 1fr 1.3fr}.fbrand{grid-column:auto}}
 
   @media(min-width:860px){
     .f-hero-in{flex-direction:row;text-align:left;align-items:center;gap:clamp(40px,6vw,72px)}
@@ -124,10 +166,29 @@
 
 <header class="bar">
   <div class="bar-in">
-    <a class="logo" href="index.html"><svg class="m"><use href="#ttt"/></svg><span>TTT<span style="color:var(--fg2)">Marketing</span></span></a>
-    <a class="back" href="index.html#team"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>На главную</a>
+    <a class="logo" href="index.html"><svg class="m"><use href="#ttt"/></svg><span class="logo-name">TTT<span style="color:var(--fg2)">Marketing</span></span></a>
+    <nav class="nav-links">
+      <a href="index.html#services">Услуги</a>
+      <a href="index.html#clients">Кейсы</a>
+      <a href="salespro.html">SalesPRO</a>
+      <a href="index.html#contact">Контакты</a>
+    </nav>
+    <div class="bar-actions">
+      <a class="bar-phone" href="tel:+77007998440">+7 700 799 84 40</a>
+      <a class="bar-cta" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%83%D1%8E%20%D0%B4%D0%B8%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D1%83%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D0%B0." target="_blank" rel="noopener">Бесплатный аудит</a>
+    </div>
+    <button class="menu" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
   </div>
 </header>
+
+<nav id="mnav" aria-label="Мобильное меню">
+  <button class="mnav-close" type="button" aria-label="Закрыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <a href="index.html#services">Услуги</a>
+  <a href="index.html#clients">Кейсы</a>
+  <a href="salespro.html">SalesPRO</a>
+  <a href="index.html#contact">Контакты</a>
+  <a class="mn-cta" href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D1%83." target="_blank" rel="noopener">Написать в WhatsApp →</a>
+</nav>
 
 <main>
   <!-- HERO -->
@@ -205,8 +266,27 @@
 </main>
 
 <footer>
+  <div class="wrap fcols">
+    <div class="fbrand"><div class="logo"><svg class="m"><use href="#ttt"/></svg><span class="logo-name">TTT<span style="color:var(--fg2)">Marketing</span></span></div><p>Ваш внешний отдел маркетинга · с 2016</p></div>
+    <div class="fcol"><h4>О проекте</h4><a href="index.html#strengths">Преимущества</a><a href="index.html#clients">Наши клиенты</a><a href="index.html#contact">Аудит в подарок</a></div>
+    <div class="fcol"><h4>Услуги</h4><a href="index.html#services">Комплексный маркетинг</a><a href="salespro.html">SalesPRO</a></div>
+    <div class="fcol"><h4>Свяжитесь с нами</h4><a href="tel:+77007998440">+7 700 799 84 40</a><a href="https://wa.me/77007998440?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D0%BF%D0%BE%20%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3%D1%83." target="_blank" rel="noopener">WhatsApp</a><a href="mailto:tttmarketing78@gmail.com">tttmarketing78@gmail.com</a></div>
+  </div>
   <div class="wrap fbottom"><span>2016–2026 © TTTMarketing</span><span>tttmarketing.kz</span></div>
 </footer>
+
+<script>
+/* Мобильное меню + подсветка шапки при скролле (унифицировано с главной) */
+(function(){
+  var burger=document.querySelector('.menu'),mnav=document.getElementById('mnav');
+  function set(o){document.body.classList.toggle('nav-open',o);if(burger){burger.setAttribute('aria-expanded',o?'true':'false');burger.setAttribute('aria-label',o?'Закрыть меню':'Открыть меню');}}
+  if(burger)burger.addEventListener('click',function(){set(!document.body.classList.contains('nav-open'));});
+  if(mnav){var close=mnav.querySelector('.mnav-close');if(close)close.addEventListener('click',function(){set(false);});mnav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  var bar=document.querySelector('header.bar');
+  if(bar){var onScroll=function(){bar.classList.toggle('scrolled',window.scrollY>10);};onScroll();window.addEventListener('scroll',onScroll,{passive:true});}
+})();
+</script>
 
 </body>
 </html>
