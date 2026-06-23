@@ -349,7 +349,7 @@
   .clients-more{margin:24px auto 0;text-align:center;color:var(--fg2);font-size:.95rem}
   .clients-more b{color:#fff}
   /* ===== Директор / CEO — компактный статусный двухколоночник ===== */
-  .dir{position:relative;overflow:hidden;background:radial-gradient(100% 60% at 50% 40%,rgba(66,133,244,.10),transparent 62%),linear-gradient(180deg,#0e0e0d 0%,#efece4 13%,#f6f3ed 50%,#efece4 87%,#0b0b0b 100%);padding:clamp(44px,9vw,72px) 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(22px,5vw,34px)}
+  .dir{position:relative;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#15121f 0%,#0b0b0b 70%);padding:clamp(44px,9vw,72px) 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(22px,5vw,34px)}
   .dir-figure{position:relative;display:flex;flex-direction:column;align-items:center}
   .dir-glow{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);width:min(80%,340px);height:min(80%,340px);border-radius:50%;pointer-events:none;z-index:0;
     background:radial-gradient(circle,rgba(124,92,255,.5) 0%,rgba(79,142,247,.26) 42%,transparent 70%);filter:blur(26px);animation:dirGlow 6s ease-in-out infinite}
@@ -369,7 +369,7 @@
   .dir-link:hover{border-color:rgba(66,133,244,.7);background:rgba(66,133,244,.12);transform:translateY(-1px)}
   .dir-link:hover svg{transform:translateX(3px)}
   @media(min-width:992px){
-    .dir{flex-direction:row;align-items:center;justify-content:center;gap:clamp(40px,6vw,90px);padding:clamp(72px,9vh,120px) clamp(40px,5vw,80px);text-align:left;background:radial-gradient(70% 90% at 28% 45%,rgba(66,133,244,.12),transparent 60%),linear-gradient(180deg,#0e0e0d 0%,#efece4 12%,#f6f3ed 50%,#efece4 88%,#0b0b0b 100%)}
+    .dir{flex-direction:row;align-items:center;justify-content:center;gap:clamp(40px,6vw,90px);padding:clamp(72px,9vh,120px) clamp(40px,5vw,80px);text-align:left;background:radial-gradient(80% 90% at 28% 50%,#15121f 0%,#0b0b0b 72%)}
     .dir-figure{flex:0 0 auto}
     .dir .dphoto{width:min(100%,400px)}
     .dir-glow{width:min(92%,440px);height:min(92%,440px);top:42%}
@@ -730,47 +730,11 @@
   .pol-ctl:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
   .pol-counter{min-width:54px;color:var(--fg2);font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.04em}
   @media (prefers-reduced-motion:reduce){.moments .glow{animation:none}.pol-hint-arrow{animation:none}.pol{transition:transform .25s ease,opacity .25s ease}}
-
-  /* ===================== FEATURE 1: морфинг фона по скроллу ===================== */
-  /* Глобальный фон: базовый тёмный слой + индиго-«всполох», прозрачность которого ведёт скролл (только opacity → GPU, без репейнтов) */
-  .scenefx{position:fixed;inset:0;z-index:-2;pointer-events:none}
-  .scenefx::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 0%,#101011 0%,#0e0e0d 55%,#0c0c0c 100%)}
-  .scenefx::after{content:"";position:absolute;inset:0;opacity:var(--scene,0);transition:opacity .18s linear;will-change:opacity;
-    background:radial-gradient(120% 120% at 50% 40%,rgba(30,32,40,.32) 0%,rgba(19,20,26,.18) 50%,rgba(12,12,14,0) 82%)}
-  @media(prefers-reduced-motion:reduce){.scenefx::after{transition:none}}
-
-  /* Директор — светлая тема: текст/акценты под молочный фон */
-  .dir .name{color:#16161a}
-  .dir-role{color:#2f6fe0}
-  .dir-quote{color:#15151a}
-  .dir-bio{color:#46443f;border-left-color:rgba(47,111,224,.4)}
-  .dir-bio b,.dir-bio strong{color:#111}
-  .dir-link{border-color:rgba(0,0,0,.18);background:rgba(0,0,0,.04);color:#16161a}
-  .dir-link:hover{border-color:rgba(47,111,224,.7);background:rgba(47,111,224,.1);color:#16161a}
-  .dir .dphoto{filter:drop-shadow(0 24px 48px rgba(0,0,0,.3))}
-  .dir-glow{background:radial-gradient(circle,rgba(66,133,244,.34) 0%,rgba(124,92,255,.16) 45%,transparent 70%);opacity:.55}
-
-  /* ===== Светлые секции (ритм тёмное/светлое): «В цифрах» и «За кадром» ===== */
-  /* «В цифрах» — светлая */
-  .numbers{background:radial-gradient(90% 70% at 50% 45%,rgba(66,133,244,.06),transparent 62%),linear-gradient(180deg,#0e0e0d 0%,#efece4 30%,#f6f3ed 50%,#efece4 70%,#0e0e0d 100%);padding:clamp(80px,12vw,140px) 0}
-  .numbers .eyebrow{color:#6b6a64}
-  .numbers .ncard .v{color:#17171b}
-  .numbers .ncard .k{color:#56544e}
-  .numbers .ncard:hover{background:rgba(0,0,0,.05)}
-  .numbers .swipe-hint{color:#6b6a64}
-
-  /* «За кадром» — светлая (кремовые полароиды премиально смотрятся на свету) */
-  .moments{background:radial-gradient(90% 60% at 50% 40%,rgba(66,133,244,.06),transparent 62%),linear-gradient(180deg,#0e0e0d 0%,#efece4 18%,#f6f3ed 50%,#efece4 82%,#0e0e0d 100%)}
-  .moments-bg{opacity:.4}
-  .moments-title{color:#16161a}
-  .moments-sub{color:#56544e}
-  .moments .eyebrow{color:#6b6a64}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержимому</a>
 <div class="sprog" aria-hidden="true"></div>
-<div class="scenefx" aria-hidden="true"></div>
 <canvas class="netfx" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 
@@ -1828,29 +1792,6 @@ window.addEventListener('load',()=>{
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (!active) layout(); }, 150); });
 
   layout();
-})();
-</script>
-
-<!-- ===================== FEATURE 1: морфинг фона по скроллу ===================== -->
-<script>
-(function () {
-  'use strict';
-  var fx = document.querySelector('.scenefx');
-  if (!fx) return;
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    var prog = max > 0 ? (window.pageYOffset || h.scrollTop) / max : 0;
-    if (prog < 0) prog = 0; else if (prog > 1) prog = 1;
-    /* колоколом 0→1→0: индиго-тон нарастает к середине страницы и спадает к низу */
-    fx.style.setProperty('--scene', Math.sin(prog * Math.PI).toFixed(3));
-  }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  update();
 })();
 </script>
 </body>
