@@ -177,16 +177,16 @@ body.nav-open #mnav a:nth-of-type(6){transition-delay:.34s}
 
 /* ============ RANKS (signature) ============ */
 .ranks{background:linear-gradient(180deg,transparent,var(--s1))}
-.ladder{display:flex;gap:10px;overflow-x:auto;padding:40px 4px 16px;scroll-snap-type:x mandatory}
-.rank{scroll-snap-align:start;flex:0 0 auto;width:128px;text-align:center;background:var(--s2);border:1px solid var(--b1);border-radius:15px;padding:20px 12px;position:relative;transition:transform .2s,border-color .2s}
+.ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:40px 0 16px}
+@media(max-width:820px){.ladder{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){.ladder{grid-template-columns:repeat(2,1fr)}}
+.rank{text-align:center;background:var(--s2);border:1px solid var(--b1);border-radius:15px;padding:20px 12px;position:relative;transition:transform .2s,border-color .2s}
 .rank:hover{transform:translateY(-5px);border-color:var(--gold)}
 .rank .em{font-size:30px}
 .rank .nm{font-family:var(--disp);font-weight:600;font-size:14px;margin:9px 0 4px}
 .rank .xp{font-family:var(--mono);font-size:12px;color:var(--t3)}
 .rank.peak{background:var(--gbg);border-color:var(--gold)}
 .rank.peak .nm{color:var(--gold2)}
-.ladder::-webkit-scrollbar{height:6px}
-.ladder::-webkit-scrollbar-thumb{background:var(--b2);border-radius:99px}
 
 /* ============ BONUS / ACHIEVEMENTS (инструмент управления) ============ */
 .bonus{background:linear-gradient(180deg,var(--s1),transparent)}
@@ -197,6 +197,7 @@ body.nav-open #mnav a:nth-of-type(6){transition-delay:.34s}
 .loop-step p{color:var(--t2);font-size:13.5px;line-height:1.45}
 @media(max-width:860px){.loop{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.loop{grid-template-columns:1fr}}
+@media(min-width:861px){.loop-3{grid-template-columns:repeat(3,1fr)}}
 
 .ledger{margin-top:30px;border:1px solid var(--b1);border-radius:18px;overflow:hidden;background:var(--s1)}
 .ledger-head,.ledger-row{display:grid;grid-template-columns:1.3fr 1.4fr auto;gap:18px;align-items:center;padding:16px 24px}
@@ -312,7 +313,7 @@ select.qf option{background:var(--s2);color:var(--t1)}
 .formnote{margin-top:14px;color:var(--t3);font-size:12.5px;font-family:var(--mono);position:relative}
 
 /* ============ PRODUCT SHOWCASE (Знакомство с продуктом) ============ */
-.shots{max-width:920px;margin:38px auto 0}
+.shots{max-width:1040px;margin:38px auto 0}
 .shot-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
 .shot-tab{font-family:var(--body);font-weight:600;font-size:14px;padding:10px 16px;border-radius:999px;border:1px solid var(--b2);background:var(--s2);color:var(--t2);cursor:pointer;transition:color .2s,background .2s,border-color .2s}
 .shot-tab:hover{color:var(--t1);border-color:var(--t3)}
@@ -336,6 +337,18 @@ select.qf option{background:var(--s2);color:var(--t1)}
 .shot-ph .s{font-family:var(--mono);font-size:11.5px;color:var(--t3);background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:4px 10px}
 .shot-cap{margin:18px auto 0;text-align:center;color:var(--t2);font-size:15px;max-width:620px}
 @media(max-width:560px){.shot-tab{font-size:13px;padding:9px 13px}.win-bar em{display:none}}
+/* лёгкий YouTube-плеер: постер-кнопка прячется после старта, iframe сверху и полностью кликабелен */
+.shot-panel[data-shot="video"] .win{max-width:460px;margin:0 auto}
+.shot-frame.vfr{min-height:0;max-height:none;padding:0;background:#000}
+.ytlite{position:relative;aspect-ratio:9/16;height:min(76vh,660px);width:auto;max-width:100%;margin:0 auto;background:#000}
+.ytlite-poster{position:absolute;inset:0;z-index:3;width:100%;height:100%;border:0;padding:0;cursor:pointer;background-size:cover;background-position:center;display:grid;place-items:center}
+.ytlite-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.34),rgba(0,0,0,.06));pointer-events:none;transition:background .2s}
+.ytlite-poster:hover::after{background:linear-gradient(0deg,rgba(0,0,0,.24),rgba(0,0,0,.02))}
+.ytlite-pbtn{position:relative;z-index:1;width:88px;height:62px;display:grid;place-items:center;pointer-events:none}
+.ytlite-pbtn svg{width:88px;height:62px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.55));transition:transform .2s}
+.ytlite-poster:hover .ytlite-pbtn svg{transform:scale(1.09)}
+.ytlite.is-playing .ytlite-poster{display:none}
+.ytlite iframe{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0}
 
 /* ============ CASE CARDS (Кейсы клиентов) ============ */
 .cases{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;max-width:1020px;margin:40px auto 0}
@@ -430,6 +443,21 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
   .mcbar-btn:active{transform:translateY(1px)}
   body{padding-bottom:74px}
 }
+/* ===== Слайдер фото команды (после hero) ===== */
+.tslider{position:relative;max-width:860px;margin:38px auto 0}
+.tsl-viewport{overflow:hidden;border-radius:18px;border:1px solid var(--b1);box-shadow:0 30px 70px -30px #000}
+.tsl-track{display:flex;transition:transform .6s cubic-bezier(.22,1,.36,1);will-change:transform}
+.tsl-slide{flex:0 0 100%;min-width:0}
+.tsl-slide img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--s2)}
+.tsl-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(17,17,16,.62);border:1px solid var(--b2);color:#fff;cursor:pointer;backdrop-filter:blur(6px);transition:background .2s,border-color .2s}
+.tsl-arrow:hover{background:rgba(28,28,32,.92);border-color:var(--acc)}
+.tsl-arrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tsl-prev{left:12px}.tsl-next{right:12px}
+.tsl-dots{display:flex;justify-content:center;gap:9px;margin-top:18px}
+.tsl-dot{width:9px;height:9px;padding:0;border:none;border-radius:50%;background:rgba(255,255,255,.22);cursor:pointer;transition:background .2s,transform .2s}
+.tsl-dot.active{background:var(--acc);transform:scale(1.3)}
+@media(max-width:560px){.tsl-arrow{width:40px;height:40px}.tsl-slide img{aspect-ratio:4/5}}
+@media(prefers-reduced-motion:reduce){.tsl-track{transition:none}}
 </style>
 </head>
 <body>
@@ -477,7 +505,7 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
         <a href="#how" class="btn btn-ghost">Как это работает</a>
       </div>
       <div class="hero-trust">
-        <span>⭐ <b>10</b> воинских званий</span>
+        <span>🏢 продукт <b>TTTMarketing</b> · 200+ проектов с 2016</span>
         <span>⚔️ <b>15-мин</b> бой с клиентом</span>
         <span>🚀 запуск за <b>1 день</b></span>
       </div>
@@ -496,6 +524,29 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
     </div>
   </div>
 </header>
+
+<!-- ===================== TEAM (живая команда за продуктом) ===================== -->
+<section id="team">
+  <div class="wrap">
+    <p class="eyebrow rv">Команда TTTMarketing</p>
+    <h2 class="rv">Живые люди за продуктом</h2>
+    <div class="tslider rv" id="teamSlider">
+      <div class="tsl-viewport">
+        <div class="tsl-track">
+          <div class="tsl-slide"><img src="assets/teamOsn.webp" alt="Основатель TTTMarketing с командой" loading="lazy"></div>
+          <div class="tsl-slide"><img src="assets/team1.webp" alt="Команда TTTMarketing вне работы" loading="lazy"></div>
+          <div class="tsl-slide"><img src="assets/team2.webp" alt="Команда TTTMarketing вне работы" loading="lazy"></div>
+          <div class="tsl-slide"><img src="assets/team3.webp" alt="Команда TTTMarketing вне работы" loading="lazy"></div>
+          <div class="tsl-slide"><img src="assets/team5.webp" alt="Команда TTTMarketing вне работы" loading="lazy"></div>
+          <div class="tsl-slide"><img src="assets/team6.webp" alt="Команда TTTMarketing вне работы" loading="lazy"></div>
+        </div>
+      </div>
+      <button class="tsl-arrow tsl-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="tsl-arrow tsl-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="tsl-dots" aria-label="Навигация по фото"></div>
+    </div>
+  </div>
+</section>
 
 <!-- ===================== PROBLEM ===================== -->
 <section id="problem" class="prob">
@@ -520,11 +571,24 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
 
     <div class="shots rv">
       <div class="shot-tabs" role="tablist" aria-label="Экраны продукта">
-        <button type="button" class="shot-tab is-active" data-shot="0" role="tab" aria-selected="true">⚔️ Бой с ИИ-клиентом</button>
+        <button type="button" class="shot-tab is-active" data-shot="video" role="tab" aria-selected="true">🎬 Видео-тур</button>
+        <button type="button" class="shot-tab" data-shot="0" role="tab" aria-selected="false">⚔️ Бой с ИИ-клиентом</button>
         <button type="button" class="shot-tab" data-shot="1" role="tab" aria-selected="false">🏆 Результат и баллы</button>
       </div>
 
-      <div class="shot-panel is-active" data-shot="0" role="tabpanel">
+      <div class="shot-panel is-active" data-shot="video" role="tabpanel">
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><em>salespro.app — Видео-тур</em></div>
+          <div class="shot-frame vfr">
+            <div class="ytlite" id="ytTour" data-id="-jaDJ3j1eHs">
+              <button class="ytlite-poster" type="button" aria-label="Смотреть видео-тур SalesPRO" style="background-image:url('https://i.ytimg.com/vi/-jaDJ3j1eHs/maxresdefault.jpg')"><span class="ytlite-pbtn"><svg viewBox="0 0 68 48" aria-hidden="true"><path d="M66.5 7.7c-.8-2.9-3-5.1-5.9-5.9C55.3.5 34 .5 34 .5S12.7.5 7.4 1.8C4.5 2.6 2.3 4.8 1.5 7.7.2 13 .2 24 .2 24s0 11 1.3 16.3c.8 2.9 3 5.1 5.9 5.9C12.7 47.5 34 47.5 34 47.5s21.3 0 26.6-1.3c2.9-.8 5.1-3 5.9-5.9C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3z" fill="#f00"/><path d="M27 34l18-10L27 14v20z" fill="#fff"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+        <p class="shot-cap">Видео-тур по SalesPRO: как менеджер проходит бой с ИИ-клиентом и получает разбор и баллы.</p>
+      </div>
+
+      <div class="shot-panel" data-shot="0" role="tabpanel">
         <div class="win">
           <div class="win-bar"><i></i><i></i><i></i><em>salespro.app — Бой</em></div>
           <div class="shot-frame">
@@ -561,6 +625,24 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
       <div class="feat rv"><div class="ic">💬</div><h3>Копилка фраз</h3><p>Живая база лучших речевых оборотов команды всегда под рукой.</p></div>
       <div class="feat rv"><div class="ic">🏠</div><h3>Профиль и история</h3><p>Личный кабинет менеджера: статистика, XP и достижения.</p></div>
       <div class="feat rv"><div class="ic">📊</div><h3>Видимость для РОП</h3><p>Объективный балл по каждому звонку. Видно, кто растёт, а кто буксует.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NICHES (кому подходит) ===================== -->
+<section id="niches">
+  <div class="wrap">
+    <p class="eyebrow rv">Кому подходит</p>
+    <h2 class="rv">Настраиваем под вашу нишу:<br>ваши продукты, клиенты и возражения</h2>
+    <div class="niche-grid rv">
+      <span class="niche">🚗 Автосалоны</span>
+      <span class="niche">🏋️ Фитнес и здоровье</span>
+      <span class="niche">🏢 Недвижимость</span>
+      <span class="niche">🏦 Банки и финансы</span>
+      <span class="niche">💻 IT / SaaS</span>
+      <span class="niche">📡 Услуги и подписки</span>
+      <span class="niche">🎓 Образование</span>
+      <span class="niche">＋ ваша ниша</span>
     </div>
   </div>
 </section>
@@ -647,26 +729,7 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
   </div>
 </section>
 
-<!-- ===================== NICHES ===================== -->
-<section id="niches">
-  <div class="wrap">
-    <p class="eyebrow rv">Кому подходит</p>
-    <h2 class="rv">Настраиваем под вашу нишу:<br>ваши продукты, клиенты и возражения</h2>
-    <div class="niche-grid rv">
-      <span class="niche">🚗 Автосалоны</span>
-      <span class="niche">🏋️ Фитнес и здоровье</span>
-      <span class="niche">🏢 Недвижимость</span>
-      <span class="niche">🏦 Банки и финансы</span>
-      <span class="niche">💻 IT / SaaS</span>
-      <span class="niche">📡 Услуги и подписки</span>
-      <span class="niche">🎓 Образование</span>
-      <span class="niche">＋ ваша ниша</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CASES (Кейсы клиентов) =====================
-     ВНИМАНИЕ: цифры и тексты ниже — ЗАГОТОВКА. Замените на свои реальные. -->
+<!-- ===================== CASES (Кейсы клиентов) ===================== -->
 <section id="cases">
   <div class="wrap">
     <p class="eyebrow rv">Кейсы клиентов</p>
@@ -702,6 +765,19 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
         <div class="case-mlabel">заявок доходит до демо</div>
         <p class="case-desc">Менеджеры доводят лида до встречи-демо, а не теряют его на этапе «дорого» и «подумаю».</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ONBOARDING (как запускаем) ===================== -->
+<section id="start">
+  <div class="wrap">
+    <p class="eyebrow rv">Как запускаем</p>
+    <h2 class="rv">Запуск за один день —<br>без установки и интеграций</h2>
+    <div class="loop loop-3 rv">
+      <div class="loop-step"><h3>Заявка и замер</h3><p>Показываем тренажёр на вашем продукте и фиксируем точку отсчёта отдела.</p></div>
+      <div class="loop-step"><h3>Настройка за 1 день</h3><p>Заполняем ваши продукты, типы клиентов и реальные возражения — без CRM и установки.</p></div>
+      <div class="loop-step"><h3>Запуск для команды</h3><p>Менеджеры получают готовую ссылку и тренируются уже в тот же день.</p></div>
     </div>
   </div>
 </section>
@@ -762,6 +838,9 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
       <details class="rv" open><summary>Это сложно внедрить?<span></span></summary><p>Нет. Тренажёр работает в браузере, без установки и интеграций с CRM. Кастомизацию под вашу нишу делаем за один день — вы получаете готовую ссылку для команды.</p></details>
       <details class="rv"><summary>Чем это лучше обычного тренинга?</summary><p>Тренинг — раз в квартал, тренажёр — каждый день. Менеджер повторяет навык на ИИ-клиенте сколько нужно, ошибается без потери реальных сделок, а РОП видит объективный балл по каждому диалогу.</p></details>
       <details class="rv"><summary>А менеджеры вообще будут им пользоваться?</summary><p>В этом и смысл геймификации: звания, XP, стрик и копилка фраз. Люди возвращаются сами, потому что видят прогресс — а не потому что обязали.</p></details>
+      <details class="rv"><summary>Нужно ли интегрировать с нашей CRM?</summary><p>Нет. SalesPRO работает прямо в браузере как отдельный инструмент — без установки и интеграций. Команде достаточно дать готовую ссылку.</p></details>
+      <details class="rv"><summary>На каком языке и о чём говорит ИИ-клиент?</summary><p>На русском и с возражениями именно вашей ниши: мы заполняем ваши продукты, типы клиентов и реальные отговорки вашего отдела — тренажёр говорит на языке вашего бизнеса.</p></details>
+      <details class="rv"><summary>Сколько менеджеров можно подключить?</summary><p>Зависит от тарифа: от небольшого отдела на «Старте» до неограниченной команды на «Корпорате». Точное число подберём под размер вашего отдела.</p></details>
     </div>
   </div>
 </section>
@@ -1064,6 +1143,30 @@ async function sendLead(e){
 </script>
 
 <script>
+/* Видео-тур: YouTube грузится по клику; при переключении на другую вкладку — сброс к постеру (без фонового звука) */
+(function(){
+  var el=document.getElementById('ytTour');if(!el)return;
+  var poster=el.querySelector('.ytlite-poster');
+  function play(){
+    if(el.classList.contains('is-playing'))return;
+    var id=el.getAttribute('data-id');
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    f.title='Видео-тур SalesPRO';
+    f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen');
+    f.setAttribute('allowfullscreen','');
+    el.appendChild(f);
+    el.classList.add('is-playing');
+  }
+  function reset(){var f=el.querySelector('iframe');if(f)f.remove();el.classList.remove('is-playing');}
+  if(poster)poster.addEventListener('click',play);
+  document.querySelectorAll('.shot-tab').forEach(function(t){
+    t.addEventListener('click',function(){if(t.getAttribute('data-shot')!=='video')reset();});
+  });
+})();
+</script>
+
+<script>
 /* Мобильное меню (гамбургер) */
 (function(){
   var btn=document.getElementById('menuBtn'),mnav=document.getElementById('mnav');
@@ -1076,6 +1179,37 @@ async function sendLead(e){
   document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
   var bar=document.querySelector('header.bar');
   if(bar){var onScroll=function(){bar.classList.toggle('scrolled',window.scrollY>10);};onScroll();window.addEventListener('scroll',onScroll,{passive:true});}
+})();
+</script>
+<script>
+/* Слайдер фото команды (#teamSlider): стрелки, точки, автопрокрутка, свайп */
+(function(){
+  var root=document.getElementById('teamSlider');if(!root)return;
+  var track=root.querySelector('.tsl-track');
+  var slides=[].slice.call(root.querySelectorAll('.tsl-slide'));
+  var dotsWrap=root.querySelector('.tsl-dots');
+  var n=slides.length;if(!n)return;
+  var idx=0,timer=null;
+  var reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var dots=slides.map(function(_,k){
+    var b=document.createElement('button');b.className='tsl-dot';b.type='button';
+    b.setAttribute('aria-label','Фото '+(k+1));
+    b.addEventListener('click',function(){go(k);restart();});
+    dotsWrap.appendChild(b);return b;
+  });
+  function render(){track.style.transform='translateX(-'+(idx*100)+'%)';dots.forEach(function(d,k){d.classList.toggle('active',k===idx);});}
+  function go(k){idx=(k%n+n)%n;render();}
+  function next(){go(idx+1);}function prev(){go(idx-1);}
+  function start(){if(reduced)return;stop();timer=setInterval(next,4500);}
+  function stop(){if(timer){clearInterval(timer);timer=null;}}
+  function restart(){stop();start();}
+  root.querySelector('.tsl-next').addEventListener('click',function(){next();restart();});
+  root.querySelector('.tsl-prev').addEventListener('click',function(){prev();restart();});
+  root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
+  var x0=null;
+  root.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;stop();},{passive:true});
+  root.addEventListener('touchend',function(e){if(x0==null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){dx<0?next():prev();}x0=null;start();},{passive:true});
+  render();start();
 })();
 </script>
 </body>
