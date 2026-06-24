@@ -652,7 +652,6 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
         <div class="qstep" data-step="2">
           <input class="qf" type="text" id="lead-name" name="name" placeholder="Имя" required>
           <input class="qf" type="tel" id="phone" name="phone" required>
-          <input class="qf" type="text" id="telegram" name="telegram" placeholder="Telegram (@username)">
           <div class="q-actions">
             <button type="button" class="btn btn-ghost" id="qBack">← Назад</button>
             <button type="submit" class="btn btn-gold">Получить демо →</button>
@@ -859,7 +858,6 @@ async function sendLead(e){
   const btn=form.querySelector('button[type="submit"]');
 
   const name=document.getElementById('lead-name').value.trim();
-  const tgRaw=document.getElementById('telegram').value.trim();
   const managers=(document.getElementById('q-managers').value||'').trim();
   const request=(document.getElementById('q-request').value||'').trim();
   const time=(document.getElementById('q-time').value||'').trim();
@@ -876,11 +874,9 @@ async function sendLead(e){
   }
 
   const phone=prettyPhone(); // +7 (747) 781-94-07
-  const tg = tgRaw ? (/^(@|https?:\/\/)/.test(tgRaw) ? tgRaw : '@'+tgRaw) : 'Не указано';
   const text='🔥 Заявка с сайта SalesPRO'
     +'\n👤 Имя: '+name
     +'\n📞 Телефон: '+phone
-    +'\n💬 Telegram: '+tg
     +'\n💼 Менеджеров в отделе: '+(managers||'Не указано')
     +'\n❓ Запрос клиента: '+(request||'Не указано')
     +'\n⏰ Удобное время для связи: '+(time||'Не указано');
