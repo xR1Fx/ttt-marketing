@@ -9,6 +9,21 @@
 <meta name="theme-color" content="#111110" />
 <link rel="icon" type="image/png" href="assets/newlogo-mark.png" />
 <link rel="apple-touch-icon" href="assets/newlogo-mark.png" />
+<!-- Open Graph / превью ссылки в Telegram, WhatsApp, соцсетях -->
+<link rel="canonical" href="https://sp.myttt.kz/salespro.html" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sp.myttt.kz/salespro.html" />
+<meta property="og:site_name" content="SalesPRO · TTTMarketing" />
+<meta property="og:title" content="SalesPRO — ИИ-тренажёр продаж для вашего отдела" />
+<meta property="og:description" content="Менеджеры отрабатывают звонки на ИИ-клиенте, а не на вашей живой базе. Объективный балл по каждому диалогу, геймификация и рост конверсии." />
+<meta property="og:image" content="https://sp.myttt.kz/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="SalesPRO — ИИ-тренажёр продаж" />
+<meta name="twitter:description" content="Тренировка отдела продаж на ИИ-клиенте. Балл по каждому звонку, геймификация, рост конверсии." />
+<meta name="twitter:image" content="https://sp.myttt.kz/assets/og-cover.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -296,6 +311,54 @@ select.qf option{background:var(--s2);color:var(--t1)}
 .iti__arrow{border-top-color:var(--t3)}
 .formnote{margin-top:14px;color:var(--t3);font-size:12.5px;font-family:var(--mono);position:relative}
 
+/* ============ PRODUCT SHOWCASE (Знакомство с продуктом) ============ */
+.shots{max-width:920px;margin:38px auto 0}
+.shot-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.shot-tab{font-family:var(--body);font-weight:600;font-size:14px;padding:10px 16px;border-radius:999px;border:1px solid var(--b2);background:var(--s2);color:var(--t2);cursor:pointer;transition:color .2s,background .2s,border-color .2s}
+.shot-tab:hover{color:var(--t1);border-color:var(--t3)}
+.shot-tab.is-active{background:var(--acc);border-color:var(--acc);color:#fff}
+.shot-tab:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.shot-panel{display:none}
+.shot-panel.is-active{display:block;animation:qfade .35s ease}
+/* «оконная» рамка */
+.win{border:1px solid var(--b2);border-radius:16px;overflow:hidden;background:var(--s1);box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.win-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;background:var(--s3);border-bottom:1px solid var(--b2)}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:#3a3a37;display:block}
+.win-bar i:nth-child(1){background:#ff5f57}.win-bar i:nth-child(2){background:#febc2e}.win-bar i:nth-child(3){background:#28c840}
+.win-bar em{margin-left:10px;font-style:normal;font-family:var(--mono);font-size:12px;color:var(--t3)}
+.shot-frame{position:relative;display:flex;align-items:center;justify-content:center;background:var(--bg);min-height:340px;max-height:640px;overflow:hidden}
+.shot-img{position:relative;z-index:1;max-width:100%;max-height:600px;width:auto;height:auto;display:block;object-fit:contain}
+.shot-img.is-missing{display:none}
+.shot-ph{position:absolute;inset:0;z-index:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;padding:20px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 12px,transparent 12px 24px),var(--s2)}
+.shot-img:not(.is-missing)+.shot-ph{display:none}
+.shot-ph .em{font-size:34px;opacity:.65}
+.shot-ph .t{font-weight:700;color:var(--t2);font-size:15px}
+.shot-ph .s{font-family:var(--mono);font-size:11.5px;color:var(--t3);background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:4px 10px}
+.shot-cap{margin:18px auto 0;text-align:center;color:var(--t2);font-size:15px;max-width:620px}
+@media(max-width:560px){.shot-tab{font-size:13px;padding:9px 13px}.win-bar em{display:none}}
+
+/* ============ CASE CARDS (Кейсы клиентов) ============ */
+.cases{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;max-width:1020px;margin:40px auto 0}
+.case{flex:1 1 290px;max-width:330px;background:linear-gradient(135deg,var(--s2),var(--s3));border:1px solid var(--b2);border-radius:18px;padding:26px 26px 28px;text-align:left;position:relative;overflow:hidden}
+.case::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:linear-gradient(90deg,var(--grn),transparent)}
+.case-top{display:flex;align-items:center;gap:13px;margin-bottom:22px}
+.case-logo{width:50px;height:50px;border-radius:12px;overflow:hidden;flex:0 0 auto;background:#fff;border:1px solid var(--b2)}
+.case-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.case-logo.contain img{object-fit:contain;padding:6px}
+.case-top h3{font-size:18px;margin:0;line-height:1.15}
+.case-niche{font-size:11.5px;color:var(--t3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.case-metric{display:flex;align-items:baseline;gap:8px;color:var(--grn)}
+.case-metric .up{font-size:26px;font-weight:800;line-height:1}
+.case-metric b{font-size:50px;font-weight:900;letter-spacing:-.03em;line-height:.9}
+.case-mlabel{color:#fff;font-size:16px;font-weight:600;margin-top:9px}
+.case-desc{color:var(--t2);font-size:14px;margin-top:14px;line-height:1.55}
+/* Мобайл: карточки кейсов — горизонтальная свайп-карусель */
+@media(max-width:720px){
+  .cases{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:26px -24px 0;padding:4px 24px 16px;gap:14px;scroll-padding-left:24px}
+  .cases::-webkit-scrollbar{display:none}
+  .case{flex:0 0 80vw;max-width:340px;scroll-snap-align:start}
+}
+
 /* ============ FOOTER ============ */
 /* ============ FOOTER (унифицирован с главной) ============ */
 footer{border-top:1px solid var(--line);margin-top:40px;padding:40px 0}
@@ -377,6 +440,7 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
     <a href="index.html" class="logo" aria-label="TTTMarketing — на главную"><img class="logo-mark" src="assets/newlogo-mark.png" alt=""><span class="logo-name">TTT<span style="color:var(--fg2)">Marketing</span></span></a>
     <nav class="nav-links">
       <a href="index.html" class="nav-home">← Главная</a>
+      <a href="#product">Продукт</a>
       <a href="#how">Как работает</a>
       <a href="#ranks">Геймификация</a>
       <a href="#bonus">Мотивация</a>
@@ -393,6 +457,7 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
 <nav id="mnav" aria-label="Мобильное меню">
   <button class="mnav-close" type="button" aria-label="Закрыть меню"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <a href="index.html">← Главная</a>
+  <a href="#product">Продукт</a>
   <a href="#how">Как работает</a>
   <a href="#ranks">Геймификация</a>
   <a href="#bonus">Мотивация</a>
@@ -443,6 +508,44 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
       <div class="prob-card rv"><div class="big">0</div><p>Слепые зоны. Без автоматики РОП слушает звонки выборочно и наугад.</p></div>
     </div>
     <p class="lead rv" style="margin-top:34px">Тренинги раз в квартал не работают. Навык продаж строится на ежедневных механических повторениях — системно и без отрыва от работы.</p>
+  </div>
+</section>
+
+<!-- ===================== PRODUCT SHOWCASE (Знакомство с продуктом) ===================== -->
+<section id="product">
+  <div class="wrap">
+    <p class="eyebrow rv">Знакомство с продуктом</p>
+    <h2 class="rv">Загляните внутрь SalesPRO</h2>
+    <p class="lead rv">Тренажёр работает прямо в браузере — без установки. Посмотрите, как проходит бой и каким получается его разбор.</p>
+
+    <div class="shots rv">
+      <div class="shot-tabs" role="tablist" aria-label="Экраны продукта">
+        <button type="button" class="shot-tab is-active" data-shot="0" role="tab" aria-selected="true">⚔️ Бой с ИИ-клиентом</button>
+        <button type="button" class="shot-tab" data-shot="1" role="tab" aria-selected="false">🏆 Результат и баллы</button>
+      </div>
+
+      <div class="shot-panel is-active" data-shot="0" role="tabpanel">
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><em>salespro.app — Бой</em></div>
+          <div class="shot-frame">
+            <img class="shot-img" src="assets/screens/fight.png" alt="Экран боя: диалог менеджера с ИИ-клиентом и коучинг в реальном времени" loading="lazy" onerror="this.classList.add('is-missing')">
+            <div class="shot-ph" aria-hidden="true"><span class="em">🖼️</span><span class="t">Скриншот «Бой»</span><span class="s">assets/screens/fight.png</span></div>
+          </div>
+        </div>
+        <p class="shot-cap">15-минутный диалог с ИИ-клиентом и живой коучинг: что отработано хорошо и что улучшить — прямо по ходу разговора.</p>
+      </div>
+
+      <div class="shot-panel" data-shot="1" role="tabpanel">
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><em>salespro.app — Итог боя</em></div>
+          <div class="shot-frame">
+            <img class="shot-img" src="assets/screens/ball.png" alt="Итог боя: общий балл, заработанный XP, новое звание и оценка по навыкам" loading="lazy" onerror="this.classList.add('is-missing')">
+            <div class="shot-ph" aria-hidden="true"><span class="em">🖼️</span><span class="t">Скриншот «Результат»</span><span class="s">assets/screens/ball.png</span></div>
+          </div>
+        </div>
+        <p class="shot-cap">После боя — объективный балл по навыкам (открытие, вопросы, презентация, возражения, закрытие), заработанный XP и новое звание.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -533,13 +636,13 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
 <!-- ===================== RESULTS ===================== -->
 <section id="results">
   <div class="wrap">
-    <p class="eyebrow rv">Результат</p>
+    <p class="eyebrow rv">Что замеряем</p>
     <h2 class="rv">Замеряем отдел до и после.<br>Инвестируйте в измеримый рост, а не в имитацию занятости</h2>
     <div class="res-grid">
-      <div class="res rv"><div class="n">+27%</div><div class="l">к конверсии звонков</div><small>пример · впишите свой кейс</small></div>
-      <div class="res rv"><div class="n">×2</div><div class="l">быстрее ввод новичка</div><small>пример · впишите свой кейс</small></div>
-      <div class="res rv"><div class="n">15 мин</div><div class="l">тренировка в день</div><small>без отрыва от работы</small></div>
-      <div class="res rv"><div class="n">100%</div><div class="l">звонков с оценкой</div><small>объективный балл коуча</small></div>
+      <div class="res rv"><div class="n">100%</div><div class="l">звонков с оценкой</div><small>объективный балл коуча по каждому диалогу</small></div>
+      <div class="res rv"><div class="n">5</div><div class="l">навыков в разборе</div><small>открытие · вопросы · презентация · возражения · закрытие</small></div>
+      <div class="res rv"><div class="n">15 мин</div><div class="l">практики в день</div><small>без отрыва от работы</small></div>
+      <div class="res rv"><div class="n">10</div><div class="l">рангов и XP</div><small>прогресс виден и сотруднику, и РОПу</small></div>
     </div>
   </div>
 </section>
@@ -558,6 +661,47 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
       <span class="niche">📡 Услуги и подписки</span>
       <span class="niche">🎓 Образование</span>
       <span class="niche">＋ ваша ниша</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CASES (Кейсы клиентов) =====================
+     ВНИМАНИЕ: цифры и тексты ниже — ЗАГОТОВКА. Замените на свои реальные. -->
+<section id="cases">
+  <div class="wrap">
+    <p class="eyebrow rv">Кейсы клиентов</p>
+    <h2 class="rv">Что изменилось в их отделах продаж</h2>
+    <div class="cases">
+      <article class="case rv">
+        <div class="case-top"><div class="case-logo"><img src="assets/synergy.png" alt="Synergy Tower" loading="lazy"></div><div><h3>Synergy Tower</h3><div class="case-niche">Недвижимость</div></div></div>
+        <div class="case-metric"><span class="up">↑</span><b>+40%</b></div>
+        <div class="case-mlabel">к конверсии звонка во встречу</div>
+        <p class="case-desc">Менеджеры отрабатывают возражения по цене на ИИ-клиенте — и доводят больше лидов до показа.</p>
+      </article>
+      <article class="case rv">
+        <div class="case-top"><div class="case-logo"><img src="assets/client-qazaq.jpg" alt="QazaqGrill" loading="lazy"></div><div><h3>QazaqGrill</h3><div class="case-niche">Рестораны</div></div></div>
+        <div class="case-metric"><span class="up">↑</span><b>×2</b></div>
+        <div class="case-mlabel">быстрее вывод новичка на план</div>
+        <p class="case-desc">Новые сотрудники отрабатывают скрипты на тренажёре до выхода к реальным гостям.</p>
+      </article>
+      <article class="case rv">
+        <div class="case-top"><div class="case-logo"><img src="assets/topsmile.webp" alt="TopSmile" loading="lazy"></div><div><h3>TopSmile</h3><div class="case-niche">Стоматология</div></div></div>
+        <div class="case-metric"><span class="up">↑</span><b>+28%</b></div>
+        <div class="case-mlabel">записей пациентов со звонка</div>
+        <p class="case-desc">Администраторы доводят пациента до записи, а не просто отвечают на вопросы.</p>
+      </article>
+      <article class="case rv">
+        <div class="case-top"><div class="case-logo"><img src="assets/client-adalqol.jpg" alt="AdalQol" loading="lazy"></div><div><h3>AdalQol</h3><div class="case-niche">Ремонт и отделка</div></div></div>
+        <div class="case-metric"><span class="up">↑</span><b>+35%</b></div>
+        <div class="case-mlabel">замеров доведено до договора</div>
+        <p class="case-desc">Менеджеры отрабатывают возражения по смете и срокам на ИИ-клиенте — меньше отказов после замера.</p>
+      </article>
+      <article class="case rv">
+        <div class="case-top"><div class="case-logo contain"><img src="assets/qbi.png" alt="QBI" loading="lazy"></div><div><h3>QBI</h3><div class="case-niche">Автоматизация бизнеса</div></div></div>
+        <div class="case-metric"><span class="up">↑</span><b>+45%</b></div>
+        <div class="case-mlabel">заявок доходит до демо</div>
+        <p class="case-desc">Менеджеры доводят лида до встречи-демо, а не теряют его на этапе «дорого» и «подумаю».</p>
+      </article>
     </div>
   </div>
 </section>
@@ -901,6 +1045,22 @@ async function sendLead(e){
   }
   return false;
 }
+</script>
+
+<script>
+/* Табы «Знакомство с продуктом» */
+(function(){
+  var tabs=document.querySelectorAll('.shot-tab');
+  var panels=document.querySelectorAll('.shot-panel');
+  if(!tabs.length) return;
+  tabs.forEach(function(tab){
+    tab.addEventListener('click',function(){
+      var i=this.getAttribute('data-shot');
+      tabs.forEach(function(t){var on=t===tab;t.classList.toggle('is-active',on);t.setAttribute('aria-selected',on?'true':'false');});
+      panels.forEach(function(p){p.classList.toggle('is-active',p.getAttribute('data-shot')===i);});
+    });
+  });
+})();
 </script>
 
 <script>
