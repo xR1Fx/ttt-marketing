@@ -254,12 +254,32 @@ details p{padding:0 22px 22px;color:var(--t2);font-size:15px}
 .cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 100% at 50% 0,var(--gbg),transparent 70%);pointer-events:none}
 .cta-box h2{position:relative}
 .cta-box .lead{margin:16px auto 28px}
-.form{display:flex;flex-direction:column;gap:12px;max-width:460px;margin:0 auto;position:relative}
-.form > input,.form .iti__tel-input{width:100%;font-size:16px;font-family:var(--body);background:var(--bg);border:1px solid var(--b2);border-radius:13px;padding:15px 18px;color:var(--t1);transition:border-color .15s ease}
-.form > input::placeholder,.form .iti__tel-input::placeholder{color:var(--t3)}
-.form > input:focus,.form .iti__tel-input:focus{outline:none;border-color:var(--gold)}
-.form .btn{width:100%;justify-content:center;margin-top:2px}
-.form-err{margin-top:8px;color:var(--red);font-size:13px;font-family:var(--body);text-align:center}
+.form{display:flex;flex-direction:column;max-width:460px;margin:0 auto;position:relative;text-align:left}
+/* Прогресс квиза */
+.q-progress{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.q-progress b{color:var(--t1);font-weight:700}
+.q-dots{display:flex;gap:6px}
+.q-dots i{width:24px;height:4px;border-radius:2px;background:var(--b2);transition:background .3s ease}
+.q-dots i.is-on{background:var(--acc)}
+/* Шаги с плавным появлением */
+.qstep{display:none;flex-direction:column;gap:12px}
+.qstep.is-active{display:flex;animation:qfade .35s ease}
+@keyframes qfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* Единый стиль полей — одинаковая ширина на каждом шаге */
+.qf{width:100%;font-size:16px;font-family:var(--body);background:var(--bg);border:1px solid var(--b2);border-radius:13px;padding:15px 18px;color:var(--t1);transition:border-color .15s ease}
+.qf::placeholder{color:var(--t3)}
+.qf:focus{outline:none;border-color:var(--gold)}
+textarea.qf{min-height:96px;resize:vertical;line-height:1.5}
+select.qf{appearance:none;-webkit-appearance:none;-moz-appearance:none;cursor:pointer;padding-right:44px;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6a66' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+select.qf:required:invalid{color:var(--t3)}
+select.qf option{background:var(--s2);color:var(--t1)}
+/* Кнопки */
+.form .btn{width:100%;justify-content:center;margin-top:6px}
+.q-actions{display:flex;gap:12px;margin-top:6px}
+.q-actions .btn{margin-top:0;width:auto}
+.q-actions .btn-gold{flex:1}
+.q-actions .btn-ghost{flex:0 0 auto}
+.form-err{margin-top:12px;color:var(--red);font-size:13px;font-family:var(--body);text-align:center}
 /* intl-tel-input — тёмная премиум-тема + выравнивание ширины под остальные поля */
 .iti{width:100%;display:block}
 .iti__tel-input{width:100%}
@@ -608,11 +628,37 @@ footer h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:v
     <div class="cta-box rv">
       <h2>Посмотрите, где ваш отдел<br>теряет сделки — бесплатно</h2>
       <p class="lead">Покажем тренажёр на вашем продукте и сделаем бесплатный замер отдела. 20 минут — и вы видите слабые места в звонках команды.</p>
-      <form class="form" onsubmit="return sendLead(event)">
-        <input type="text" id="lead-name" name="name" placeholder="Имя" required>
-        <input type="tel" id="phone" name="phone" required>
-        <input type="text" id="telegram" name="telegram" placeholder="Telegram (@username)">
-        <button type="submit" class="btn btn-gold">Получить демо →</button>
+      <form class="form" id="leadForm" onsubmit="return sendLead(event)">
+        <div class="q-progress">
+          <span>Шаг <b id="q-cur">1</b> из 2</span>
+          <div class="q-dots"><i class="is-on"></i><i></i></div>
+        </div>
+
+        <!-- Шаг 1 — о компании и запросе -->
+        <div class="qstep is-active" data-step="1">
+          <select class="qf" id="q-managers" required>
+            <option value="" disabled selected hidden>Менеджеров в отделе продаж</option>
+            <option value="1–10">1–10 менеджеров</option>
+            <option value="10–20">10–20 менеджеров</option>
+            <option value="20–30">20–30 менеджеров</option>
+            <option value="более 30">более 30 менеджеров</option>
+          </select>
+          <textarea class="qf" id="q-request" placeholder="Ваш запрос: что хотите улучшить в отделе продаж?" required></textarea>
+          <input class="qf" type="text" id="q-time" placeholder="Удобное время для связи (напр. будни 10:00–18:00)">
+          <button type="button" class="btn btn-gold" id="qNext">Далее →</button>
+        </div>
+
+        <!-- Шаг 2 — контакты -->
+        <div class="qstep" data-step="2">
+          <input class="qf" type="text" id="lead-name" name="name" placeholder="Имя" required>
+          <input class="qf" type="tel" id="phone" name="phone" required>
+          <input class="qf" type="text" id="telegram" name="telegram" placeholder="Telegram (@username)">
+          <div class="q-actions">
+            <button type="button" class="btn btn-ghost" id="qBack">← Назад</button>
+            <button type="submit" class="btn btn-gold">Получить демо →</button>
+          </div>
+        </div>
+
         <p class="form-err" id="form-err" hidden></p>
       </form>
       <p class="formnote">Берём ограниченное число внедрений в месяц — отвечаем в течение дня.</p>
@@ -671,48 +717,64 @@ document.querySelectorAll('.rv:not(.in)').forEach(el=>io.observe(el));
 const TG_BOT_TOKEN = '8887040826:AAHpiC_GkuP_F4WND4vl9_tSH8AEAeB-meo'; // @sales_ttt_bot
 const TG_CHAT_ID   = '-1001554129628'; // группа «TTTMarketing | Заявки»
 
-/* intl-tel-input: флаги + коды стран, по умолчанию Казахстан (+7) */
+/* intl-tel-input: флаги + коды стран, по умолчанию Казахстан (+7).
+   Инициализируем лениво — только когда шаг 2 становится видимым,
+   иначе на скрытом (display:none) поле плагин неверно считает отступы. */
 const phoneEl=document.getElementById('phone');
 let iti=null, utilsReady=false;
-if(phoneEl && window.intlTelInput){
+
+const onlyDigits=s=>(s||'').replace(/\D/g,'');
+function maskKZ(d){
+  d=d.slice(0,10);
+  let o='';
+  // разделители ставим только ПЕРЕД следующими цифрами — без «хвостовых», иначе ломается Backspace
+  if(d.length>=1) o='('+d.slice(0,3);
+  if(d.length>3)  o+=') '+d.slice(3,6);
+  if(d.length>6)  o+='-'+d.slice(6,8);
+  if(d.length>8)  o+='-'+d.slice(8,10);
+  return o;
+}
+function formatPhone(){
+  if(!iti) return;
+  const el=phoneEl;
+  const c=iti.getSelectedCountryData();
+  const dc=c&&c.dialCode;
+  // запоминаем, сколько цифр стояло до курсора, чтобы вернуть его на место после переформатирования
+  const caret=el.selectionStart||0;
+  const digitsBeforeCaret=onlyDigits(el.value.slice(0,caret)).length;
+  let formatted;
+  if(dc==='7'){                        // Казахстан / Россия — наша маска со скобками
+    formatted=maskKZ(onlyDigits(el.value));
+  }else if(window.intlTelInput&&intlTelInput.utils){ // другие страны — формат libphonenumber
+    const full='+'+(dc||'')+onlyDigits(el.value);
+    let f=intlTelInput.utils.formatNumberAsYouType(full,c.iso2);
+    const pref='+'+dc;
+    if(f.indexOf(pref)===0) f=f.slice(pref.length).trim();
+    formatted=f;
+  }else{
+    return; // utils ещё не готовы для не-KZ — не трогаем ввод
+  }
+  el.value=formatted;
+  // ставим курсор после того же количества цифр, что и до форматирования
+  let pos=0,seen=0;
+  while(pos<formatted.length && seen<digitsBeforeCaret){
+    if(/\d/.test(formatted.charAt(pos))) seen++;
+    pos++;
+  }
+  try{ el.setSelectionRange(pos,pos); }catch(_){}
+}
+function initPhone(){
+  if(iti || !phoneEl || !window.intlTelInput) return; // уже создан или плагин не загружен
   iti=window.intlTelInput(phoneEl,{
     initialCountry:'kz',      // Казахстан по умолчанию (+7)
     separateDialCode:true,    // код страны рядом с флагом
     countrySearch:true,       // поиск в списке стран
     strictMode:true,          // ограничение длины: лишние цифры не вводятся
-    formatAsYouType:false,    // форматируем сами (ниже) — чтобы были скобки +7 (777) 123-12-34
+    formatAsYouType:false,    // форматируем сами — чтобы были скобки +7 (777) 123-12-34
     formatOnDisplay:false,
-    // utils.js (libphonenumber) — даёт ограничение длины и валидацию
     loadUtilsOnInit:'https://cdn.jsdelivr.net/npm/intl-tel-input@24/build/js/utils.js'
   });
-  // флаг готовности utils, чтобы не пропустить заявку до их загрузки
   if(iti.promise) iti.promise.then(function(){utilsReady=true;}).catch(function(){});
-
-  // Живая маска ввода: +7 (777) 123-12-34 для KZ/RU, стандартный формат — для остальных
-  const onlyDigits=s=>(s||'').replace(/\D/g,'');
-  function maskKZ(d){
-    d=d.slice(0,10);
-    let o='';
-    if(d.length>0) o='('+d.slice(0,3);
-    if(d.length>=3) o+=') ';
-    if(d.length>3) o+=d.slice(3,6);
-    if(d.length>6) o+='-'+d.slice(6,8);
-    if(d.length>8) o+='-'+d.slice(8,10);
-    return o;
-  }
-  function formatPhone(){
-    const c=iti.getSelectedCountryData();
-    const dc=c&&c.dialCode;
-    if(dc==='7'){                        // Казахстан / Россия — наша маска со скобками
-      phoneEl.value=maskKZ(onlyDigits(phoneEl.value));
-    }else if(window.intlTelInput&&intlTelInput.utils){ // другие страны — формат libphonenumber
-      const full='+'+(dc||'')+onlyDigits(phoneEl.value);
-      let f=intlTelInput.utils.formatNumberAsYouType(full,c.iso2);
-      const pref='+'+dc;
-      if(f.indexOf(pref)===0) f=f.slice(pref.length).trim();
-      phoneEl.value=f;
-    }
-  }
   phoneEl.addEventListener('input',formatPhone);
   phoneEl.addEventListener('countrychange',formatPhone);
 }
@@ -745,36 +807,83 @@ function prettyPhone(){
   return e164;
 }
 
+/* ---------- Квиз: сообщения об ошибках/успехе ---------- */
+function formMsg(msg, ok){
+  const e=document.getElementById('form-err');
+  if(!e) return;
+  e.textContent=msg; e.hidden=false;
+  e.style.color = ok ? 'var(--grn)' : 'var(--red)';
+}
+function clearMsg(){ const e=document.getElementById('form-err'); if(e) e.hidden=true; }
+
+/* ---------- Квиз: переключение шагов (вперёд/назад) ---------- */
+const quizForm=document.getElementById('leadForm');
+const qSteps=quizForm?Array.prototype.slice.call(quizForm.querySelectorAll('.qstep')):[];
+const qDots=quizForm?quizForm.querySelectorAll('.q-dots i'):[];
+const qCur=document.getElementById('q-cur');
+const QTOTAL=qSteps.length||1;
+let qStep=1;
+
+function goStep(n){
+  qStep=Math.max(1,Math.min(QTOTAL,n));
+  qSteps.forEach(function(s){ s.classList.toggle('is-active', +s.getAttribute('data-step')===qStep); });
+  Array.prototype.forEach.call(qDots,function(d,i){ d.classList.toggle('is-on', i<qStep); });
+  if(qCur) qCur.textContent=qStep;
+  if(qStep===2) initPhone();   // создаём поле телефона, когда шаг 2 стал видимым
+  clearMsg();
+  const active=qSteps[qStep-1];
+  if(active){ const f=active.querySelector('.qf'); if(f){ try{f.focus();}catch(_){} } }
+}
+
+function validateStep1(){
+  const m=document.getElementById('q-managers');
+  const rq=document.getElementById('q-request');
+  if(m && !m.value){ formMsg('Выберите количество менеджеров.'); m.focus(); return false; }
+  if(rq && !rq.value.trim()){ formMsg('Коротко опишите ваш запрос.'); rq.focus(); return false; }
+  return true;
+}
+
+(function(){
+  const next=document.getElementById('qNext'), back=document.getElementById('qBack');
+  if(next) next.addEventListener('click',function(){ if(validateStep1()) goStep(2); });
+  if(back) back.addEventListener('click',function(){ goStep(1); });
+})();
+
+/* ---------- Отправка заявки в Telegram-группу ---------- */
 async function sendLead(e){
   e.preventDefault();
+  // Enter на промежуточном шаге = «Далее», а не отправка
+  if(qStep<QTOTAL){ if(validateStep1()) goStep(2); return false; }
+
   const form=e.target;
   const btn=form.querySelector('button[type="submit"]');
-  const errEl=document.getElementById('form-err');
-  const showErr=m=>{ if(errEl){errEl.textContent=m;errEl.hidden=false;} };
-  const clearErr=()=>{ if(errEl){errEl.hidden=true;} };
 
   const name=document.getElementById('lead-name').value.trim();
   const tgRaw=document.getElementById('telegram').value.trim();
+  const managers=(document.getElementById('q-managers').value||'').trim();
+  const request=(document.getElementById('q-request').value||'').trim();
+  const time=(document.getElementById('q-time').value||'').trim();
 
-  clearErr();
-  if(!name){ showErr('Пожалуйста, укажите имя.'); return false; }
-  if(!iti){ showErr('Поле телефона не готово — обновите страницу.'); return false; }
-  if(!utilsReady){ showErr('Секунду — проверяем номер. Нажмите ещё раз.'); return false; }
-  // строгая валидация номера через intl-tel-input
+  clearMsg();
+  if(!name){ formMsg('Пожалуйста, укажите имя.'); return false; }
+  if(!iti){ formMsg('Поле телефона не готово — обновите страницу.'); return false; }
+  if(!utilsReady){ formMsg('Секунду — проверяем номер. Нажмите ещё раз.'); return false; }
   if(!iti.isValidNumber()){
     const codes={0:'Неверный код страны',1:'Неверный код страны',2:'Номер слишком короткий',3:'Номер слишком длинный',4:'Введите номер телефона',5:'Неверная длина номера'};
-    const ve=iti.getValidationError();
-    showErr(codes[ve]||'Введите корректный номер телефона полностью.');
+    formMsg(codes[iti.getValidationError()]||'Введите корректный номер телефона полностью.');
     if(phoneEl) phoneEl.focus();
     return false;
   }
-  const phone=prettyPhone(); // +7 (747) 781-94-07
 
+  const phone=prettyPhone(); // +7 (747) 781-94-07
   const tg = tgRaw ? (/^(@|https?:\/\/)/.test(tgRaw) ? tgRaw : '@'+tgRaw) : 'Не указано';
   const text='🔥 Заявка с сайта SalesPRO'
     +'\n👤 Имя: '+name
     +'\n📞 Телефон: '+phone
-    +'\n💬 Telegram: '+tg;
+    +'\n💬 Telegram: '+tg
+    +'\n💼 Менеджеров в отделе: '+(managers||'Не указано')
+    +'\n❓ Запрос клиента: '+(request||'Не указано')
+    +'\n⏰ Удобное время для связи: '+(time||'Не указано');
 
   const label=btn.textContent;
   btn.disabled=true; btn.textContent='Отправляем…';
@@ -789,9 +898,10 @@ async function sendLead(e){
     form.reset();
     if(iti) iti.setCountry('kz');
     btn.textContent='✓ Заявка отправлена';
+    formMsg('✓ Заявка отправлена! Свяжемся с вами в ближайшее время.', true);
   }catch(err){
     btn.disabled=false; btn.textContent=label;
-    showErr('Не удалось отправить заявку. Напишите нам в Telegram — кнопка справа внизу.');
+    formMsg('Не удалось отправить заявку. Напишите нам в Telegram — кнопка справа внизу.');
   }
   return false;
 }
